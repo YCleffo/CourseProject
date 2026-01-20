@@ -44,7 +44,7 @@
                         <td th:text="${actor.roleName}">Роль</td>
                         <td>
                             <a th:href="@{/movies/{id}(id=${actor.movie.id}, from='actors')}"
-                               th:text="${actor.movie.title}"></a>
+                                th:text="${actor.movie.title}"></a>
                             <span th:if="${actor.movie == null}">—</span>
                         </td>
                         <td th:text="${#numbers.formatDecimal(actor.salary, 1, 2) + ' $'}">50000.00</td>

@@ -52,8 +52,7 @@
                             </div>
                         </td>
                         <td>
-                            <a th:href="@{/movies/{id}(id=${movie.id}, from='movies')}"
-                               th:text="${movie.title}"></a>
+                            <a th:href="@{/movies/{id}(id=${movie.id}, from='movies')}" th:text="${movie.title}"></a>
                         </td>
                         <td>
                             <th:block th:each="genre : ${movie.genres}">
