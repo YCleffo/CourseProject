@@ -38,6 +38,9 @@ public class SecurityConfig {
                 )
                 .exceptionHandling(exception -> exception
                         .accessDeniedPage("/access-denied")
+                )
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/movies/**")
                 );
 
         return http.build();

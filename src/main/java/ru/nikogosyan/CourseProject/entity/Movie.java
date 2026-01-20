@@ -57,6 +57,9 @@ public class Movie {
     @Column(name = "image_path")
     private String imagePath;
 
+    @Transient
+    private Set<Long> genreIds = new HashSet<>();
+
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Actor> actors = new ArrayList<>();
 

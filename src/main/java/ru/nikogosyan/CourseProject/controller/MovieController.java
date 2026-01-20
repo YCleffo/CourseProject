@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.nikogosyan.CourseProject.entity.Genre;
 import ru.nikogosyan.CourseProject.entity.Movie;
 import ru.nikogosyan.CourseProject.service.GenreService;
 import ru.nikogosyan.CourseProject.service.MovieService;
@@ -19,9 +20,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/movies")
@@ -87,16 +87,67 @@ public class MovieController {
     @PostMapping("/new")
     public String createMovie(@Valid @ModelAttribute Movie movie,
                               BindingResult result,
-                              @RequestParam("imageFile") MultipartFile imageFile,
-                              Authentication authentication) throws IOException {
+                              @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+                              Authentication authentication,
+                              Model model) {
 
-        if (result.hasErrors()) return "movie-form";
+        log.info("Creating movie: {}", movie.getTitle());
+        log.info("Image file present: {}, size: {}",
+                imageFile != null && !imageFile.isEmpty(),
+                imageFile != null ? imageFile.getSize() : 0);
 
-        checkModifyPermission(authentication);
-        handleImageUpload(movie, imageFile);
+        if (result.hasErrors()) {
+            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+            return "movie-form";
+        }
 
-        movieService.saveMovie(movie, authentication.getName());
-        return "redirect:/movies";
+        try {
+            checkModifyPermission(authentication);
+
+            if (imageFile != null && !imageFile.isEmpty()) {
+                // Проверка размера файла
+                if (imageFile.getSize() > 50 * 1024 * 1024) { // 50 MB
+                    model.addAttribute("error", "Размер файла не должен превышать 50MB");
+                    model.addAttribute("genres", genreService.getAllGenres());
+                    model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+                    return "movie-form";
+                }
+
+                // Проверка типа файла
+                String contentType = imageFile.getContentType();
+                if (contentType == null || !contentType.startsWith("image/")) {
+                    model.addAttribute("error", "Файл должен быть изображением");
+                    model.addAttribute("genres", genreService.getAllGenres());
+                    model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+                    return "movie-form";
+                }
+
+                handleImageUpload(movie, imageFile);
+                log.info("Image uploaded successfully: {}", movie.getImagePath());
+            }
+
+            if (movie.getGenreIds() != null && !movie.getGenreIds().isEmpty()) {
+                movie.setGenres(genreService.getGenresByIds(movie.getGenreIds()));
+            }
+
+            movieService.saveMovie(movie, authentication.getName());
+            log.info("Movie saved successfully: {}", movie.getId());
+            return "redirect:/movies";
+
+        } catch (IOException e) {
+            log.error("Error uploading image: {}", e.getMessage(), e);
+            model.addAttribute("error", "Ошибка при загрузке изображения: " + e.getMessage());
+            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+            return "movie-form";
+        } catch (Exception e) {
+            log.error("Error creating movie: {}", e.getMessage(), e);
+            model.addAttribute("error", "Ошибка при создании фильма: " + e.getMessage());
+            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+            return "movie-form";
+        }
     }
 
     @GetMapping("/edit/{id}")
@@ -105,6 +156,12 @@ public class MovieController {
                                 Model model) {
         checkModifyPermission(authentication);
         Movie movie = movieService.getMovieById(id);
+
+        Set<Long> ids = movie.getGenres().stream()
+                .map(Genre::getId)
+                .collect(Collectors.toSet());
+        movie.setGenreIds(ids);
+
         model.addAttribute("movie", movie);
         model.addAttribute("genres", genreService.getAllGenres());
         model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
@@ -115,26 +172,49 @@ public class MovieController {
     public String updateMovie(@PathVariable Long id,
                               @Valid @ModelAttribute Movie movie,
                               BindingResult result,
-                              @RequestParam("imageFile") MultipartFile imageFile,
-                              Authentication authentication) throws IOException {
+                              @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+                              Authentication authentication,
+                              Model model) {
 
-        if (result.hasErrors()) return "movie-form";
-
-        Movie existingMovie = movieService.getMovieById(id);
-
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
-
-        if (!isAdmin && !existingMovie.getCreatedBy().equals(authentication.getName())) {
-            return "redirect:/movies";
+        if (result.hasErrors()) {
+            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+            return "movie-form";
         }
 
-        handleImageUpload(movie, imageFile, existingMovie.getImagePath());
+        try {
+            Movie existingMovie = movieService.getMovieById(id);
 
-        movieService.updateMovie(id, movie, authentication);
-        return "redirect:/movies";
+            boolean isAdmin = authentication.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority)
+                    .filter(Objects::nonNull)
+                    .anyMatch(role -> role.equals("ROLE_ADMIN"));
+
+            if (!isAdmin && !existingMovie.getCreatedBy().equals(authentication.getName())) {
+                model.addAttribute("error", "У вас нет прав на редактирование этого фильма");
+                return "redirect:/movies";
+            }
+
+            if (imageFile != null && !imageFile.isEmpty()) {
+                handleImageUpload(movie, imageFile, existingMovie.getImagePath());
+            } else {
+                movie.setImagePath(existingMovie.getImagePath());
+            }
+
+            if (movie.getGenreIds() != null && !movie.getGenreIds().isEmpty()) {
+                movie.setGenres(genreService.getGenresByIds(movie.getGenreIds()));
+            }
+
+            movieService.updateMovie(id, movie, authentication);
+            return "redirect:/movies";
+
+        } catch (IOException e) {
+            log.error("Error uploading image: {}", e.getMessage());
+            model.addAttribute("error", "Ошибка при загрузке изображения: " + e.getMessage());
+            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+            return "movie-form";
+        }
     }
 
     @PostMapping("/delete/{id}")
@@ -152,22 +232,53 @@ public class MovieController {
         return "redirect:/movies";
     }
 
-    private void handleImageUpload(Movie movie, MultipartFile imageFile) throws IOException {
-        handleImageUpload(movie, imageFile, null);
-    }
-
     private void handleImageUpload(Movie movie, MultipartFile imageFile, String existingPath) throws IOException {
         if (!Files.exists(UPLOAD_DIR)) {
             Files.createDirectories(UPLOAD_DIR);
         }
 
         if (imageFile != null && !imageFile.isEmpty()) {
-            String fileName = System.currentTimeMillis() + "_" + imageFile.getOriginalFilename();
-            Files.copy(imageFile.getInputStream(), UPLOAD_DIR.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+            // Проверка типа файла
+            String contentType = imageFile.getContentType();
+            if (contentType == null || !contentType.startsWith("image/")) {
+                throw new IOException("Файл должен быть изображением");
+            }
+
+            // Проверка размера (10MB)
+            if (imageFile.getSize() > 10 * 1024 * 1024) {
+                throw new IOException("Размер файла не должен превышать 10MB");
+            }
+
+            String originalFilename = imageFile.getOriginalFilename();
+            if (originalFilename == null || originalFilename.isEmpty()) {
+                throw new IOException("Некорректное имя файла");
+            }
+
+            // Генерация безопасного имени файла
+            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String fileName = System.currentTimeMillis() + "_" + UUID.randomUUID().toString() + extension;
+
+            Path filePath = UPLOAD_DIR.resolve(fileName);
+            Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
             movie.setImagePath("/uploads/images/" + fileName);
+
+            // Удаление старого файла если есть
+            if (existingPath != null && !existingPath.isEmpty()) {
+                try {
+                    Path oldFile = Paths.get(".").resolve(existingPath.substring(1));
+                    Files.deleteIfExists(oldFile);
+                } catch (IOException e) {
+                    log.warn("Failed to delete old image: {}", e.getMessage());
+                }
+            }
         } else if (existingPath != null) {
             movie.setImagePath(existingPath);
         }
+    }
+
+    private void handleImageUpload(Movie movie, MultipartFile imageFile) throws IOException {
+        handleImageUpload(movie, imageFile, null);
     }
 
     private void checkModifyPermission(Authentication authentication) {
