@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Админ панель - Управление ролями</title>
@@ -10,89 +11,88 @@
 </head>
 
 <body>
-<div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-<div class="container mt-4">
-    <h2>Управление ролями пользователей</h2>
+    <div class="container mt-4">
+        <h2>Управление ролями пользователей</h2>
 
-    <div th:if="${message}" class="alert alert-success mt-3" role="alert">
-        <span th:text="${message}"></span>
-    </div>
-
-    <div th:if="${error}" class="alert alert-danger mt-3" role="alert">
-        <span th:text="${error}"></span>
-    </div>
-
-    <div class="card mt-4">
-        <div class="card-header">
-            <h4>Все пользователи</h4>
+        <div th:if="${message}" class="alert alert-success mt-3" role="alert">
+            <span th:text="${message}"></span>
         </div>
 
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped align-middle">
-                    <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Имя пользователя</th>
-                        <th>Роли</th>
-                        <th>Статус</th>
-                        <th>Дата создания</th>
-                    </tr>
-                    </thead>
+        <div th:if="${error}" class="alert alert-danger mt-3" role="alert">
+            <span th:text="${error}"></span>
+        </div>
 
-                    <tbody>
-                    <tr th:each="user : ${users}">
-                        <td th:text="${user.id}">1</td>
+        <div class="card mt-4">
+            <div class="card-header">
+                <h4>Все пользователи</h4>
+            </div>
 
-                        <td th:text="${user.username}">username</td>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Имя пользователя</th>
+                                <th>Роли</th>
+                                <th>Статус</th>
+                                <th>Дата создания</th>
+                            </tr>
+                        </thead>
 
-                        <td>
-                            <form th:action="@{/admin/roles/update}" method="post"
-                                  class="d-flex gap-2 align-items-center">
-                                <input type="hidden" name="username" th:value="${user.username}"/>
+                        <tbody>
+                            <tr th:each="user : ${users}">
+                                <td th:text="${user.id}">1</td>
 
-                                <select class="form-select form-select-sm"
-                                        name="roles"
-                                        multiple
-                                        size="3"
-                                        style="min-width: 200px;">
-                                    <option value="ROLE_ADMIN"
-                                            th:selected="${user.roles.?[name == 'ROLE_ADMIN'].size() > 0}">
-                                        ADMIN
-                                    </option>
+                                <td th:text="${user.username}">username</td>
 
-                                    <option value="ROLE_USER"
-                                            th:selected="${user.roles.?[name == 'ROLE_USER'].size() > 0}">
-                                        USER
-                                    </option>
+                                <td>
+                                    <form th:action="@{/admin/roles/update}" method="post"
+                                        class="d-flex gap-2 align-items-center">
+                                        <input type="hidden" name="username" th:value="${user.username}" />
 
-                                    <option value="ROLE_READ_ONLY"
-                                            th:selected="${user.roles.?[name == 'ROLE_READ_ONLY'].size() > 0}">
-                                        READ_ONLY
-                                    </option>
-                                </select>
+                                        <select class="form-select form-select-sm" name="roles" multiple size="3"
+                                            style="min-width: 200px;">
+                                            <option value="ROLE_ADMIN"
+                                                th:selected="${user.roles.?[name == 'ROLE_ADMIN'].size() > 0}">
+                                                ADMIN
+                                            </option>
 
-                                <button type="submit" class="btn btn-primary btn-sm">Сохранить</button>
-                            </form>
-                        </td>
+                                            <option value="ROLE_USER"
+                                                th:selected="${user.roles.?[name == 'ROLE_USER'].size() > 0}">
+                                                USER
+                                            </option>
 
-                        <td>
-                            <span th:if="${user.enabled}" class="badge bg-success">Активен</span>
-                            <span th:unless="${user.enabled}" class="badge bg-danger">Неактивен</span>
-                        </td>
+                                            <option value="ROLE_READ_ONLY"
+                                                th:selected="${user.roles.?[name == 'ROLE_READ_ONLY'].size() > 0}">
+                                                READ_ONLY
+                                            </option>
+                                        </select>
 
-                        <td th:text="${user.createdAt != null ? #temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm') : '-'}">
-                            2026-01-20
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                        <button type="submit" class="btn btn-primary btn-sm">Сохранить</button>
+                                    </form>
+                                </td>
+
+                                <td>
+                                    <span th:if="${user.enabled}" class="badge bg-success">Активен</span>
+                                    <span th:unless="${user.enabled}" class="badge bg-danger">Неактивен</span>
+                                </td>
+
+                                <td
+                                    th:text="${user.createdAt != null ? #temporals.format(user.createdAt, 'yyyy-MM-dd HH:mm') : '-'}">
+                                    2026-01-20
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

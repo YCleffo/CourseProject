@@ -1,15 +1,24 @@
 package ru.nikogosyan.CourseProject.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import ru.nikogosyan.CourseProject.dto.CalculationDto;
+import ru.nikogosyan.CourseProject.dto.CalculationResultDto;
 import ru.nikogosyan.CourseProject.entity.Actor;
+import ru.nikogosyan.CourseProject.entity.Movie;
 import ru.nikogosyan.CourseProject.service.ActorService;
+import ru.nikogosyan.CourseProject.service.CalculationService;
 import ru.nikogosyan.CourseProject.service.MovieService;
+import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 
@@ -20,38 +29,68 @@ public class CalculationController {
 
     private final MovieService movieService;
     private final ActorService actorService;
+    private final CalculationService calculationService;
+    private final SecurityUtils securityUtils;
 
     @GetMapping
-    public String calculationPage(Authentication authentication, Model model) {
+    public String calculationPage(@RequestParam(value = "movieId", required = false) Long movieId,
+                                  Authentication authentication,
+                                  Model model) {
         model.addAttribute("page", "calculation");
         model.addAttribute("movies", movieService.getAllMovies(authentication));
+
+        CalculationDto form = new CalculationDto();
+        if (movieId != null) {
+            form.setMovieId(movieId);
+        }
+        model.addAttribute("calc", form);
+
+        if (movieId != null) {
+            model.addAttribute("logs", calculationService.getLogsForMovie(movieId, authentication));
+        }
+
         return "calculation";
     }
 
-    @PostMapping("/profit")
-    public String calculateProfit(@RequestParam Long movieId,
-                                  @RequestParam(defaultValue = "0.1") Double profitPercent,
-                                  Authentication authentication,
-                                  Model model) {
-        var movie = movieService.getMovieForView(movieId, authentication);
-        List<Actor> actors = actorService.getActorsByMovieIdForView(movieId, authentication);
+    private static BigDecimal pctToFraction(BigDecimal pct) {
+        if (pct == null) return BigDecimal.ZERO;
+        return pct.divide(new BigDecimal("100"), 4, RoundingMode.HALF_UP);
+    }
 
-        BigDecimal totalActorsSalary = actors.stream()
+    @PostMapping("/profit")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    public String calculateV2(@Valid @ModelAttribute("calc") CalculationDto calc,
+                              BindingResult bindingResult,
+                              Authentication authentication,
+                              Model model) {
+        model.addAttribute("page", "calculation");
+        model.addAttribute("movies", movieService.getAllMovies(authentication));
+
+        if (bindingResult.hasErrors()) {
+            return "calculation";
+        }
+
+        Movie movie = movieService.getMovieForView(calc.getMovieId(), authentication);
+
+        List<Actor> actors = actorService.getActorsByMovieIdForView(movie.getId(), authentication);
+        BigDecimal actorsSalary = actors.stream()
                 .map(Actor::getSalary)
                 .filter(Objects::nonNull)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        BigDecimal boxOffice = movie.getBoxOffice() != null ? movie.getBoxOffice() : BigDecimal.ZERO;
-        BigDecimal profit = boxOffice.multiply(BigDecimal.valueOf(profitPercent));
-        BigDecimal netProfit = profit.subtract(totalActorsSalary);
+        CalculationResultDto result = calculationService.calculate(movie, actorsSalary, calc);
+
+        if (securityUtils.isReadOnly(authentication)) {
+            throw new RuntimeException("READONLY users cannot modify data");
+        }
+
+        calculationService.saveLog(movie, authentication, calc, result);
 
         model.addAttribute("movie", movie);
         model.addAttribute("actors", actors);
-        model.addAttribute("totalActorsSalary", totalActorsSalary);
-        model.addAttribute("grossProfit", profit);
-        model.addAttribute("netProfit", netProfit);
-        model.addAttribute("profitPercent", profitPercent * 100);
-        model.addAttribute("movies", movieService.getAllMovies(authentication));
+        model.addAttribute("result", result);
+
+        model.addAttribute("logs", calculationService.getLogsForMovie(movie.getId(), authentication));
 
         return "calculation";
     }

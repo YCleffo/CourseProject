@@ -44,16 +44,13 @@
                         <td>
                             <a th:href="@{/actors/{id}(id=${actor.id}, from='actors')}">
                                 <img th:if="${primaryPhotoByActorId[actor.id] != null}"
-                                     th:src="${primaryPhotoByActorId[actor.id]}"
-                                     class="img-thumbnail"
-                                     style="width:60px;height:60px;object-fit:cover;"
-                                     alt="photo">
+                                    th:src="${primaryPhotoByActorId[actor.id]}" class="img-thumbnail"
+                                    style="width:60px;height:60px;object-fit:cover;" alt="photo">
                                 <span th:if="${primaryPhotoByActorId[actor.id] == null}">—</span>
                             </a>
                         </td>
                         <td>
-                            <a th:href="@{/actors/{id}(id=${actor.id}, from='actors')}"
-                               th:text="${actor.name}">Имя</a>
+                            <a th:href="@{/actors/{id}(id=${actor.id}, from='actors')}" th:text="${actor.name}">Имя</a>
                         </td>
                         <td th:text="${actor.roleName}">Роль</td>
                         <td>
