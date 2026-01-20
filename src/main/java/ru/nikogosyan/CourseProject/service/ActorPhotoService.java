@@ -123,14 +123,14 @@ public class ActorPhotoService {
         boolean isReadOnly = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .filter(Objects::nonNull)
-                .anyMatch(r -> r.equals("ROLE_READONLY") || r.equals("ROLE_READ_ONLY"));
+                .anyMatch(r -> r.equals("ROLE_READ_ONLY") || r.equals("ROLE_READ_ONLY"));
 
         if (isReadOnly) throw new RuntimeException("READONLY users cannot modify data");
 
         boolean isAdmin = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .filter(Objects::nonNull)
-                .anyMatch(r -> r.equals("ROLE_ADMIN") || r.equals("ROLEADMIN"));
+                .anyMatch(r -> r.equals("ROLE_ADMIN") || r.equals("ROLE_ADMIN"));
 
         String username = authentication.getName();
         String createdBy = actor.getCreatedBy();

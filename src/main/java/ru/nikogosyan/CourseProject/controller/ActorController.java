@@ -41,12 +41,12 @@ public class ActorController {
         boolean isReadOnly = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_READONLY") || role.equals("ROLE_READ_ONLY"));
+                .anyMatch(role -> role.equals("ROLE_READ_ONLY") || role.equals("ROLE_READ_ONLY"));
 
         boolean isAdmin = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_ADMIN") || role.equals("ROLEADMIN"));
+                .anyMatch(role -> role.equals("ROLE_ADMIN") || role.equals("ROLE_ADMIN"));
 
         boolean canModify = !isReadOnly && (isAdmin || (actor.getCreatedBy() != null && actor.getCreatedBy().equals(authentication.getName())));
 
