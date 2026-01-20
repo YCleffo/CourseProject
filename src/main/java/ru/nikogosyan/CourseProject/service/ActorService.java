@@ -10,8 +10,8 @@ import ru.nikogosyan.CourseProject.entity.Actor;
 import ru.nikogosyan.CourseProject.repository.ActorRepository;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +40,25 @@ public class ActorService {
     @Transactional(readOnly = true)
     public List<Actor> getActorsByMovieId(Long movieId) {
         return actorRepository.findByMovieId(movieId);
+    }
+
+    @Transactional(readOnly = true)
+    public Map<Long, Actor> getFirstActorsByMovieIds(List<Long> movieIds) {
+        if (movieIds == null || movieIds.isEmpty()) return Map.of();
+
+        List<Actor> all = actorRepository.findByMovieIdIn(movieIds);
+
+        return all.stream()
+                .collect(Collectors.groupingBy(a -> a.getMovie().getId()))
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        e -> e.getValue().stream()
+                                .sorted(Comparator.comparing(Actor::getId))
+                                .findFirst()
+                                .orElse(null)
+                ));
     }
 
     @Transactional

@@ -63,7 +63,10 @@
                             <td colspan="3" class="text-center">Нет актёров</td>
                         </tr>
                         <tr th:each="a : ${actors}">
-                            <td th:text="${a.name}"></td>
+                            <td>
+                                <a th:href="@{/actors/{id}(id=${a.id}, from='movies', movieId=${movie.id})}"
+                                   th:text="${a.name}">Имя</a>
+                            </td>
                             <td th:text="${a.roleName}"></td>
                             <td th:text="${a.salary != null ? #numbers.formatDecimal(a.salary, 1, 2) : '—'}"></td>
                         </tr>

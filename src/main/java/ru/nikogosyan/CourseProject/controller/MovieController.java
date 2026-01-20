@@ -98,6 +98,9 @@ public class MovieController {
             movie.setGenresString(genresString);
         }
 
+        List<Long> movieIds = movies.stream().map(Movie::getId).toList();
+        model.addAttribute("firstActorByMovieId", actorService.getFirstActorsByMovieIds(movieIds));
+
         return "movies-list";
     }
 

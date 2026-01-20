@@ -26,6 +26,7 @@
                 <thead class="table-dark">
                     <tr>
                         <th>ID</th>
+                        <th>Фото</th>
                         <th>Имя</th>
                         <th>Роль</th>
                         <th>Фильм</th>
@@ -40,7 +41,20 @@
                     </tr>
                     <tr th:each="actor : ${actors}">
                         <td th:text="${actor.id}">1</td>
-                        <td th:text="${actor.name}">Имя</td>
+                        <td>
+                            <a th:href="@{/actors/{id}(id=${actor.id}, from='actors')}">
+                                <img th:if="${primaryPhotoByActorId[actor.id] != null}"
+                                     th:src="${primaryPhotoByActorId[actor.id]}"
+                                     class="img-thumbnail"
+                                     style="width:60px;height:60px;object-fit:cover;"
+                                     alt="photo">
+                                <span th:if="${primaryPhotoByActorId[actor.id] == null}">—</span>
+                            </a>
+                        </td>
+                        <td>
+                            <a th:href="@{/actors/{id}(id=${actor.id}, from='actors')}"
+                               th:text="${actor.name}">Имя</a>
+                        </td>
                         <td th:text="${actor.roleName}">Роль</td>
                         <td>
                             <a th:href="@{/movies/{id}(id=${actor.movie.id}, from='actors')}"

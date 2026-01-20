@@ -14960,3 +14960,2007 @@ org.springframework.expression.spel.SpelEvaluationException: EL1011E: Method cal
 2026-01-20 20:09:43 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-01-20 20:09:43 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2026-01-20 20:09:43 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-01-20 20:27:57 [main] INFO  r.n.C.CourseProjectApplication - Starting CourseProjectApplication using Java 25.0.1 with PID 34284 (C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject\target\classes started by Yuran in C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject)
+2026-01-20 20:27:57 [main] INFO  r.n.C.CourseProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-20 20:27:58 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-20 20:27:58 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 44 ms. Found 6 JPA repository interfaces.
+2026-01-20 20:27:58 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2026-01-20 20:27:58 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-20 20:27:58 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-01-20 20:27:59 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1006 ms
+2026-01-20 20:27:59 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-20 20:27:59 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-20 20:27:59 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-20 20:27:59 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-20 20:27:59 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6068cda1
+2026-01-20 20:27:59 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-20 20:27:59 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-20 20:27:59 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/course_project?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.30
+	Default catalog/schema: course_project/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-20 20:28:00 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-20 20:28:00 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-20 20:28:00 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-20 20:28:00 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:28:00 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:28:00 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:28:01 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-20 20:28:01 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-20 20:28:01 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/index.html] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:28:01 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/index.html] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:28:01 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:28:01 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2026-01-20 20:28:01 [main] INFO  r.n.C.CourseProjectApplication - Started CourseProjectApplication in 4.085 seconds (process running for 4.593)
+2026-01-20 20:28:01 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-20 20:28:01 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-01-20 20:28:01 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-01-20 20:28:03 [http-nio-8082-exec-3] INFO  r.n.C.service.UserService - Loading user by username: admin
+2026-01-20 20:28:03 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-01-20 20:28:03 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-20 20:28:05 [http-nio-8082-exec-9] INFO  r.n.C.service.MovieService - Getting movies for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:28:05 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-20 20:28:05 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    where
+        a1_0.movie_id in (?)
+2026-01-20 20:28:05 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:28:07 [http-nio-8082-exec-4] INFO  r.n.C.service.ActorService - Getting actors for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:28:07 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-20 20:28:07 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:28:09 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:28:09 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:28:09 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id 
+    limit
+        ?
+2026-01-20 20:28:09 [http-nio-8082-exec-7] WARN  o.t.s.p.AbstractStandardFragmentInsertionTagProcessor - [THYMELEAF][http-nio-8082-exec-7][actor-details] Deprecated unwrapped fragment expression "fragments/navbar :: navbar" found in template actor-details, line 11, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-01-20 20:31:49 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:31:49 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+        and ap1_0.is_primary=true 
+    limit
+        ?
+2026-01-20 20:31:49 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    insert 
+    into
+        actor_photos
+        (actor_id, created_at, image_path, is_primary) 
+    values
+        (?, ?, ?, ?)
+2026-01-20 20:31:49 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:31:49 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:31:49 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id 
+    limit
+        ?
+2026-01-20 20:31:49 [http-nio-8082-exec-2] WARN  o.t.s.p.AbstractStandardFragmentInsertionTagProcessor - [THYMELEAF][http-nio-8082-exec-2][actor-details] Deprecated unwrapped fragment expression "fragments/navbar :: navbar" found in template actor-details, line 11, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-01-20 20:31:56 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:31:56 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+        and ap1_0.is_primary=true 
+    limit
+        ?
+2026-01-20 20:31:56 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    insert 
+    into
+        actor_photos
+        (actor_id, created_at, image_path, is_primary) 
+    values
+        (?, ?, ?, ?)
+2026-01-20 20:31:56 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:31:56 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:31:56 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id 
+    limit
+        ?
+2026-01-20 20:31:56 [http-nio-8082-exec-6] WARN  o.t.s.p.AbstractStandardFragmentInsertionTagProcessor - [THYMELEAF][http-nio-8082-exec-6][actor-details] Deprecated unwrapped fragment expression "fragments/navbar :: navbar" found in template actor-details, line 11, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-01-20 20:32:03 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:32:03 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+        and ap1_0.is_primary=true 
+    limit
+        ?
+2026-01-20 20:32:03 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    insert 
+    into
+        actor_photos
+        (actor_id, created_at, image_path, is_primary) 
+    values
+        (?, ?, ?, ?)
+2026-01-20 20:32:03 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:32:03 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:32:03 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id 
+    limit
+        ?
+2026-01-20 20:32:03 [http-nio-8082-exec-4] WARN  o.t.s.p.AbstractStandardFragmentInsertionTagProcessor - [THYMELEAF][http-nio-8082-exec-4][actor-details] Deprecated unwrapped fragment expression "fragments/navbar :: navbar" found in template actor-details, line 11, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-01-20 20:32:13 [http-nio-8082-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:32:13 [http-nio-8082-exec-10] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+        and ap1_0.is_primary=true 
+    limit
+        ?
+2026-01-20 20:32:13 [http-nio-8082-exec-10] DEBUG org.hibernate.SQL - 
+    insert 
+    into
+        actor_photos
+        (actor_id, created_at, image_path, is_primary) 
+    values
+        (?, ?, ?, ?)
+2026-01-20 20:32:13 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:32:13 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:32:13 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id 
+    limit
+        ?
+2026-01-20 20:32:13 [http-nio-8082-exec-2] WARN  o.t.s.p.AbstractStandardFragmentInsertionTagProcessor - [THYMELEAF][http-nio-8082-exec-2][actor-details] Deprecated unwrapped fragment expression "fragments/navbar :: navbar" found in template actor-details, line 11, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-01-20 20:35:32 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-20 20:35:32 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-20 20:35:32 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-20 20:35:32 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-20 20:35:32 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-01-20 20:35:38 [main] INFO  r.n.C.CourseProjectApplication - Starting CourseProjectApplication using Java 25.0.1 with PID 26032 (C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject\target\classes started by Yuran in C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject)
+2026-01-20 20:35:38 [main] INFO  r.n.C.CourseProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-20 20:35:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-20 20:35:38 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 34 ms. Found 6 JPA repository interfaces.
+2026-01-20 20:35:39 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2026-01-20 20:35:39 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-20 20:35:39 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-01-20 20:35:39 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 991 ms
+2026-01-20 20:35:39 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-20 20:35:39 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-20 20:35:39 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-20 20:35:39 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-20 20:35:39 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@e1c91cd
+2026-01-20 20:35:39 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-20 20:35:39 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-20 20:35:39 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/course_project?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.30
+	Default catalog/schema: course_project/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-20 20:35:40 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-20 20:35:40 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-20 20:35:40 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-20 20:35:40 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:35:40 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:35:40 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:35:41 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-20 20:35:41 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-20 20:35:41 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/index.html] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:35:41 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/index.html] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:35:41 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:35:41 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-01-20 20:35:41 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2026-01-20 20:35:41 [main] INFO  r.n.C.CourseProjectApplication - Started CourseProjectApplication in 3.824 seconds (process running for 4.224)
+2026-01-20 20:35:46 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-20 20:35:46 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-01-20 20:35:46 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-01-20 20:35:48 [http-nio-8082-exec-4] INFO  r.n.C.service.UserService - Loading user by username: admin
+2026-01-20 20:35:48 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-01-20 20:35:48 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-20 20:35:49 [http-nio-8082-exec-9] INFO  r.n.C.service.ActorService - Getting actors for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:35:49 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-20 20:35:49 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:35:51 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:35:51 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:35:51 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id 
+    limit
+        ?
+2026-01-20 20:35:51 [http-nio-8082-exec-1] WARN  o.t.s.p.AbstractStandardFragmentInsertionTagProcessor - [THYMELEAF][http-nio-8082-exec-1][actor-details] Deprecated unwrapped fragment expression "fragments/navbar :: navbar" found in template actor-details, line 11, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-01-20 20:35:51 [http-nio-8082-exec-1] ERROR org.thymeleaf.TemplateEngine - [THYMELEAF][http-nio-8082-exec-1] Exception processing template "actor-details": An error happened during template parsing (template: "class path resource [templates/actor-details.html]" - line 154, col 37)
+org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "class path resource [templates/actor-details.html]" - line 154, col 37)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:239)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parseStandalone(AbstractMarkupTemplateParser.java:100)
+	at org.thymeleaf.engine.TemplateManager.parseAndProcess(TemplateManager.java:666)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1103)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1077)
+	at org.thymeleaf.spring6.view.ThymeleafView.renderFragment(ThymeleafView.java:372)
+	at org.thymeleaf.spring6.view.ThymeleafView.render(ThymeleafView.java:192)
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1305)
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1042)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:980)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:493)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:354)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:86)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:132)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:245)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:239)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.csrf.CsrfFilter.doFilterInternal(CsrfFilter.java:118)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:337)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+Caused by: org.attoparser.ParseException: (Line = 154, Column = 37) Malformed markup: Attribute "th:attrappend" appears more than once in element
+	at org.attoparser.MarkupEventProcessorHandler.handleAttribute(MarkupEventProcessorHandler.java:549)
+	at org.attoparser.ParsingAttributeSequenceUtil.parseAttributeSequence(ParsingAttributeSequenceUtil.java:275)
+	at org.attoparser.ParsingElementMarkupUtil.parseOpenElement(ParsingElementMarkupUtil.java:153)
+	at org.attoparser.MarkupParser.parseBuffer(MarkupParser.java:710)
+	at org.attoparser.MarkupParser.parseDocument(MarkupParser.java:301)
+	at org.attoparser.MarkupParser.parse(MarkupParser.java:257)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:230)
+	... 120 common frames omitted
+2026-01-20 20:35:51 [http-nio-8082-exec-1] ERROR o.a.c.c.C.[.[.[.[dispatcherServlet] - Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: org.thymeleaf.exceptions.TemplateInputException: An error happened during template parsing (template: "class path resource [templates/actor-details.html]" - line 154, col 37)] with root cause
+org.attoparser.ParseException: (Line = 154, Column = 37) Malformed markup: Attribute "th:attrappend" appears more than once in element
+	at org.attoparser.MarkupEventProcessorHandler.handleAttribute(MarkupEventProcessorHandler.java:549)
+	at org.attoparser.ParsingAttributeSequenceUtil.parseAttributeSequence(ParsingAttributeSequenceUtil.java:275)
+	at org.attoparser.ParsingElementMarkupUtil.parseOpenElement(ParsingElementMarkupUtil.java:153)
+	at org.attoparser.MarkupParser.parseBuffer(MarkupParser.java:710)
+	at org.attoparser.MarkupParser.parseDocument(MarkupParser.java:301)
+	at org.attoparser.MarkupParser.parse(MarkupParser.java:257)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parse(AbstractMarkupTemplateParser.java:230)
+	at org.thymeleaf.templateparser.markup.AbstractMarkupTemplateParser.parseStandalone(AbstractMarkupTemplateParser.java:100)
+	at org.thymeleaf.engine.TemplateManager.parseAndProcess(TemplateManager.java:666)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1103)
+	at org.thymeleaf.TemplateEngine.process(TemplateEngine.java:1077)
+	at org.thymeleaf.spring6.view.ThymeleafView.renderFragment(ThymeleafView.java:372)
+	at org.thymeleaf.spring6.view.ThymeleafView.render(ThymeleafView.java:192)
+	at org.springframework.web.servlet.DispatcherServlet.render(DispatcherServlet.java:1305)
+	at org.springframework.web.servlet.DispatcherServlet.processDispatchResult(DispatcherServlet.java:1042)
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:980)
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:866)
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1003)
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:892)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:622)
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:874)
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:710)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:128)
+	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:53)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108)
+	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:235)
+	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:493)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:354)
+	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:86)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:132)
+	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126)
+	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:181)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:245)
+	at org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter.doFilter(AbstractAuthenticationProcessingFilter.java:239)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:110)
+	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:96)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.csrf.CsrfFilter.doFilterInternal(CsrfFilter.java:118)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90)
+	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82)
+	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:231)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:244)
+	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:337)
+	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:228)
+	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:141)
+	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:237)
+	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:195)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.ServletRequestPathFilter.doFilter(ServletRequestPathFilter.java:52)
+	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113)
+	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74)
+	at org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebSecurityConfiguration.java:317)
+	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:355)
+	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:272)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:110)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:199)
+	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116)
+	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:107)
+	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:165)
+	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:77)
+	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:482)
+	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:113)
+	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:83)
+	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:72)
+	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:341)
+	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397)
+	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63)
+	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:903)
+	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1778)
+	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:946)
+	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:480)
+	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:57)
+	at java.base/java.lang.Thread.run(Thread.java:1474)
+2026-01-20 20:37:44 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-20 20:37:44 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-20 20:37:44 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-20 20:37:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-20 20:37:44 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-01-20 20:38:38 [main] INFO  r.n.C.CourseProjectApplication - Starting CourseProjectApplication using Java 25.0.1 with PID 27900 (C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject\target\classes started by Yuran in C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject)
+2026-01-20 20:38:38 [main] INFO  r.n.C.CourseProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-20 20:38:39 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-20 20:38:39 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 34 ms. Found 6 JPA repository interfaces.
+2026-01-20 20:38:39 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2026-01-20 20:38:39 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-20 20:38:39 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-01-20 20:38:39 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 947 ms
+2026-01-20 20:38:39 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-20 20:38:39 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-20 20:38:40 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-20 20:38:40 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-20 20:38:40 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@d99df7a
+2026-01-20 20:38:40 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-20 20:38:40 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-20 20:38:40 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/course_project?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.30
+	Default catalog/schema: course_project/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-20 20:38:40 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-20 20:38:40 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-20 20:38:40 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-20 20:38:41 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:38:41 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:38:41 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:38:41 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-20 20:38:41 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-20 20:38:41 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/index.html] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:38:41 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/index.html] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:38:41 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:38:42 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-01-20 20:38:42 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2026-01-20 20:38:42 [main] INFO  r.n.C.CourseProjectApplication - Started CourseProjectApplication in 4.007 seconds (process running for 4.435)
+2026-01-20 20:38:42 [RMI TCP Connection(1)-192.168.3.2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-20 20:38:42 [RMI TCP Connection(1)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-01-20 20:38:42 [RMI TCP Connection(1)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-01-20 20:38:44 [http-nio-8082-exec-6] INFO  r.n.C.service.UserService - Loading user by username: admin
+2026-01-20 20:38:44 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-01-20 20:38:44 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-20 20:39:01 [http-nio-8082-exec-8] INFO  r.n.C.service.ActorService - Getting actors for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:39:01 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-20 20:39:01 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:39:02 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    join
+        movies m1_0 
+            on m1_0.id=a1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        a1_0.id=?
+2026-01-20 20:39:02 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:39:02 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id=? 
+    order by
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id 
+    limit
+        ?
+2026-01-20 20:39:02 [http-nio-8082-exec-1] WARN  o.t.s.p.AbstractStandardFragmentInsertionTagProcessor - [THYMELEAF][http-nio-8082-exec-1][actor-details] Deprecated unwrapped fragment expression "fragments/navbar :: navbar" found in template actor-details, line 11, col 6. Please use the complete syntax of fragment expressions instead ("~{fragments/navbar :: navbar}"). The old, unwrapped syntax for fragment expressions will be removed in future versions of Thymeleaf.
+2026-01-20 20:39:29 [http-nio-8082-exec-3] INFO  r.n.C.service.ActorService - Getting actors for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:39:29 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-20 20:39:29 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:39:30 [http-nio-8082-exec-5] INFO  r.n.C.service.MovieService - Getting movies for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:39:30 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-20 20:39:30 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    where
+        a1_0.movie_id in (?)
+2026-01-20 20:39:30 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:39:31 [http-nio-8082-exec-9] INFO  r.n.C.service.ActorService - Getting actors for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:39:31 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-20 20:39:31 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:39:33 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-20 20:39:33 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-20 20:39:33 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-20 20:39:33 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-20 20:39:33 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-01-20 20:42:15 [main] INFO  r.n.C.CourseProjectApplication - Starting CourseProjectApplication using Java 25.0.1 with PID 33520 (C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject\target\classes started by Yuran in C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject)
+2026-01-20 20:42:15 [main] INFO  r.n.C.CourseProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-20 20:42:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-20 20:42:15 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 40 ms. Found 6 JPA repository interfaces.
+2026-01-20 20:42:16 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2026-01-20 20:42:16 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-20 20:42:16 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-01-20 20:42:16 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 969 ms
+2026-01-20 20:42:16 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-20 20:42:16 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-20 20:42:16 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-20 20:42:16 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-20 20:42:16 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2f9236d8
+2026-01-20 20:42:16 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-20 20:42:16 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-20 20:42:16 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/course_project?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.30
+	Default catalog/schema: course_project/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-20 20:42:17 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-20 20:42:17 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-20 20:42:17 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-20 20:42:18 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:42:18 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:42:18 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-20 20:42:18 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-20 20:42:18 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-20 20:42:18 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/index.html] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:42:18 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/index.html] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:42:18 [main] WARN  o.apache.catalina.webresources.Cache - Unable to add the resource at [/] to the cache for web application [] because there was insufficient free space available after evicting expired cache entries - consider increasing the maximum size of the cache
+2026-01-20 20:42:19 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-01-20 20:42:19 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2026-01-20 20:42:19 [main] INFO  r.n.C.CourseProjectApplication - Started CourseProjectApplication in 4.327 seconds (process running for 4.754)
+2026-01-20 20:42:19 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-20 20:42:19 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-01-20 20:42:19 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-01-20 20:42:21 [http-nio-8082-exec-5] INFO  r.n.C.service.UserService - Loading user by username: admin
+2026-01-20 20:42:21 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-01-20 20:42:21 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-20 20:42:22 [http-nio-8082-exec-8] INFO  r.n.C.service.ActorService - Getting actors for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:42:22 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-20 20:42:22 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:42:22 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id in (?) 
+    order by
+        ap1_0.actor_id,
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:42:27 [http-nio-8082-exec-3] INFO  r.n.C.service.MovieService - Getting movies for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:42:27 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-20 20:42:27 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    where
+        a1_0.movie_id in (?)
+2026-01-20 20:42:27 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:42:28 [http-nio-8082-exec-7] INFO  r.n.C.service.ActorService - Getting actors for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:42:28 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-20 20:42:28 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:42:28 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id in (?) 
+    order by
+        ap1_0.actor_id,
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:42:30 [http-nio-8082-exec-4] INFO  r.n.C.service.MovieService - Getting movies for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:42:30 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-20 20:42:30 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    where
+        a1_0.movie_id in (?)
+2026-01-20 20:42:30 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:42:32 [http-nio-8082-exec-9] INFO  r.n.C.service.ActorService - Getting actors for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:42:32 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-20 20:42:32 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:42:32 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id in (?) 
+    order by
+        ap1_0.actor_id,
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-20 20:42:35 [http-nio-8082-exec-2] INFO  r.n.C.service.MovieService - Getting movies for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:42:35 [http-nio-8082-exec-2] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-20 20:42:42 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:42:42 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.movie_id,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0 
+    where
+        a1_0.movie_id=?
+2026-01-20 20:42:42 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.id=?
+2026-01-20 20:42:42 [http-nio-8082-exec-6] INFO  r.n.C.service.MovieService - Getting movies for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:42:42 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-20 20:42:53 [http-nio-8082-exec-9] INFO  r.n.C.service.MovieService - Getting movies for user: admin, isAdmin: true, isUser: false
+2026-01-20 20:42:53 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-20 20:42:57 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0
+2026-01-20 20:42:57 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-20 20:43:19 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-20 20:43:19 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-20 20:43:19 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-20 20:43:19 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-20 20:43:19 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
