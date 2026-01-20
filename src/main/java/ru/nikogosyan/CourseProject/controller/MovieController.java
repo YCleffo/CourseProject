@@ -16,6 +16,7 @@ import ru.nikogosyan.CourseProject.entity.Genre;
 import ru.nikogosyan.CourseProject.entity.Movie;
 import ru.nikogosyan.CourseProject.service.GenreService;
 import ru.nikogosyan.CourseProject.service.MovieService;
+import ru.nikogosyan.CourseProject.service.ActorService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,6 +34,7 @@ public class MovieController {
 
     private final MovieService movieService;
     private final GenreService genreService;
+    private final ActorService actorService;
 
     private static final Path UPLOAD_DIR = Paths.get("uploads/images");
 
@@ -86,14 +88,40 @@ public class MovieController {
         model.addAttribute("movies", movies);
         model.addAttribute("canModify", !isReadOnly);
 
+        model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+
         for (Movie movie : movies) {
             String genresString = movie.getGenres().stream()
                     .map(Genre::getName)
+                    .map(genreName -> GENRE_TRANSLATIONS.getOrDefault(genreName, genreName))
                     .collect(Collectors.joining(", "));
-            model.addAttribute("genresString_" + movie.getId(), genresString);
+            movie.setGenresString(genresString);
         }
 
         return "movies-list";
+    }
+
+    @GetMapping("/{id}")
+    public String movieDetails(@PathVariable Long id,
+                               @RequestParam(required=false, defaultValue="movies") String from,
+                               Authentication authentication,
+                               Model model) {
+
+        Movie movie = movieService.getMovieById(id);
+
+        boolean isReadOnly = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .filter(Objects::nonNull)
+                .anyMatch(role -> role.equals("ROLE_READ_ONLY"));
+
+        model.addAttribute("page", "movies");
+        model.addAttribute("movie", movie);
+        model.addAttribute("actors", actorService.getActorsByMovieId(id));
+        model.addAttribute("canModify", !isReadOnly);
+        model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+        model.addAttribute("from", from);
+
+        return "movie-details";
     }
 
     @GetMapping("/new")
@@ -127,15 +155,13 @@ public class MovieController {
             checkModifyPermission(authentication);
 
             if (imageFile != null && !imageFile.isEmpty()) {
-                // Проверка размера файла
-                if (imageFile.getSize() > 50 * 1024 * 1024) { // 50 MB
+                if (imageFile.getSize() > 50 * 1024 * 1024) {
                     model.addAttribute("error", "Размер файла не должен превышать 50MB");
                     model.addAttribute("genres", genreService.getAllGenres());
                     model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
                     return "movie-form";
                 }
 
-                // Проверка типа файла
                 String contentType = imageFile.getContentType();
                 if (contentType == null || !contentType.startsWith("image/")) {
                     model.addAttribute("error", "Файл должен быть изображением");

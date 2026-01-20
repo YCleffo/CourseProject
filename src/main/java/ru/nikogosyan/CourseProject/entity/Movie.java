@@ -63,6 +63,9 @@ public class Movie {
     private String imagePath;
 
     @Transient
+    private String genresString;
+
+    @Transient
     private Set<Long> genreIds = new HashSet<>();
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)

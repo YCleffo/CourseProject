@@ -62,22 +62,23 @@ public class MovieService {
     @Transactional
     public Movie updateMovie(Long id, Movie updatedMovie, Authentication authentication) {
         Movie movie = getMovieById(id);
-        String username = authentication.getName();
 
+        String username = authentication.getName();
         boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
+                .map(GrantedAuthority::getAuthority)
+                .filter(Objects::nonNull)
                 .anyMatch(role -> role.equals("ROLE_ADMIN"));
 
         if (!isAdmin && !movie.getCreatedBy().equals(username)) {
-            throw new RuntimeException("You don't have permission to update this movie");
+            throw new RuntimeException("You dont have permission to update this movie");
         }
-
-        log.info("Updating movie: {} by user: {}", id, username);
 
         movie.setTitle(updatedMovie.getTitle());
         movie.setGenres(updatedMovie.getGenres());
         movie.setReleaseYear(updatedMovie.getReleaseYear());
         movie.setBoxOffice(updatedMovie.getBoxOffice());
+
+        movie.setImagePath(updatedMovie.getImagePath());
 
         return movieRepository.save(movie);
     }

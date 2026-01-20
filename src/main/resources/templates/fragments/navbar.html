@@ -18,14 +18,16 @@
             <a class="nav-link" th:classappend="${page == 'actors'} ? 'active'" th:href="@{/actors}">Актёры</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:classappend="${page == 'calculation'} ? 'active'" th:href="@{/calculation}">Расчет прибыли</a>
+            <a class="nav-link" th:classappend="${page == 'calculation'} ? 'active'" th:href="@{/calculation}">Расчет
+              прибыли</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" th:classappend="${page == 'about'} ? 'active'" th:href="@{/about}">О приложении</a>
           </li>
 
           <li class="nav-item" sec:authorize="hasRole('ADMIN')">
-            <a class="nav-link" th:classappend="${page == 'admin'} ? 'active'" th:href="@{/admin/roles}">Админ панель</a>
+            <a class="nav-link" th:classappend="${page == 'admin'} ? 'active'" th:href="@{/admin/roles}">Админ
+              панель</a>
           </li>
         </ul>
 
@@ -38,7 +40,9 @@
               <li>
                 <span class="dropdown-item-text">Роль: <span th:text="${roles}"></span></span>
               </li>
-              <li><hr class="dropdown-divider"></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
               <li>
                 <form th:action="@{/logout}" method="post">
                   <button type="submit" class="dropdown-item">Выход</button>

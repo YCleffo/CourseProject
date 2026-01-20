@@ -85,7 +85,6 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.encode(password));
         user.setEnabled(true);
 
-        // По умолчанию роль READ_ONLY
         Role readOnlyRole = roleRepository.findByName("ROLE_READ_ONLY")
                 .orElseThrow(() -> new RuntimeException("Role READ_ONLY not found"));
         user.getRoles().add(readOnlyRole);
