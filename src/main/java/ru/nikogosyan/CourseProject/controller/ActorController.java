@@ -116,7 +116,7 @@ public class ActorController {
         boolean isReadOnly = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_READONLY"));
+                .anyMatch(role -> role.equals("ROLE_READ_ONLY"));
 
         boolean canModify = !isReadOnly;
 
