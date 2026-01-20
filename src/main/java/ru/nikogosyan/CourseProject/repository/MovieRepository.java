@@ -10,9 +10,6 @@ import java.util.List;
 
 @Repository
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    List<Movie> findByCreatedBy(String createdBy);
-    List<Movie> findByTitleContainingIgnoreCase(String title);
-
     @EntityGraph(value = "Movie.genres", type = EntityGraph.EntityGraphType.FETCH)
     @Query("SELECT DISTINCT m FROM Movie m")
     List<Movie> findAllWithGenres();

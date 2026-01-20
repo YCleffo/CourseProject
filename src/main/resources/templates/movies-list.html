@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.svg}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 <div th:replace="~{fragments/navbar :: navbar}"></div>
@@ -24,6 +25,7 @@
             <thead class="table-dark">
             <tr>
                 <th>ID</th>
+                <th>Фото</th>
                 <th>Название</th>
                 <th>Жанр</th>
                 <th>Год выпуска</th>
@@ -34,10 +36,21 @@
             </thead>
             <tbody>
             <tr th:if="${#lists.isEmpty(movies)}">
-                <td colspan="7" class="text-center">Фильмы не найдены</td>
+                <td colspan="8" class="text-center">Фильмы не найдены</td>
             </tr>
             <tr th:each="movie : ${movies}">
                 <td th:text="${movie.id}">1</td>
+                <td>
+                    <div th:if="${movie.imagePath}">
+                        <img th:src="@{${movie.imagePath}}"
+                             alt="Постер фильма"
+                             class="movie-image"
+                             onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'no-image\'>Нет фото</div>';">
+                    </div>
+                    <div th:unless="${movie.imagePath}" class="no-image">
+                        Нет фото
+                    </div>
+                </td>
                 <td th:text="${movie.title}">Название</td>
                 <td th:text="${movie.genresString}">Жанр</td>
                 <td th:text="${movie.releaseYear}">2024</td>
