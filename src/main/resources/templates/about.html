@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>О приложении</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" th:href="@{/img/favicon.svg}">
+</head>
+<body>
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
+<!--    <div class="container-fluid">-->
+<!--        <a class="navbar-brand" href="#">Курсовой проект</a>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+
+<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--            <ul class="navbar-nav me-auto">-->
+<!--                <li class="nav-item"><a class="nav-link" th:href="@{/home}">Главная</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link" th:href="@{/movies}">Фильмы</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link" th:href="@{/actors}">Актёры</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link" th:href="@{/calculation}">Расчет прибыли</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link active" th:href="@{/about}">О приложении</a></li>-->
+<!--            </ul>-->
+<!--            <form th:action="@{/logout}" method="post" class="d-flex">-->
+<!--                <button type="submit" class="btn btn-outline-light btn-sm">Выход</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2>О приложении</h2>
+        </div>
+        <div class="card-body">
+            <h4>Система управления фильмами</h4>
+            <p class="lead">Веб-приложение для управления базой данных фильмов и актёров.</p>
+
+            <h5 class="mt-4">Функциональные возможности:</h5>
+            <ul>
+                <li>Аутентификация и авторизация пользователей</li>
+                <li>Разграничение доступа по ролям (READ_ONLY, USER, ADMIN)</li>
+                <li>Управление фильмами и актёрами</li>
+                <li>Расчёт прибыли фильмов</li>
+                <li>Ведение логов в отдельный файл</li>
+                <li>Мониторинг через Spring Boot Actuator</li>
+            </ul>
+
+            <h5 class="mt-4">Используемые технологии:</h5>
+            <ul>
+                <li>Spring Boot</li>
+                <li>Spring Security</li>
+                <li>Spring Data JPA</li>
+                <li>MySQL</li>
+                <li>Thymeleaf</li>
+                <li>Bootstrap 5</li>
+                <li>Lombok</li>
+            </ul>
+
+            <h5 class="mt-4">Информация о разработчике:</h5>
+            <p><strong>Разработчик:</strong> Никогосян Юрий Сасунович</p>
+            <p><strong>Версия:</strong> 1.0.0</p>
+            <p><strong>Год:</strong> 2026</p>
+
+            <div class="mt-4">
+                <a th:href="@{/home}" class="btn btn-primary">На главную</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

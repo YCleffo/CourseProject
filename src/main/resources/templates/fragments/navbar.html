@@ -1,0 +1,53 @@
+<div th:fragment="navbar" xmlns:sec="http://www.w3.org/1999/xhtml">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand">Курсовой проект</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${page == 'home'} ? 'active'" th:href="@{/home}">Главная</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${page == 'movies'} ? 'active'" th:href="@{/movies}">Фильмы</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${page == 'actors'} ? 'active'" th:href="@{/actors}">Актёры</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${page == 'calculation'} ? 'active'" th:href="@{/calculation}">Расчет прибыли</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:classappend="${page == 'about'} ? 'active'" th:href="@{/about}">О приложении</a>
+          </li>
+
+          <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+            <a class="nav-link" th:classappend="${page == 'admin'} ? 'active'" th:href="@{/admin/roles}">Админ панель</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+              <span th:text="${#authentication.name}">Пользователь</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <span class="dropdown-item-text">Роль: <span th:text="${roles}"></span></span>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <form th:action="@{/logout}" method="post">
+                  <button type="submit" class="dropdown-item">Выход</button>
+                </form>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</div>

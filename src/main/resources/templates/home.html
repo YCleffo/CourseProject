@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - Курсовой проект</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" th:href="@{/img/favicon.svg}">
+</head>
+<body>
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
+<!--    <div class="container-fluid">-->
+<!--        <a class="navbar-brand" href="#">Курсовой проект</a>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--            <ul class="navbar-nav me-auto">-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link active" th:href="@{/home}">Главная</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/movies}">Фильмы</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/actors}">Актёры</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/calculation}">Расчет прибыли</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    <a class="nav-link" th:href="@{/about}">О приложении</a>-->
+<!--                </li>-->
+<!--                <li class="nav-item" sec:authorize="hasRole('ADMIN')">-->
+<!--                    <a class="nav-link" th:href="@{/admin/roles}">Админ панель</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--            <ul class="navbar-nav">-->
+<!--                <li class="nav-item dropdown">-->
+<!--                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">-->
+<!--                        <span th:text="${username}">Пользователь</span>-->
+<!--                    </a>-->
+<!--                    <ul class="dropdown-menu dropdown-menu-end">-->
+<!--                        <li><span class="dropdown-item-text">Роль: <span th:text="${roles}"></span></span></li>-->
+<!--                        <li><hr class="dropdown-divider"></li>-->
+<!--                        <li>-->
+<!--                            <form th:action="@{/logout}" method="post">-->
+<!--                                <button type="submit" class="dropdown-item">Выход</button>-->
+<!--                            </form>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container mt-5">
+    <div class="jumbotron">
+        <h1 class="display-4">Добро пожаловать в систему управления фильмами!</h1>
+        <p class="lead">Эффективно управляйте базой данных фильмов и актёров.</p>
+        <hr class="my-4">
+        <p>Вы вошли как: <strong th:text="${username}">Пользователь</strong></p>
+        <p>Ваши роли: <strong th:text="${roles}">Роли</strong></p>
+
+        <div class="row mt-5">
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Фильмы</h5>
+                        <p class="card-text">Просматривайте и управляйте фильмами в базе данных.</p>
+                        <a th:href="@{/movies}" class="btn btn-primary">Перейти к фильмам</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Актёры</h5>
+                        <p class="card-text">Просматривайте и редактируйте информацию об актёрах.</p>
+                        <a th:href="@{/actors}" class="btn btn-primary">Перейти к актёрам</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Расчёты</h5>
+                        <p class="card-text">Рассчитывайте прибыль и статистику по фильмам.</p>
+                        <a th:href="@{/calculation}" class="btn btn-primary">Перейти к расчётам</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3" sec:authorize="hasRole('ADMIN')">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <strong>Доступ администратора:</strong> У вас есть привилегии администратора.
+                    <a th:href="@{/admin/roles}" class="alert-link">Управление ролями пользователей</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

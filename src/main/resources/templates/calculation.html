@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Расчет прибыли</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" th:href="@{/img/favicon.svg}">
+</head>
+<body>
+<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark">-->
+<!--    <div class="container-fluid">-->
+<!--        <a class="navbar-brand" href="#">Курсовой проект</a>-->
+<!--        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">-->
+<!--            <span class="navbar-toggler-icon"></span>-->
+<!--        </button>-->
+
+<!--        <div class="collapse navbar-collapse" id="navbarNav">-->
+<!--            <ul class="navbar-nav me-auto">-->
+<!--                <li class="nav-item"><a class="nav-link" th:href="@{/home}">Главная</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link" th:href="@{/movies}">Фильмы</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link" th:href="@{/actors}">Актёры</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link" th:href="@{/calculation}">Расчет прибыли</a></li>-->
+<!--                <li class="nav-item"><a class="nav-link active" th:href="@{/about}">О приложении</a></li>-->
+<!--            </ul>-->
+<!--            <form th:action="@{/logout}" method="post" class="d-flex">-->
+<!--                <button type="submit" class="btn btn-outline-light btn-sm">Выход</button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</nav>-->
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+<div class="container mt-4">
+    <h2>Калькулятор прибыли фильма</h2>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <form th:action="@{/calculation/profit}" method="post">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="movieId" class="form-label">Выберите фильм</label>
+                        <select class="form-select" id="movieId" name="movieId" required>
+                            <option value="">Выберите фильм...</option>
+                            <option th:each="m : ${movies}" th:value="${m.id}" th:text="${m.title}">Фильм</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="profitPercent" class="form-label">Процент прибыли</label>
+                        <input type="number" class="form-control" id="profitPercent" name="profitPercent"
+                               value="0.1" step="0.01" min="0" max="1">
+                        <small class="text-muted">0.1 = 10% от сборов</small>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3">Рассчитать прибыль</button>
+            </form>
+        </div>
+    </div>
+
+    <div th:if="${movie != null}" class="card mt-4">
+        <div class="card-header bg-success text-white">
+            <h4>Результаты расчёта</h4>
+        </div>
+        <div class="card-body">
+            <h5 th:text="${movie.title}">Название фильма</h5>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <table class="table">
+                        <tr>
+                            <th>Сборы в прокате:</th>
+                            <td th:text="${#numbers.formatDecimal(movie.boxOffice, 1, 2) + ' $'}">0.00</td>
+                        </tr>
+                        <tr>
+                            <th>Процент прибыли:</th>
+                            <td th:text="${profitPercent * 100 + '%'}">
+                        </tr>
+                        <tr class="table-info">
+                            <th>Валовая прибыль:</th>
+                            <td th:text="${#numbers.formatDecimal(grossProfit, 1, 2) + ' $'}">0.00</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <table class="table">
+                        <tr>
+                            <th>Общая зарплата актёров:</th>
+                            <td th:text="${#numbers.formatDecimal(totalActorsSalary, 1, 2) + ' $'}">0.00</td>
+                        </tr>
+                        <tr class="table-success">
+                            <th>Чистая прибыль:</th>
+                            <td th:text="${#numbers.formatDecimal(netProfit, 1, 2) + ' $'}">0.00</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <h6 class="mt-4">Актёры в этом фильме:</h6>
+            <table class="table table-sm">
+                <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Роль</th>
+                    <th>Зарплата</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${#lists.isEmpty(actors)}">
+                    <td colspan="3" class="text-center">Актёры не найдены</td>
+                </tr>
+                <tr th:each="actor : ${actors}">
+                    <td th:text="${actor.name}">Имя</td>
+                    <td th:text="${actor.roleName}">Роль</td>
+                    <td th:text="${#numbers.formatDecimal(actor.salary, 1, 2) + ' $'}">0.00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
