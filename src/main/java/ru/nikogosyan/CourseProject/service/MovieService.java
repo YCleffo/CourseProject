@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nikogosyan.CourseProject.entity.Movie;
 import ru.nikogosyan.CourseProject.repository.MovieRepository;
+import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -16,23 +17,16 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Slf4j
 public class MovieService {
-
     private final MovieRepository movieRepository;
+    private final SecurityUtils securityUtils;
 
     @Transactional(readOnly = true)
     public List<Movie> getAllMovies(Authentication authentication) {
-        String username = authentication.getName();
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+        SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
+        log.info("Getting movies for user: {}, isAdmin: {}, isUser: {}",
+                userInfo.username(), userInfo.isAdmin(), userInfo.isUser());
 
-        boolean isUser = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_USER"));
-
-        log.info("Getting actors for user: {}, isAdmin: {}, isUser: {}", username, isAdmin, isUser);
-
-        return movieRepository.findAll();
+        return movieRepository.findAllWithGenres();
     }
 
     @Transactional(readOnly = true)

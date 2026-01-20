@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nikogosyan.CourseProject.entity.Actor;
 import ru.nikogosyan.CourseProject.repository.ActorRepository;
+import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -19,18 +20,13 @@ public class ActorService {
 
     private final ActorRepository actorRepository;
 
+    private final SecurityUtils securityUtils;
+
     @Transactional(readOnly = true)
     public List<Actor> getAllActors(Authentication authentication) {
-        String username = authentication.getName();
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
-
-        boolean isUser = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_USER"));
-
-        log.info("Getting actors for user: {}, isAdmin: {}, isUser: {}", username, isAdmin, isUser);
+        SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
+        log.info("Getting actors for user: {}, isAdmin: {}, isUser: {}",
+                userInfo.username(), userInfo.isAdmin(), userInfo.isUser());
 
         return actorRepository.findAll();
     }

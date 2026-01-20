@@ -12,9 +12,14 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "movies")
+@NamedEntityGraph(
+        name = "Movie.genres",
+        attributeNodes = @NamedAttributeNode("genres")
+)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,7 +33,7 @@ public class Movie {
     @NotBlank(message = "Title is required")
     private String title;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "movie_genres",
             joinColumns = @JoinColumn(name = "movie_id"),
@@ -66,5 +71,14 @@ public class Movie {
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public String getGenresString() {
+        if (genres == null || genres.isEmpty()) {
+            return "";
+        }
+        return genres.stream()
+                .map(Genre::getName)
+                .collect(Collectors.joining(", "));
     }
 }

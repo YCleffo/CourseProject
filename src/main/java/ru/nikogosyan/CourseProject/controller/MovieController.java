@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.jspecify.annotations.NonNull;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
@@ -84,6 +85,13 @@ public class MovieController {
         model.addAttribute("page", "movies");
         model.addAttribute("movies", movies);
         model.addAttribute("canModify", !isReadOnly);
+
+        for (Movie movie : movies) {
+            String genresString = movie.getGenres().stream()
+                    .map(Genre::getName)
+                    .collect(Collectors.joining(", "));
+            model.addAttribute("genresString_" + movie.getId(), genresString);
+        }
 
         return "movies-list";
     }
@@ -251,24 +259,7 @@ public class MovieController {
         }
 
         if (imageFile != null && !imageFile.isEmpty()) {
-            // Проверка типа файла
-            String contentType = imageFile.getContentType();
-            if (contentType == null || !contentType.startsWith("image/")) {
-                throw new IOException("Файл должен быть изображением");
-            }
-
-            // Проверка размера (10MB)
-            if (imageFile.getSize() > 10 * 1024 * 1024) {
-                throw new IOException("Размер файла не должен превышать 10MB");
-            }
-
-            String originalFilename = imageFile.getOriginalFilename();
-            if (originalFilename == null || originalFilename.isEmpty()) {
-                throw new IOException("Некорректное имя файла");
-            }
-
-            // Генерация безопасного имени файла
-            String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+            String extension = getString(imageFile);
             String fileName = System.currentTimeMillis() + "_" + UUID.randomUUID() + extension;
 
             Path filePath = UPLOAD_DIR.resolve(fileName);
@@ -276,7 +267,6 @@ public class MovieController {
 
             movie.setImagePath("/uploads/images/" + fileName);
 
-            // Удаление старого файла если есть
             if (existingPath != null && !existingPath.isEmpty()) {
                 try {
                     Path oldFile = Paths.get(".").resolve(existingPath.substring(1));
@@ -288,6 +278,24 @@ public class MovieController {
         } else if (existingPath != null) {
             movie.setImagePath(existingPath);
         }
+    }
+
+    private static @NonNull String getString(MultipartFile imageFile) throws IOException {
+        String contentType = imageFile.getContentType();
+        if (contentType == null || !contentType.startsWith("image/")) {
+            throw new IOException("Файл должен быть изображением");
+        }
+
+        if (imageFile.getSize() > 10 * 1024 * 1024) {
+            throw new IOException("Размер файла не должен превышать 10MB");
+        }
+
+        String originalFilename = imageFile.getOriginalFilename();
+        if (originalFilename == null || originalFilename.isEmpty()) {
+            throw new IOException("Некорректное имя файла");
+        }
+
+        return originalFilename.substring(originalFilename.lastIndexOf("."));
     }
 
     private void handleImageUpload(Movie movie, MultipartFile imageFile) throws IOException {

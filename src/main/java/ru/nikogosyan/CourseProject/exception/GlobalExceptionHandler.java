@@ -16,18 +16,21 @@ public class GlobalExceptionHandler {
     public String handleRuntimeException(RuntimeException ex, Model model) {
         log.error("Runtime exception: {}", ex.getMessage());
         model.addAttribute("error", ex.getMessage());
+        log.error("Multipart exception", ex);
         return "error";
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public String handleAccessDeniedException(AccessDeniedException ex) {
         log.error("Access denied: {}", ex.getMessage());
+        log.error("Multipart exception", ex);
         return "access-denied";
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public String handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex, Model model) {
         log.error("File too large: {}", ex.getMessage());
+        log.error("Multipart exception", ex);
         model.addAttribute("error", "Файл слишком большой. Максимальный размер: 50MB");
         return "error";
     }
@@ -35,6 +38,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MultipartException.class)
     public String handleMultipartException(MultipartException ex, Model model) {
         log.error("Multipart exception: {}", ex.getMessage());
+        log.error("Multipart exception", ex);
         model.addAttribute("error", "Ошибка загрузки файла: " + ex.getMessage());
         return "error";
     }
