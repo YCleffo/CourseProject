@@ -81,7 +81,7 @@ public class MovieService {
         log.info("Updating movie: {} by user: {}", id, username);
 
         movie.setTitle(updatedMovie.getTitle());
-        movie.setGenre(updatedMovie.getGenre());
+        movie.setGenres(updatedMovie.getGenres());
         movie.setReleaseYear(updatedMovie.getReleaseYear());
         movie.setBoxOffice(updatedMovie.getBoxOffice());
 

@@ -9,7 +9,9 @@ import lombok.AllArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "movies")
@@ -26,8 +28,13 @@ public class Movie {
     @NotBlank(message = "Title is required")
     private String title;
 
-    @Column(length = 100)
-    private String genre;
+    @ManyToMany
+    @JoinTable(
+            name = "movie_genres",
+            joinColumns = @JoinColumn(name = "movie_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private Set<Genre> genres = new HashSet<>();
 
     @Column(name = "release_year")
     @Min(value = 1900, message = "Release year must be after 1900")
@@ -46,6 +53,9 @@ public class Movie {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
+
+    @Column(name = "image_path", length = 255)
+    private String imagePath;
 
     @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Actor> actors = new ArrayList<>();
