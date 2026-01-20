@@ -13,19 +13,36 @@ public class SecurityUtils {
 
     public UserInfo getUserInfo(Authentication authentication) {
         String username = authentication.getName();
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
-
-        boolean isUser = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_USER"));
-
-        return new UserInfo(username, isAdmin, isUser);
+        boolean isAdmin = hasAuthority(authentication, Roles.ROLE_ADMIN);
+        boolean isUser = hasAuthority(authentication, Roles.ROLE_USER);
+        boolean isReadOnly = hasAuthority(authentication, Roles.ROLE_READ_ONLY);
+        return new UserInfo(username, isAdmin, isUser, isReadOnly);
     }
 
-    public record UserInfo(String username, boolean isAdmin, boolean isUser) {
+    public boolean isAdmin(Authentication authentication) {
+        return hasAuthority(authentication, Roles.ROLE_ADMIN);
     }
+
+    public boolean isUser(Authentication authentication) {
+        return hasAuthority(authentication, Roles.ROLE_USER);
+    }
+
+    public boolean isReadOnly(Authentication authentication) {
+        return hasAuthority(authentication, Roles.ROLE_READ_ONLY);
+    }
+
+    public boolean hasAuthority(Authentication authentication, String authority) {
+        if (authentication == null) {
+            return false;
+        } else {
+            authentication.getAuthorities();
+        }
+
+        return authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .filter(Objects::nonNull)
+                .anyMatch(authority::equals);
+    }
+
+    public record UserInfo(String username, boolean isAdmin, boolean isUser, boolean isReadOnly) {}
 }

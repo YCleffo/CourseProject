@@ -33,8 +33,8 @@ public class CalculationController {
                                   @RequestParam(defaultValue = "0.1") Double profitPercent,
                                   Authentication authentication,
                                   Model model) {
-        var movie = movieService.getMovieById(movieId);
-        List<Actor> actors = actorService.getActorsByMovieId(movieId);
+        var movie = movieService.getMovieForView(movieId, authentication);
+        List<Actor> actors = actorService.getActorsByMovieIdForView(movieId, authentication);
 
         BigDecimal totalActorsSalary = actors.stream()
                 .map(Actor::getSalary)

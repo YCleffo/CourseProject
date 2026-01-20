@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import ru.nikogosyan.CourseProject.utils.Roles;
 
 @Configuration
 @EnableWebSecurity
@@ -20,10 +21,10 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) {
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/actuator/**").hasRole("ADMIN")
+                        .requestMatchers("/actuator/**").hasAuthority(Roles.ROLE_ADMIN)
                         .requestMatchers("/register", "/css/**", "/js/**", "/img/**", "/uploads/**").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -39,17 +40,14 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception
                         .accessDeniedPage("/access-denied")
                 )
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/movies/**")
-                );
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/home"));
 
         return http.build();
     }
 
     @Bean
     public DaoAuthenticationProvider authenticationProvider(PasswordEncoder passwordEncoder) {
-        DaoAuthenticationProvider provider =
-                new DaoAuthenticationProvider(userDetailsService);
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }

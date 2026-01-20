@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nikogosyan.CourseProject.entity.Actor;
 import ru.nikogosyan.CourseProject.repository.ActorRepository;
+import ru.nikogosyan.CourseProject.utils.Roles;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
 import java.util.*;
@@ -19,14 +20,21 @@ import java.util.stream.Collectors;
 public class ActorService {
 
     private final ActorRepository actorRepository;
-
     private final SecurityUtils securityUtils;
 
     @Transactional(readOnly = true)
     public List<Actor> getAllActors(Authentication authentication) {
         SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
-        log.info("Getting actors for user: {}, isAdmin: {}, isUser: {}",
-                userInfo.username(), userInfo.isAdmin(), userInfo.isUser());
+        log.info("Getting actors for user {}, isAdmin={}, isUser={}, isReadOnly={}",
+                userInfo.username(), userInfo.isAdmin(), userInfo.isUser(), userInfo.isReadOnly());
+
+        if (userInfo.isAdmin()) {
+            return actorRepository.findAll();
+        }
+
+        if (userInfo.isUser()) {
+            return actorRepository.findByCreatedBy(userInfo.username());
+        }
 
         return actorRepository.findAll();
     }
@@ -38,13 +46,42 @@ public class ActorService {
     }
 
     @Transactional(readOnly = true)
-    public List<Actor> getActorsByMovieId(Long movieId) {
-        return actorRepository.findByMovieId(movieId);
+    public Actor getActorForView(Long id, Authentication authentication) {
+        SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
+
+        Actor actor = getActorById(id);
+
+        if (userInfo.isAdmin() || !userInfo.isUser()) {
+            return actor;
+        }
+
+        if (!Objects.equals(actor.getCreatedBy(), userInfo.username())) {
+            throw new RuntimeException("You dont have permission to view this actor");
+        }
+
+        return actor;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Actor> getActorsByMovieIdForView(Long movieId, Authentication authentication) {
+        SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
+
+        List<Actor> actors = actorRepository.findByMovieId(movieId);
+
+        if (userInfo.isAdmin() || !userInfo.isUser()) {
+            return actors;
+        }
+
+        return actors.stream()
+                .filter(a -> Objects.equals(a.getCreatedBy(), userInfo.username()))
+                .toList();
     }
 
     @Transactional(readOnly = true)
     public Map<Long, Actor> getFirstActorsByMovieIds(List<Long> movieIds) {
-        if (movieIds == null || movieIds.isEmpty()) return Map.of();
+        if (movieIds == null || movieIds.isEmpty()) {
+            return Map.of();
+        }
 
         List<Actor> all = actorRepository.findByMovieIdIn(movieIds);
 
@@ -63,7 +100,7 @@ public class ActorService {
 
     @Transactional
     public Actor saveActor(Actor actor, String username) {
-        log.info("Saving actor: {} by user: {}", actor.getName(), username);
+        log.info("Saving actor {} by user {}", actor.getName(), username);
         actor.setCreatedBy(username);
         return actorRepository.save(actor);
     }
@@ -71,34 +108,36 @@ public class ActorService {
     @Transactional
     public void deleteActor(Long id, Authentication authentication) {
         Actor actor = getActorById(id);
+
         String username = authentication.getName();
-
         boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+                .map(GrantedAuthority::getAuthority)
+                .filter(Objects::nonNull)
+                .anyMatch(role -> role.equals(Roles.ROLE_ADMIN));
 
-        if (!isAdmin && !actor.getCreatedBy().equals(username)) {
-            throw new RuntimeException("You don't have permission to delete this actor");
+        if (!isAdmin && !Objects.equals(actor.getCreatedBy(), username)) {
+            throw new RuntimeException("You dont have permission to delete this actor");
         }
 
-        log.info("Deleting actor: {} by user: {}", id, username);
+        log.info("Deleting actor {} by user {}", id, username);
         actorRepository.deleteById(id);
     }
 
     @Transactional
     public Actor updateActor(Long id, Actor updatedActor, Authentication authentication) {
         Actor actor = getActorById(id);
+
         String username = authentication.getName();
-
         boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_ADMIN"));
+                .map(GrantedAuthority::getAuthority)
+                .filter(Objects::nonNull)
+                .anyMatch(role -> role.equals(Roles.ROLE_ADMIN));
 
-        if (!isAdmin && !actor.getCreatedBy().equals(username)) {
-            throw new RuntimeException("You don't have permission to update this actor");
+        if (!isAdmin && !Objects.equals(actor.getCreatedBy(), username)) {
+            throw new RuntimeException("You dont have permission to update this actor");
         }
 
-        log.info("Updating actor: {} by user: {}", id, username);
+        log.info("Updating actor {} by user {}", id, username);
 
         actor.setName(updatedActor.getName());
         actor.setRoleName(updatedActor.getRoleName());

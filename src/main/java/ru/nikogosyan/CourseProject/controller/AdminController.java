@@ -6,11 +6,16 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nikogosyan.CourseProject.service.UserService;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/admin")
-@PreAuthorize("hasRole('ADMIN')")
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequiredArgsConstructor
 @Slf4j
 public class AdminController {
@@ -24,35 +29,20 @@ public class AdminController {
         return "admin-roles";
     }
 
-    @PostMapping("/roles/add")
-    public String addRole(@RequestParam String username,
-                          @RequestParam String roleName,
-                          Model model) {
+    @PostMapping("/roles/update")
+    public String updateRoles(@RequestParam String username,
+                              @RequestParam(name = "roles", required = false) List<String> roles,
+                              RedirectAttributes ra) {
         try {
-            userService.addRoleToUser(username, "ROLE_" + roleName);
-            log.info("Role {} added to user {}", roleName, username);
-            model.addAttribute("message", "Role added successfully");
-        } catch (Exception e) {
-            log.error("Error adding role: {}", e.getMessage());
-            model.addAttribute("error", e.getMessage());
-        }
-        model.addAttribute("users", userService.findAllUsers());
-        return "admin-roles";
-    }
+            Set<String> roleNames = (roles == null) ? Set.of() : new HashSet<>(roles);
+            if (roleNames.isEmpty()) throw new RuntimeException("User must have at least one role");
 
-    @PostMapping("/roles/remove")
-    public String removeRole(@RequestParam String username,
-                             @RequestParam String roleName,
-                             Model model) {
-        try {
-            userService.removeRoleFromUser(username, "ROLE_" + roleName);
-            log.info("Role {} removed from user {}", roleName, username);
-            model.addAttribute("message", "Role removed successfully");
+            userService.setRolesForUser(username, roleNames);
+            ra.addFlashAttribute("message", "Роли обновлены для пользователя: " + username);
         } catch (Exception e) {
-            log.error("Error removing role: {}", e.getMessage());
-            model.addAttribute("error", e.getMessage());
+            log.error("Error updating roles for {}: {}", username, e.getMessage());
+            ra.addFlashAttribute("error", e.getMessage());
         }
-        model.addAttribute("users", userService.findAllUsers());
-        return "admin-roles";
+        return "redirect:/admin/roles";
     }
 }

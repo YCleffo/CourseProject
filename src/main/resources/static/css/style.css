@@ -17,3 +17,16 @@
     color: #6c757d;
     font-size: 12px;
 }
+
+.form-select {
+    overflow: auto !important;
+}
+
+option:hover {
+    background-color: light-dark(rgb(180, 180, 180), rgb(115, 115, 115));
+    color: light-dark(rgb(16, 16, 16), rgb(255, 255, 255));
+}
+
+option {
+    cursor: pointer;
+}

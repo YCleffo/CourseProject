@@ -25,7 +25,7 @@
             <a class="nav-link" th:classappend="${page == 'about'} ? 'active'" th:href="@{/about}">О приложении</a>
           </li>
 
-          <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+          <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
             <a class="nav-link" th:classappend="${page == 'admin'} ? 'active'" th:href="@{/admin/roles}">Админ
               панель</a>
           </li>

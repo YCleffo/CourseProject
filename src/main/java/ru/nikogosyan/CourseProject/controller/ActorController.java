@@ -4,7 +4,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +14,7 @@ import ru.nikogosyan.CourseProject.entity.Actor;
 import ru.nikogosyan.CourseProject.service.ActorPhotoService;
 import ru.nikogosyan.CourseProject.service.ActorService;
 import ru.nikogosyan.CourseProject.service.MovieService;
+import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
 import java.util.List;
 import java.util.Objects;
@@ -28,27 +28,21 @@ public class ActorController {
     private final ActorService actorService;
     private final MovieService movieService;
     private final ActorPhotoService actorPhotoService;
+    private final SecurityUtils securityUtils;
 
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public String actorDetails(@PathVariable Long id,
                                @RequestParam(value = "from", defaultValue = "actors") String from,
                                @RequestParam(value = "movieId", required = false) Long movieId,
                                Authentication authentication,
                                Model model) {
 
-        Actor actor = actorService.getActorById(id);
+        Actor actor = actorService.getActorForView(id, authentication);
 
-        boolean isReadOnly = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_READ_ONLY") || role.equals("ROLE_READ_ONLY"));
+        boolean isReadOnly = securityUtils.isReadOnly(authentication);
+        boolean isAdmin = securityUtils.isAdmin(authentication);
 
-        boolean isAdmin = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_ADMIN") || role.equals("ROLE_ADMIN"));
-
-        boolean canModify = !isReadOnly && (isAdmin || (actor.getCreatedBy() != null && actor.getCreatedBy().equals(authentication.getName())));
+        boolean canModify = !isReadOnly && (isAdmin || Objects.equals(actor.getCreatedBy(), authentication.getName()));
 
         model.addAttribute("page", "actors");
         model.addAttribute("actor", actor);
@@ -61,7 +55,7 @@ public class ActorController {
         return "actor-details";
     }
 
-    @PostMapping("{id}/photos")
+    @PostMapping("/{id}/photos")
     public String uploadActorPhoto(@PathVariable Long id,
                                    @RequestParam("imageFile") MultipartFile imageFile,
                                    @RequestParam(value = "from", defaultValue = "actors") String from,
@@ -70,14 +64,15 @@ public class ActorController {
                                    RedirectAttributes ra) {
         try {
             actorPhotoService.upload(id, imageFile, authentication);
-            ra.addFlashAttribute("message", "Фото загружено");
+            ra.addFlashAttribute("message", "Photo uploaded successfully!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
+
         return "redirect:/actors/" + id + "?from=" + from + (movieId != null ? "&movieId=" + movieId : "");
     }
 
-    @PostMapping("{id}/photos/{photoId}/primary")
+    @PostMapping("/{id}/photos/{photoId}/primary")
     public String setPrimary(@PathVariable Long id,
                              @PathVariable Long photoId,
                              @RequestParam(value = "from", defaultValue = "actors") String from,
@@ -86,14 +81,15 @@ public class ActorController {
                              RedirectAttributes ra) {
         try {
             actorPhotoService.setPrimary(id, photoId, authentication);
-            ra.addFlashAttribute("message", "Главное фото обновлено");
+            ra.addFlashAttribute("message", "Primary photo updated!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
+
         return "redirect:/actors/" + id + "?from=" + from + (movieId != null ? "&movieId=" + movieId : "");
     }
 
-    @PostMapping("{id}/photos/{photoId}/delete")
+    @PostMapping("/{id}/photos/{photoId}/delete")
     public String deletePhoto(@PathVariable Long id,
                               @PathVariable Long photoId,
                               @RequestParam(value = "from", defaultValue = "actors") String from,
@@ -102,10 +98,11 @@ public class ActorController {
                               RedirectAttributes ra) {
         try {
             actorPhotoService.delete(id, photoId, authentication);
-            ra.addFlashAttribute("message", "Фото удалено");
+            ra.addFlashAttribute("message", "Photo deleted!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
+
         return "redirect:/actors/" + id + "?from=" + from + (movieId != null ? "&movieId=" + movieId : "");
     }
 
@@ -113,19 +110,16 @@ public class ActorController {
     public String listActors(Authentication authentication, Model model) {
         List<Actor> actors = actorService.getAllActors(authentication);
 
-        boolean isReadOnly = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority)
-                .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_READ_ONLY"));
-
+        boolean isReadOnly = securityUtils.isReadOnly(authentication);
         boolean canModify = !isReadOnly;
 
         List<Long> actorIds = actors.stream().map(Actor::getId).toList();
-        model.addAttribute("primaryPhotoByActorId", actorPhotoService.getPrimaryOrFirstPhotoPaths(actorIds));
 
+        model.addAttribute("primaryPhotoByActorId", actorPhotoService.getPrimaryOrFirstPhotoPaths(actorIds));
         model.addAttribute("page", "actors");
         model.addAttribute("actors", actors);
         model.addAttribute("canModify", canModify);
+
         return "actors-list";
     }
 
@@ -142,6 +136,7 @@ public class ActorController {
                               BindingResult result,
                               Authentication authentication,
                               Model model) {
+
         if (result.hasErrors()) {
             model.addAttribute("movies", movieService.getAllMovies(authentication));
             return "actor-form";
@@ -153,13 +148,13 @@ public class ActorController {
     }
 
     @GetMapping("/edit/{id}")
-    public String editActorForm(@PathVariable Long id,
-                                Authentication authentication,
-                                Model model) {
+    public String editActorForm(@PathVariable Long id, Authentication authentication, Model model) {
         checkModifyPermission(authentication);
-        Actor actor = actorService.getActorById(id);
+
+        Actor actor = actorService.getActorForView(id, authentication);
         model.addAttribute("actor", actor);
         model.addAttribute("movies", movieService.getAllMovies(authentication));
+
         return "actor-form";
     }
 
@@ -169,6 +164,7 @@ public class ActorController {
                               BindingResult result,
                               Authentication authentication,
                               Model model) {
+
         if (result.hasErrors()) {
             model.addAttribute("movies", movieService.getAllMovies(authentication));
             return "actor-form";
@@ -187,11 +183,7 @@ public class ActorController {
     }
 
     private void checkModifyPermission(Authentication authentication) {
-        boolean isReadOnly = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).filter(Objects::nonNull)
-                .anyMatch(role -> role.equals("ROLE_READ_ONLY"));
-
-        if (isReadOnly) {
+        if (securityUtils.isReadOnly(authentication)) {
             throw new RuntimeException("READ_ONLY users cannot modify data");
         }
     }
