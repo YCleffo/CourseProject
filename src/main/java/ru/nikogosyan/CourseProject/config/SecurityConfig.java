@@ -20,11 +20,11 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity http) {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/actuator/**").hasRole("ADMIN")
-                        .requestMatchers("/register", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/register", "/css/**", "/js/**", "/uploads/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

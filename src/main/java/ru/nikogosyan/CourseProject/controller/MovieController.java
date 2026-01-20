@@ -1,5 +1,6 @@
 package ru.nikogosyan.CourseProject.controller;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,18 @@ public class MovieController {
     private final GenreService genreService;
 
     private static final Path UPLOAD_DIR = Paths.get("uploads/images");
+
+    @PostConstruct
+    public void init() {
+        try {
+            if (!Files.exists(UPLOAD_DIR)) {
+                Files.createDirectories(UPLOAD_DIR);
+                log.info("Created upload directory: {}", UPLOAD_DIR.toAbsolutePath());
+            }
+        } catch (IOException e) {
+            log.error("Failed to create upload directory", e);
+        }
+    }
 
     private static final Map<String, String> GENRE_TRANSLATIONS = Map.ofEntries(
             Map.entry("Action", "Боевик"),
@@ -256,7 +269,7 @@ public class MovieController {
 
             // Генерация безопасного имени файла
             String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
-            String fileName = System.currentTimeMillis() + "_" + UUID.randomUUID().toString() + extension;
+            String fileName = System.currentTimeMillis() + "_" + UUID.randomUUID() + extension;
 
             Path filePath = UPLOAD_DIR.resolve(fileName);
             Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
