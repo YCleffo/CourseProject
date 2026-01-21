@@ -2,27 +2,23 @@ package ru.nikogosyan.CourseProject.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "movies")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @NamedEntityGraph(
         name = "Movie.genres",
         attributeNodes = @NamedAttributeNode("genres")
 )
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
 public class Movie {
 
     @Id
@@ -77,11 +73,7 @@ public class Movie {
     }
 
     public String getGenresString() {
-        if (genres == null || genres.isEmpty()) {
-            return "";
-        }
-        return genres.stream()
-                .map(Genre::getName)
-                .collect(Collectors.joining(", "));
+        if (genres == null || genres.isEmpty()) return "";
+        return genres.stream().map(Genre::getName).collect(Collectors.joining(", "));
     }
 }
