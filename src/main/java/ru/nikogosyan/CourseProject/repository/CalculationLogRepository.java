@@ -8,6 +8,8 @@ import java.util.List;
 
 @Repository
 public interface CalculationLogRepository extends JpaRepository<CalculationLog, Long> {
+    void deleteByMovieId(Long movieId);
+    void deleteByMovieIdAndCreatedBy(Long movieId, String createdBy);
 
     List<CalculationLog> findByMovieIdOrderByCreatedAtDesc(Long movieId);
 

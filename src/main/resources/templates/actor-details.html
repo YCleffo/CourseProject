@@ -50,12 +50,16 @@
                     <div class="col-md-8">
                         <table class="table">
                             <tr>
-                                <th style="width: 180px;">Фильм</th>
+                                <th>Фильмы</th>
                                 <td>
-                                    <a th:if="${actor.movie != null}"
-                                        th:href="@{/movies/{id}(id=${actor.movie.id}, from='actors')}"
-                                        th:text="${actor.movie.title}">Movie</a>
-                                    <span th:if="${actor.movie == null}">—</span>
+                                    <span th:if="${actor.movies != null and !actor.movies.isEmpty()}">
+                                        <span th:each="m, st : ${actor.movies}">
+                                            <a th:href="@{/movies/{id}(id=${m.id}, from='actors')}"
+                                                th:text="${m.title}"></a>
+                                            <span th:unless="${st.last}">, </span>
+                                        </span>
+                                    </span>
+                                    <span th:if="${actor.movies == null or actor.movies.isEmpty()}">—</span>
                                 </td>
                             </tr>
                             <tr>

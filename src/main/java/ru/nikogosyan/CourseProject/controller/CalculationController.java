@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ru.nikogosyan.CourseProject.dto.CalculationDto;
 import ru.nikogosyan.CourseProject.dto.CalculationResultDto;
 import ru.nikogosyan.CourseProject.entity.Actor;
@@ -36,6 +37,10 @@ public class CalculationController {
     public String calculationPage(@RequestParam(value = "movieId", required = false) Long movieId,
                                   Authentication authentication,
                                   Model model) {
+
+        boolean canModify = !securityUtils.isReadOnly(authentication);
+        model.addAttribute("canModify", canModify);
+
         model.addAttribute("page", "calculation");
         model.addAttribute("movies", movieService.getAllMovies(authentication));
 
@@ -63,6 +68,9 @@ public class CalculationController {
                               BindingResult bindingResult,
                               Authentication authentication,
                               Model model) {
+        boolean canModify = !securityUtils.isReadOnly(authentication);
+        model.addAttribute("canModify", canModify);
+
         model.addAttribute("page", "calculation");
         model.addAttribute("movies", movieService.getAllMovies(authentication));
 
@@ -93,5 +101,13 @@ public class CalculationController {
         model.addAttribute("logs", calculationService.getLogsForMovie(movie.getId(), authentication));
 
         return "calculation";
+    }
+
+    @PostMapping("/clear")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public String clear(@RequestParam Long movieId, Authentication auth, RedirectAttributes ra) {
+        calculationService.clearLogs(movieId, auth);
+        ra.addFlashAttribute("message", "История расчётов очищена");
+        return "redirect:/calculation?movieId=" + movieId;
     }
 }

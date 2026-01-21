@@ -56,8 +56,8 @@
                         <td>
                             <span th:if="${actor.movies != null and !actor.movies.isEmpty()}">
                                 <span th:each="m, st : ${actor.movies}">
-                                    <a th:href="@{/movies/{id}(id=${m.id}, from='actors')}"
-                                        th:text="${m.title}">Фильм</a><span th:unless="${st.last}">, </span>
+                                    <a th:href="@{/movies/{id}(id=${m.id}, from='actors')}" th:text="${m.title}"></a>
+                                    <span th:unless="${st.last}">, </span>
                                 </span>
                             </span>
                             <span th:if="${actor.movies == null or actor.movies.isEmpty()}">—</span>
