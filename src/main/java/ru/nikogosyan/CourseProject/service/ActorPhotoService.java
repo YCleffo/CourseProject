@@ -12,7 +12,10 @@ import ru.nikogosyan.CourseProject.repository.ActorPhotoRepository;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +30,7 @@ public class ActorPhotoService {
     private final ActorService actorService;
     private final SecurityUtils securityUtils;
 
-    private static final Path UPLOAD_DIR = Paths.get("uploads/actors");
+    private static final Path UPLOADDIR = Paths.get("uploads/actors");
 
     @Transactional(readOnly = true)
     public List<ActorPhoto> getPhotos(Long actorId) {
@@ -43,9 +46,7 @@ public class ActorPhotoService {
 
     @Transactional(readOnly = true)
     public Map<Long, String> getPrimaryOrFirstPhotoPaths(List<Long> actorIds) {
-        if (actorIds == null || actorIds.isEmpty()) {
-            return Map.of();
-        }
+        if (actorIds == null || actorIds.isEmpty()) return Map.of();
 
         List<ActorPhoto> photos = actorPhotoRepository.findForActorsOrdered(actorIds);
 
@@ -62,23 +63,19 @@ public class ActorPhotoService {
         Actor actor = actorService.getActorById(actorId);
         checkCanModify(authentication, actor);
 
-        if (imageFile == null || imageFile.isEmpty()) {
-            throw new RuntimeException("File is empty");
-        }
+        if (imageFile == null || imageFile.isEmpty()) throw new RuntimeException("File is empty");
 
         String contentType = imageFile.getContentType();
         if (contentType == null || !contentType.startsWith("image")) {
             throw new RuntimeException("Only image files are allowed");
         }
 
-        if (!Files.exists(UPLOAD_DIR)) {
-            Files.createDirectories(UPLOAD_DIR);
-        }
+        if (!Files.exists(UPLOADDIR)) Files.createDirectories(UPLOADDIR);
 
         String ext = getExtension(imageFile.getOriginalFilename());
         String fileName = System.currentTimeMillis() + "-" + UUID.randomUUID() + ext;
-        Path filePath = UPLOAD_DIR.resolve(fileName);
 
+        Path filePath = UPLOADDIR.resolve(fileName);
         Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         boolean makePrimary = !actorPhotoRepository.existsByActorIdAndIsPrimaryTrue(actorId);
@@ -87,6 +84,36 @@ public class ActorPhotoService {
         photo.setActor(actor);
         photo.setImagePath("/uploads/actors/" + fileName);
         photo.setPrimary(makePrimary);
+
+        actorPhotoRepository.save(photo);
+    }
+
+    @Transactional
+    public void uploadPrimary(Long actorId, MultipartFile imageFile, Authentication authentication) throws IOException {
+        Actor actor = actorService.getActorById(actorId);
+        checkCanModify(authentication, actor);
+
+        if (imageFile == null || imageFile.isEmpty()) throw new RuntimeException("File is empty");
+
+        String contentType = imageFile.getContentType();
+        if (contentType == null || !contentType.startsWith("image")) {
+            throw new RuntimeException("Only image files are allowed");
+        }
+
+        if (!Files.exists(UPLOADDIR)) Files.createDirectories(UPLOADDIR);
+
+        String ext = getExtension(imageFile.getOriginalFilename());
+        String fileName = System.currentTimeMillis() + "-" + UUID.randomUUID() + ext;
+
+        Path filePath = UPLOADDIR.resolve(fileName);
+        Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+
+        actorPhotoRepository.clearPrimary(actorId);
+
+        ActorPhoto photo = new ActorPhoto();
+        photo.setActor(actor);
+        photo.setImagePath("/uploads/actors/" + fileName);
+        photo.setPrimary(true);
 
         actorPhotoRepository.save(photo);
     }
@@ -120,33 +147,31 @@ public class ActorPhotoService {
 
         actorPhotoRepository.delete(photo);
 
-        actorPhotoRepository.findFirstByActorIdOrderByIsPrimaryDescCreatedAtAscIdAsc(actorId).ifPresent(p -> {
-            if (!p.isPrimary()) {
-                actorPhotoRepository.clearPrimary(actorId);
-                p.setPrimary(true);
-                actorPhotoRepository.save(p);
-            }
-        });
+        actorPhotoRepository.findFirstByActorIdOrderByIsPrimaryDescCreatedAtAscIdAsc(actorId)
+                .ifPresent(p -> {
+                    if (!p.isPrimary()) {
+                        actorPhotoRepository.clearPrimary(actorId);
+                        p.setPrimary(true);
+                        actorPhotoRepository.save(p);
+                    }
+                });
     }
 
     private void checkCanModify(Authentication authentication, Actor actor) {
         if (securityUtils.isReadOnly(authentication)) {
-            throw new RuntimeException("READ_ONLY users cannot modify data");
+            throw new RuntimeException("READONLY users cannot modify data");
         }
-
         boolean isAdmin = securityUtils.isAdmin(authentication);
         String username = authentication.getName();
         String createdBy = actor.getCreatedBy();
 
         if (!isAdmin && createdBy != null && !createdBy.equals(username)) {
-            throw new RuntimeException("You don't have permission to modify this actor");
+            throw new RuntimeException("You dont have permission to modify this actor");
         }
     }
 
     private String getExtension(String originalFilename) {
-        if (originalFilename == null || originalFilename.isBlank() || !originalFilename.contains(".")) {
-            return "";
-        }
-        return originalFilename.substring(originalFilename.lastIndexOf("."));
+        if (originalFilename == null || originalFilename.isBlank() || !originalFilename.contains(".")) return "";
+        return originalFilename.substring(originalFilename.lastIndexOf('.'));
     }
 }

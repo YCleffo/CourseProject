@@ -41,7 +41,6 @@ public class ActorController {
 
         boolean isReadOnly = securityUtils.isReadOnly(authentication);
         boolean isAdmin = securityUtils.isAdmin(authentication);
-
         boolean canModify = !isReadOnly && (isAdmin || Objects.equals(actor.getCreatedBy(), authentication.getName()));
 
         model.addAttribute("page", "actors");
@@ -69,6 +68,9 @@ public class ActorController {
             ra.addFlashAttribute("error", e.getMessage());
         }
 
+        if ("edit".equals(from)) {
+            return "redirect:/actors/edit/" + id;
+        }
         return "redirect:/actors/" + id + "?from=" + from + (movieId != null ? "&movieId=" + movieId : "");
     }
 
@@ -86,6 +88,9 @@ public class ActorController {
             ra.addFlashAttribute("error", e.getMessage());
         }
 
+        if ("edit".equals(from)) {
+            return "redirect:/actors/edit/" + id;
+        }
         return "redirect:/actors/" + id + "?from=" + from + (movieId != null ? "&movieId=" + movieId : "");
     }
 
@@ -103,6 +108,9 @@ public class ActorController {
             ra.addFlashAttribute("error", e.getMessage());
         }
 
+        if ("edit".equals(from)) {
+            return "redirect:/actors/edit/" + id;
+        }
         return "redirect:/actors/" + id + "?from=" + from + (movieId != null ? "&movieId=" + movieId : "");
     }
 
@@ -132,7 +140,7 @@ public class ActorController {
     }
 
     @PostMapping("/new")
-    public String createActor(@Valid @ModelAttribute Actor actor,
+    public String createActor(@Valid @ModelAttribute("actor") Actor actor,
                               BindingResult result,
                               Authentication authentication,
                               Model model) {
@@ -143,7 +151,8 @@ public class ActorController {
         }
 
         checkModifyPermission(authentication);
-        actorService.saveActor(actor, authentication.getName());
+        actorService.saveActor(actor, authentication);
+
         return "redirect:/actors";
     }
 
@@ -152,27 +161,49 @@ public class ActorController {
         checkModifyPermission(authentication);
 
         Actor actor = actorService.getActorForView(id, authentication);
+        if (actor.getMovie() != null) {
+            actor.setMovieId(actor.getMovie().getId());
+        }
+
         model.addAttribute("actor", actor);
         model.addAttribute("movies", movieService.getAllMovies(authentication));
+
+        model.addAttribute("photos", actorPhotoService.getPhotos(id));
 
         return "actor-form";
     }
 
     @PostMapping("/edit/{id}")
     public String updateActor(@PathVariable Long id,
-                              @Valid @ModelAttribute Actor actor,
+                              @Valid @ModelAttribute("actor") Actor actor,
                               BindingResult result,
                               Authentication authentication,
                               Model model) {
 
         if (result.hasErrors()) {
+            actor.setId(id);
             model.addAttribute("movies", movieService.getAllMovies(authentication));
             return "actor-form";
         }
 
         checkModifyPermission(authentication);
         actorService.updateActor(id, actor, authentication);
+
         return "redirect:/actors";
+    }
+
+    @PostMapping("/{id}/photos/primary-upload")
+    public String uploadPrimaryActorPhoto(@PathVariable Long id,
+                                          @RequestParam("imageFile") MultipartFile imageFile,
+                                          Authentication authentication,
+                                          RedirectAttributes ra) {
+        try {
+            actorPhotoService.uploadPrimary(id, imageFile, authentication);
+            ra.addFlashAttribute("message", "Primary photo uploaded!");
+        } catch (Exception e) {
+            ra.addFlashAttribute("error", e.getMessage());
+        }
+        return "redirect:/actors/edit/" + id;
     }
 
     @PostMapping("/delete/{id}")
@@ -184,7 +215,7 @@ public class ActorController {
 
     private void checkModifyPermission(Authentication authentication) {
         if (securityUtils.isReadOnly(authentication)) {
-            throw new RuntimeException("READ_ONLY users cannot modify data");
+            throw new RuntimeException("READONLY users cannot modify data");
         }
     }
 }

@@ -1,58 +1,151 @@
-<!DOCTYPE html>
+<!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" lang="ru">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Редактирование актёра</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="icon" th:href="@{/img/favicon.svg}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="icon" th:href="@{/img/favicon.svg}" />
 </head>
 
 <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
+
     <div class="container mt-4">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <h3 th:text="${actor.id != null ? 'Редактировать актёра' : 'Добавить нового актёра'}">Форма
-                            актёра</h3>
+                        <h3 th:text="${actor.id != null ? 'Редактировать актёра' : 'Добавить нового актёра'}">
+                            Форма актёра
+                        </h3>
                     </div>
+
                     <div class="card-body">
-                        <form th:action="${actor.id != null ? '/actors/edit/' + actor.id : '/actors/new'}"
-                            th:object="${actor}" method="post">
+                        <div th:if="${actor.id != null}" class="mb-4">
+                            <h5 class="mb-3">Главное фото</h5>
 
                             <div class="mb-3">
+                                <div th:if="${primaryPhotoPath != null}">
+                                    <img th:src="${primaryPhotoPath}" class="img-thumbnail" style="max-height: 220px"
+                                        alt="primary photo" />
+                                </div>
+                                <div th:unless="${primaryPhotoPath != null}" class="text-muted">
+                                    Главное фото ещё не загружено
+                                </div>
+                            </div>
+
+                            <form th:action="@{/actors/{id}/photos/primary-upload(id=${actor.id})}" method="post"
+                                enctype="multipart/form-data" class="d-flex gap-2 align-items-center">
+                                <input type="file" class="form-control" name="imageFile" accept="image/*" required />
+                                <button type="submit" class="btn btn-outline-primary">
+                                    Загрузить как главное
+                                </button>
+                            </form>
+                        </div>
+
+                        <div th:if="${actor.id != null}" class="mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="mb-0">Фото актёра</h5>
+
+                                <form th:action="@{/actors/{id}/photos(id=${actor.id})}" method="post"
+                                    enctype="multipart/form-data" class="d-flex gap-2 align-items-center">
+                                    <input type="hidden" name="from" value="edit" />
+                                    <input type="file" class="form-control form-control-sm" name="imageFile"
+                                        accept="image/*" required />
+                                    <button type="submit" class="btn btn-success btn-sm">
+                                        Загрузить
+                                    </button>
+                                </form>
+                            </div>
+
+                            <div class="border rounded bg-light p-2" style="aspect-ratio: 1 / 1; overflow: auto">
+                                <div th:if="${#lists.isEmpty(photos)}" class="text-muted">
+                                    Фото пока нет
+                                </div>
+
+                                <div th:if="${!#lists.isEmpty(photos)}" class="d-grid gap-2" style="
+											grid-template-columns: repeat(
+												auto-fill,
+												minmax(110px, 1fr)
+											);
+										">
+                                    <div th:each="p : ${photos}" class="border rounded bg-white p-2 position-relative">
+                                        <img th:src="${p.imagePath}" class="w-100 rounded" style="
+													aspect-ratio: 1 / 1;
+													object-fit: cover;
+												" alt="photo" />
+
+                                        <span th:if="${p.isPrimary}"
+                                            class="badge bg-success position-absolute top-0 start-0 m-1">
+                                            Главное
+                                        </span>
+
+                                        <div class="d-grid gap-1 mt-2">
+                                            <form th:if="${!p.isPrimary}"
+                                                th:action="@{/actors/{id}/photos/{pid}/primary(id=${actor.id}, pid=${p.id})}"
+                                                method="post">
+                                                <input type="hidden" name="from" value="edit" />
+                                                <button type="submit" class="btn btn-outline-primary btn-sm">
+                                                    Сделать главным
+                                                </button>
+                                            </form>
+
+                                            <form
+                                                th:action="@{/actors/{id}/photos/{pid}/delete(id=${actor.id}, pid=${p.id})}"
+                                                method="post" onsubmit="
+														return confirm(
+															'Удалить фото?',
+														);
+													">
+                                                <input type="hidden" name="from" value="edit" />
+                                                <button type="submit" class="btn btn-outline-danger btn-sm">
+                                                    Удалить
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <form th:action="${actor.id != null ? '/actors/edit/' + actor.id : '/actors/new'}"
+                            th:object="${actor}" method="post">
+                            <div class="mb-3">
                                 <label for="name" class="form-label">Имя актёра *</label>
-                                <input type="text" class="form-control" id="name" th:field="*{name}" required>
+                                <input type="text" class="form-control" id="name" th:field="*{name}" required />
                                 <div class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="roleName" class="form-label">Название роли</label>
-                                <input type="text" class="form-control" id="roleName" th:field="*{roleName}">
+                                <input type="text" class="form-control" id="roleName" th:field="*{roleName}" />
                             </div>
 
                             <div class="mb-3">
-                                <label for="movie" class="form-label">Фильм *</label>
-                                <select class="form-select" id="movie" th:field="*{movie}" required>
+                                <label for="movie" class="form-label">Movie</label>
+                                <select class="form-select" id="movie" th:field="*{movieId}" required>
                                     <option value="">Выберите фильм</option>
                                     <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.title}">
-                                        Фильм</option>
+                                    </option>
                                 </select>
+                                <div class="text-danger" th:if="${#fields.hasErrors('movieId')}" th:errors="*{movieId}">
+                                </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="salary" class="form-label">Зарплата ($)</label>
                                 <input type="number" class="form-control" id="salary" th:field="*{salary}" step="0.01"
-                                    min="0">
+                                    min="0" />
                                 <div class="text-danger" th:if="${#fields.hasErrors('salary')}" th:errors="*{salary}">
                                 </div>
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <button type="submit" class="btn btn-primary">Сохранить</button>
+                                <button type="submit" class="btn btn-primary">
+                                    Сохранить
+                                </button>
                                 <a th:href="@{/actors}" class="btn btn-secondary">Отмена</a>
                             </div>
                         </form>

@@ -9,7 +9,12 @@ import java.util.List;
 
 @Repository
 public interface ActorRepository extends JpaRepository<Actor, Long> {
+
     List<Actor> findByCreatedBy(String createdBy);
-    List<Actor> findByMovieId(Long movieId);
-    List<Actor> findByMovieIdIn(Collection<Long> movieIds);
+
+    // было: findByMovieId(Long movieId)
+    List<Actor> findByMovie_Id(Long movieId);
+
+    // было: findByMovieIdIn(Collection<Long> movieIds)
+    List<Actor> findByMovie_IdIn(Collection<Long> movieIds);
 }
