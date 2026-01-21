@@ -47,30 +47,179 @@
 
                 <hr>
 
-                <h5>Актёры</h5>
-                <table class="table table-sm">
+                <h5>Актёры и роли</h5>
+
+                <table id="castTable" class="table table-sm align-middle">
                     <thead>
                         <tr>
-                            <th>Имя</th>
-                            <th>Роль</th>
-                            <th>Гонорар</th>
+                            <th class="cast-sort" data-type="text">Актер</th>
+                            <th class="cast-sort" data-type="text" style="width: 35%">Роль</th>
+                            <th class="cast-sort" data-type="number" style="width: 20%">Гонорар</th>
+                            <th th:if="${canModify}" style="width: 1%">Действия</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        <tr th:if="${#lists.isEmpty(actors)}">
-                            <td colspan="3" class="text-center">Нет актёров</td>
-                        </tr>
-                        <tr th:each="a : ${actors}">
+                        <tr th:if="${canModify}" data-nosort="true">
                             <td>
-                                <a th:href="@{/actors/{id}(id=${a.id}, from='movies', movieId=${movie.id})}"
-                                    th:text="${a.name}">Имя</a>
+                                <select name="actorId" class="form-select form-select-sm" required form="castAddForm">
+                                    <option value="" selected>-- выбрать --</option>
+                                    <option th:each="a : ${actorsToAdd}" th:value="${a.id}" th:text="${a.name}">
+                                    </option>
+                                </select>
                             </td>
-                            <td th:text="${a.roleName}"></td>
-                            <td th:text="${a.salary != null ? #numbers.formatDecimal(a.salary, 1, 2) + ' $' : '—'}">
+
+                            <td>
+                                <input name="roleName" class="form-control form-control-sm" required form="castAddForm">
+                            </td>
+
+                            <td>
+                                <input name="salary" type="number" step="0.01" min="0"
+                                    class="form-control form-control-sm" placeholder="например 1000000"
+                                    form="castAddForm">
+                            </td>
+
+                            <td class="text-nowrap">
+                                <form id="castAddForm" th:action="@{/movies/{id}/cast/add(id=${movie.id})}"
+                                    method="post"></form>
+                                <button type="submit" class="btn btn-sm btn-success"
+                                    form="castAddForm">Добавить</button>
+                            </td>
+                        </tr>
+
+                        <tr th:if="${#lists.isEmpty(cast)}" data-nosort="true">
+                            <td th:colspan="${canModify ? 4 : 3}" class="text-center text-muted">Каст пока пуст.</td>
+                        </tr>
+
+                        <tr th:each="mc : ${cast}" class="cast-row">
+                            <td class="cast-actor">
+                                <a th:href="@{/actors/{id}(id=${mc.actor.id}, from='movies', movieId=${movie.id})}"
+                                    th:text="${mc.actor.name}"></a>
+                            </td>
+
+                            <td class="cast-role">
+                                <span th:if="${!canModify}" th:text="${mc.roleName}"></span>
+
+                                <input th:if="${canModify}" class="form-control form-control-sm" name="roleName"
+                                    required th:value="${mc.roleName}" th:attr="form=${'castUpdateForm_' + mc.id}">
+                            </td>
+
+                            <td class="cast-salary">
+                                <span th:if="${!canModify}"
+                                    th:text="${mc.salary != null ? #numbers.formatDecimal(mc.salary, 1, 2) : ''}"></span>
+
+                                <input th:if="${canModify}" class="form-control form-control-sm" name="salary"
+                                    type="number" step="0.01" min="0" th:value="${mc.salary}"
+                                    th:attr="form=${'castUpdateForm_' + mc.id}">
+                            </td>
+
+                            <td th:if="${canModify}" class="text-nowrap">
+                                <form th:id="${'castUpdateForm_' + mc.id}"
+                                    th:action="@{/movies/{id}/cast/{castId}/update(id=${movie.id}, castId=${mc.id})}"
+                                    method="post"></form>
+
+                                <button type="submit" class="btn btn-sm btn-outline-primary me-2"
+                                    th:attr="form=${'castUpdateForm_' + mc.id}">
+                                    Сохранить
+                                </button>
+
+                                <form th:action="@{/movies/{id}/cast/{castId}/delete(id=${movie.id}, castId=${mc.id})}"
+                                    method="post" style="display:inline"
+                                    onsubmit="return confirm('Удалить из каста?');">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
+                                </form>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+
+                <style>
+                    th.cast-sort {
+                        cursor: pointer;
+                        user-select: none;
+                    }
+
+                    th.cast-sort::after {
+                        content: " ↕";
+                        color: #999;
+                        font-weight: normal;
+                    }
+
+                    th.cast-sort.sorted-asc::after {
+                        content: " ↑";
+                        color: #333;
+                    }
+
+                    th.cast-sort.sorted-desc::after {
+                        content: " ↓";
+                        color: #333;
+                    }
+                </style>
+
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const table = document.getElementById('castTable');
+                        if (!table) return;
+
+                        const thead = table.querySelector('thead');
+                        const tbody = table.querySelector('tbody');
+                        const headers = Array.from(thead.querySelectorAll('th.cast-sort'));
+
+                        function getCellValue(row, colIndex) {
+                            const cell = row.children[colIndex];
+                            if (!cell) return '';
+
+                            const input = cell.querySelector('input');
+                            if (input) return (input.value ?? '').trim();
+
+                            return (cell.textContent ?? '').trim();
+                        }
+
+                        function parseNumber(v) {
+                            if (v == null) return 0;
+                            const normalized = String(v).replace(/\s/g, '').replace(',', '.');
+                            const n = parseFloat(normalized);
+                            return Number.isFinite(n) ? n : 0;
+                        }
+
+                        headers.forEach((th, colIndex) => {
+                            let asc = true;
+
+                            th.addEventListener('click', () => {
+                                headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+                                th.classList.add(asc ? 'sorted-asc' : 'sorted-desc');
+
+                                const fixedRows = Array.from(tbody.querySelectorAll('tr[data-nosort="true"]'));
+
+                                const rows = Array.from(tbody.querySelectorAll('tr.cast-row'));
+
+                                const type = th.dataset.type || 'text';
+
+                                rows.sort((a, b) => {
+                                    const va = getCellValue(a, colIndex);
+                                    const vb = getCellValue(b, colIndex);
+
+                                    let cmp;
+                                    if (type === 'number') {
+                                        cmp = parseNumber(va) - parseNumber(vb);
+                                    } else {
+                                        cmp = va.localeCompare(vb, 'ru', { sensitivity: 'base' });
+                                    }
+
+                                    return asc ? cmp : -cmp;
+                                });
+
+                                tbody.innerHTML = '';
+                                fixedRows.forEach(r => tbody.appendChild(r));
+                                rows.forEach(r => tbody.appendChild(r));
+
+                                asc = !asc;
+                            });
+                        });
+                    });
+                </script>
+
+
 
                 <a class="btn btn-secondary" th:href="${from == 'actors'} ? @{/actors} : @{/movies}">
                     Назад к списку

@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import ru.nikogosyan.CourseProject.entity.Actor;
 import ru.nikogosyan.CourseProject.entity.Genre;
 import ru.nikogosyan.CourseProject.entity.Movie;
+import ru.nikogosyan.CourseProject.entity.MovieCast;
 import ru.nikogosyan.CourseProject.service.ActorService;
 import ru.nikogosyan.CourseProject.service.GenreService;
 import ru.nikogosyan.CourseProject.service.MovieCastService;
@@ -21,7 +22,9 @@ import ru.nikogosyan.CourseProject.service.MovieService;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.file.*;
+import java.text.Collator;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -74,6 +77,20 @@ public class MovieController {
             Map.entry("Thriller", "Триллер")
     );
 
+    private List<Genre> getGenresSortedRu() {
+        List<Genre> genres = genreService.getAllGenres();
+
+        Collator ru = Collator.getInstance(new Locale("ru", "RU"));
+        ru.setStrength(Collator.PRIMARY);
+
+        genres.sort(Comparator.comparing(
+                g -> GENRE_TRANSLATIONS.getOrDefault(g.getName(), g.getName()),
+                ru
+        ));
+
+        return genres;
+    }
+
     @GetMapping
     public String listMovies(Authentication authentication, Model model) {
         List<Movie> movies = movieService.getAllMovies(authentication);
@@ -98,7 +115,7 @@ public class MovieController {
         return "movies-list";
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("{id}")
     public String movieDetails(
             @PathVariable Long id,
             @RequestParam(required = false, defaultValue = "movies") String from,
@@ -106,18 +123,50 @@ public class MovieController {
             Model model
     ) {
         Movie movie = movieService.getMovieForView(id, authentication);
+
         boolean isReadOnly = securityUtils.isReadOnly(authentication);
+        boolean canModify = !isReadOnly;
+
+        List<MovieCast> cast = movieCastService.getCastByMovieIdForView(id, authentication);
+
+        List<Actor> allActors = actorService.getAllActors(authentication);
+
+        Set<Long> castActorIds = cast.stream()
+                .map(mc -> mc.getActor().getId())
+                .collect(Collectors.toSet());
+
+        List<Actor> actorsToAdd = allActors.stream()
+                .filter(a -> !castActorIds.contains(a.getId()))
+                .toList();
 
         model.addAttribute("page", "movies");
         model.addAttribute("movie", movie);
+        model.addAttribute("cast", cast);
+        model.addAttribute("actorsToAdd", actorsToAdd);
 
         model.addAttribute("actors", actorService.getActorsByMovieIdForView(id, authentication));
 
-        model.addAttribute("canModify", !isReadOnly);
+        model.addAttribute("canModify", canModify);
         model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
         model.addAttribute("from", from);
-
         return "movie-details";
+    }
+
+    @PostMapping("{id}/cast/{castId}/update")
+    public String updateCast(
+            @PathVariable Long id,
+            @PathVariable Long castId,
+            @RequestParam String roleName,
+            @RequestParam(required = false) String salary,
+            Authentication authentication
+    ) {
+        BigDecimal sal = null;
+        if (salary != null && !salary.isBlank()) {
+            sal = new BigDecimal(salary);
+        }
+
+        movieCastService.updateCast(id, castId, roleName, sal, authentication);
+        return "redirect:/movies/" + id + "?from=movies";
     }
 
     @PostMapping("/{id}/cast/add")
@@ -150,7 +199,8 @@ public class MovieController {
     public String newMovieForm(Authentication authentication, Model model) {
         checkModifyPermission(authentication);
         model.addAttribute("movie", new Movie());
-        model.addAttribute("genres", genreService.getAllGenres());
+        model.addAttribute("genres", getGenresSortedRu());
+
         model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
         return "movie-form";
     }
@@ -164,7 +214,8 @@ public class MovieController {
             Model model
     ) {
         if (result.hasErrors()) {
-            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genres", getGenresSortedRu());
+
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
             return "movie-form";
         }
@@ -175,7 +226,8 @@ public class MovieController {
             if (imageFile != null && !imageFile.isEmpty()) {
                 if (imageFile.getSize() > 50L * 1024 * 1024) {
                     model.addAttribute("error", "File too large. Maximum size is 50MB.");
-                    model.addAttribute("genres", genreService.getAllGenres());
+                    model.addAttribute("genres", getGenresSortedRu());
+
                     model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
                     return "movie-form";
                 }
@@ -183,7 +235,8 @@ public class MovieController {
                 String contentType = imageFile.getContentType();
                 if (contentType == null || !contentType.startsWith("image")) {
                     model.addAttribute("error", "Only image files are allowed.");
-                    model.addAttribute("genres", genreService.getAllGenres());
+                    model.addAttribute("genres", getGenresSortedRu());
+
                     model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
                     return "movie-form";
                 }
@@ -199,12 +252,14 @@ public class MovieController {
             return "redirect:/movies";
         } catch (IOException e) {
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genres", getGenresSortedRu());
+
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
             return "movie-form";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genres", getGenresSortedRu());
+
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
             return "movie-form";
         }
@@ -219,7 +274,8 @@ public class MovieController {
         movie.setGenreIds(ids);
 
         model.addAttribute("movie", movie);
-        model.addAttribute("genres", genreService.getAllGenres());
+        model.addAttribute("genres", getGenresSortedRu());
+
         model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
         return "movie-form";
     }
@@ -234,7 +290,8 @@ public class MovieController {
             Model model
     ) {
         if (result.hasErrors()) {
-            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genres", getGenresSortedRu());
+
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
             return "movie-form";
         }
@@ -262,12 +319,14 @@ public class MovieController {
             return "redirect:/movies";
         } catch (IOException e) {
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genres", getGenresSortedRu());
+
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
             return "movie-form";
         } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
-            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genres", getGenresSortedRu());
+
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
             return "movie-form";
         }
@@ -319,7 +378,8 @@ public class MovieController {
 
     private static @NonNull String getExtension(MultipartFile imageFile) throws IOException {
         String contentType = imageFile.getContentType();
-        if (contentType == null || !contentType.startsWith("image")) throw new IOException("Only image files are allowed.");
+        if (contentType == null || !contentType.startsWith("image"))
+            throw new IOException("Only image files are allowed.");
         if (imageFile.getSize() > 10L * 1024 * 1024) throw new IOException("File too large. Maximum size is 10MB.");
 
         String originalFilename = imageFile.getOriginalFilename();

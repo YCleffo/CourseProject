@@ -60,11 +60,6 @@
                                     </span>
                                     <span th:if="${actor.movies == null or actor.movies.isEmpty()}"
                                         class="text-muted">—</span>
-
-                                    <div class="mt-2 text-muted small" th:if="${movieId == null}">
-                                        Роль показывается в карточке фильма или при переходе в актёра со страницы
-                                        фильма.
-                                    </div>
                                 </td>
                             </tr>
                             <tr th:if="${movieId != null}">

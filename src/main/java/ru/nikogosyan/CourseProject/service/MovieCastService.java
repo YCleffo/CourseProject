@@ -141,4 +141,32 @@ public class MovieCastService {
             throw new RuntimeException("You dont have permission to update this movie.");
         }
     }
+
+    @Transactional
+    public MovieCast updateCast(
+            Long movieId,
+            Long castId,
+            String roleName,
+            BigDecimal salary,
+            Authentication authentication
+    ) {
+        SecurityUtils.UserInfo ui = securityUtils.getUserInfo(authentication);
+        if (ui.isReadOnly()) {
+            throw new RuntimeException("READONLY users cannot modify data");
+        }
+
+        Movie movie = movieService.getMovieById(movieId);
+        checkCanModifyMovie(movie, authentication);
+
+        if (roleName == null || roleName.isBlank()) {
+            throw new RuntimeException("Role name is required");
+        }
+
+        MovieCast mc = movieCastRepository.findByIdAndMovieId(castId, movieId)
+                .orElseThrow(() -> new RuntimeException("Cast not found"));
+
+        mc.setRoleName(roleName.trim());
+        mc.setSalary(salary);
+        return movieCastRepository.save(mc);
+    }
 }
