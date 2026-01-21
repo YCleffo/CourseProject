@@ -12,9 +12,7 @@ import ru.nikogosyan.CourseProject.repository.ActorRepository;
 import ru.nikogosyan.CourseProject.utils.Roles;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -60,7 +58,7 @@ public class ActorService {
     public List<Actor> getActorsByMovieIdForView(Long movieId, Authentication authentication) {
         SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
 
-        List<Actor> actors = actorRepository.findByMovie_Id(movieId); // было findByMovieId(movieId)
+        List<Actor> actors = actorRepository.findByMovies_Id(movieId);
 
         if (userInfo.isAdmin() && !userInfo.isUser()) return actors;
 
@@ -69,38 +67,44 @@ public class ActorService {
                 .toList();
     }
 
+    // Используется в MovieController для списка фильмов: firstActorByMovieId
     @Transactional(readOnly = true)
     public Map<Long, Actor> getFirstActorsByMovieIds(List<Long> movieIds) {
         if (movieIds == null || movieIds.isEmpty()) return Map.of();
 
-        List<Actor> all = actorRepository.findByMovie_IdIn(movieIds); // было findByMovieIdIn(movieIds)
+        List<Actor> all = actorRepository.findByMovies_IdIn(movieIds);
 
-        return all.stream()
-                .collect(Collectors.groupingBy(a -> a.getMovie().getId()))
-                .entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().stream()
-                                .sorted(java.util.Comparator.comparing(Actor::getId))
-                                .findFirst()
-                                .orElse(null)
-                ));
+        // для каждого movieId выбираем актёра с минимальным actor.id
+        Map<Long, Actor> result = new HashMap<>();
+        all.stream()
+                .sorted(Comparator.comparing(Actor::getId))
+                .forEach(a -> {
+                    if (a.getMovies() == null) return;
+                    for (Movie m : a.getMovies()) {
+                        if (m == null || m.getId() == null) continue;
+                        if (!movieIds.contains(m.getId())) continue;
+                        result.putIfAbsent(m.getId(), a);
+                    }
+                });
+
+        return result;
     }
 
     @Transactional
     public Actor saveActor(Actor actor, Authentication authentication) {
         SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
-
         log.info("Saving actor by user {}, actor={}", userInfo.username(), actor.getName());
 
-        if (actor.getMovieId() == null) {
+        if (actor.getMovieIds() == null || actor.getMovieIds().isEmpty()) {
             throw new RuntimeException("Movie is required");
         }
 
-        Movie movie = movieService.getMovieForView(actor.getMovieId(), authentication);
+        Set<Movie> movies = actor.getMovieIds().stream()
+                .map(id -> movieService.getMovieForView(id, authentication))
+                .collect(Collectors.toSet());
 
         actor.setCreatedBy(userInfo.username());
-        actor.setMovie(movie);
+        actor.setMovies(movies);
 
         return actorRepository.save(actor);
     }
@@ -113,7 +117,7 @@ public class ActorService {
         boolean isAdmin = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals(Roles.ROLE_ADMIN));
+                .anyMatch(role -> role.equals(Roles.ROLE_ADMIN)); // важно: ROLEADMIN как в вашем Roles [file:4]
 
         if (!isAdmin && !Objects.equals(actor.getCreatedBy(), username)) {
             throw new RuntimeException("You dont have permission to delete this actor");
@@ -131,24 +135,26 @@ public class ActorService {
         boolean isAdmin = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .filter(Objects::nonNull)
-                .anyMatch(role -> role.equals(Roles.ROLE_ADMIN));
+                .anyMatch(role -> role.equals(Roles.ROLE_ADMIN)); // важно: ROLEADMIN [file:4]
 
         if (!isAdmin && !Objects.equals(actor.getCreatedBy(), username)) {
             throw new RuntimeException("You dont have permission to update this actor");
         }
 
-        if (updatedActor.getMovieId() == null) {
+        if (updatedActor.getMovieIds() == null || updatedActor.getMovieIds().isEmpty()) {
             throw new RuntimeException("Movie is required");
         }
 
-        Movie movie = movieService.getMovieForView(updatedActor.getMovieId(), authentication);
+        Set<Movie> movies = updatedActor.getMovieIds().stream()
+                .map(mid -> movieService.getMovieForView(mid, authentication))
+                .collect(Collectors.toSet());
 
         log.info("Updating actor by user {}, actorId={}", username, id);
 
         actor.setName(updatedActor.getName());
         actor.setRoleName(updatedActor.getRoleName());
         actor.setSalary(updatedActor.getSalary());
-        actor.setMovie(movie);
+        actor.setMovies(movies);
 
         return actorRepository.save(actor);
     }

@@ -68,8 +68,8 @@ public class Movie {
     @Transient
     private Set<Long> genreIds = new HashSet<>();
 
-    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Actor> actors = new ArrayList<>();
+    @ManyToMany(mappedBy = "movies")
+    private Set<Actor> actors = new HashSet<>();
 
     @PreUpdate
     public void preUpdate() {

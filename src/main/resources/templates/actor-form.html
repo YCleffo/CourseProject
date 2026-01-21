@@ -124,14 +124,14 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="movie" class="form-label">Movie</label>
-                                <select class="form-select" id="movie" th:field="*{movieId}" required>
-                                    <option value="">Выберите фильм</option>
-                                    <option th:each="movie : ${movies}" th:value="${movie.id}" th:text="${movie.title}">
+                                <label for="movieIds" class="form-label">Фильмы</label>
+                                <select class="form-select" id="movieIds" th:field="*{movieIds}" multiple size="6" required>
+                                    <option th:each="movie : ${movies}"
+                                            th:value="${movie.id}"
+                                            th:text="${movie.title}">
                                     </option>
                                 </select>
-                                <div class="text-danger" th:if="${#fields.hasErrors('movieId')}" th:errors="*{movieId}">
-                                </div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('movieIds')}" th:errors="*{movieIds}"></div>
                             </div>
 
                             <div class="mb-3">

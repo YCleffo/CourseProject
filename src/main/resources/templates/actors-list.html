@@ -54,9 +54,13 @@
                         </td>
                         <td th:text="${actor.roleName}">Роль</td>
                         <td>
-                            <a th:href="@{/movies/{id}(id=${actor.movie.id}, from='actors')}"
-                                th:text="${actor.movie.title}"></a>
-                            <span th:if="${actor.movie == null}">—</span>
+                            <span th:if="${actor.movies != null and !actor.movies.isEmpty()}">
+                                <span th:each="m, st : ${actor.movies}">
+                                    <a th:href="@{/movies/{id}(id=${m.id}, from='actors')}"
+                                        th:text="${m.title}">Фильм</a><span th:unless="${st.last}">, </span>
+                                </span>
+                            </span>
+                            <span th:if="${actor.movies == null or actor.movies.isEmpty()}">—</span>
                         </td>
                         <td th:text="${#numbers.formatDecimal(actor.salary, 1, 2) + ' $'}">50000.00</td>
                         <td th:text="${actor.createdBy}">Пользователь</td>
@@ -66,7 +70,8 @@
                             <form th:action="@{/actors/delete/{id}(id=${actor.id})}" method="post"
                                 style="display: inline;">
                                 <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Вы уверены?')">Удалить</button>
+                                    onclick="return confirm('Вы уверены?')">Удалить
+                                </button>
                             </form>
                         </td>
                     </tr>

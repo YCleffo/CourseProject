@@ -161,9 +161,6 @@ public class ActorController {
         checkModifyPermission(authentication);
 
         Actor actor = actorService.getActorForView(id, authentication);
-        if (actor.getMovie() != null) {
-            actor.setMovieId(actor.getMovie().getId());
-        }
 
         model.addAttribute("actor", actor);
         model.addAttribute("movies", movieService.getAllMovies(authentication));
