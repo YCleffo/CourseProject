@@ -12,6 +12,5 @@ public interface ActorRepository extends JpaRepository<Actor, Long> {
     List<Actor> findByCreatedBy(String createdBy);
 
     List<Actor> findByMoviesId(Long movieId);
-
     List<Actor> findByMoviesIdIn(Collection<Long> movieIds);
 }

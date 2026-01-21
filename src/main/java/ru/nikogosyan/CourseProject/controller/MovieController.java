@@ -11,10 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.nikogosyan.CourseProject.entity.Actor;
 import ru.nikogosyan.CourseProject.entity.Genre;
 import ru.nikogosyan.CourseProject.entity.Movie;
 import ru.nikogosyan.CourseProject.service.ActorService;
 import ru.nikogosyan.CourseProject.service.GenreService;
+import ru.nikogosyan.CourseProject.service.MovieCastService;
 import ru.nikogosyan.CourseProject.service.MovieService;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
@@ -32,6 +34,7 @@ public class MovieController {
     private final MovieService movieService;
     private final GenreService genreService;
     private final ActorService actorService;
+    private final MovieCastService movieCastService;
     private final SecurityUtils securityUtils;
 
     private static final Path UPLOAD_DIR = Paths.get("uploads/images");
@@ -39,12 +42,10 @@ public class MovieController {
     @PostConstruct
     public void init() {
         try {
-            if (!Files.exists(UPLOAD_DIR)) {
-                Files.createDirectories(UPLOAD_DIR);
-                log.info("Created upload directory {}", UPLOAD_DIR.toAbsolutePath());
-            }
+            if (!Files.exists(UPLOAD_DIR)) Files.createDirectories(UPLOAD_DIR);
+            log.info("Created upload directory {}", UPLOAD_DIR.toAbsolutePath());
         } catch (IOException e) {
-            log.error("Failed to create upload directory: {}", e.getMessage(), e);
+            log.error("Failed to create upload directory {}", e.getMessage(), e);
         }
     }
 
@@ -57,16 +58,16 @@ public class MovieController {
             Map.entry("Documentary", "Документальный"),
             Map.entry("Mystery", "Детектив"),
             Map.entry("Drama", "Драма"),
-            Map.entry("History", "История"),
+            Map.entry("History", "Исторический"),
             Map.entry("Comedy", "Комедия"),
             Map.entry("Crime", "Криминал"),
             Map.entry("Musical", "Мюзикл"),
-            Map.entry("Sci-Fi", "Научная фантастика"),
+            Map.entry("Sci-Fi", "Фантастика"),
             Map.entry("Adventure", "Приключения"),
             Map.entry("Romance", "Романтика"),
             Map.entry("Family", "Семейный"),
             Map.entry("Sport", "Спорт"),
-            Map.entry("Superhero", "Супергеройский"),
+            Map.entry("Superhero", "Супергерои"),
             Map.entry("Fantasy", "Фэнтези"),
             Map.entry("Western", "Вестерн"),
             Map.entry("Horror", "Ужасы"),
@@ -76,7 +77,6 @@ public class MovieController {
     @GetMapping
     public String listMovies(Authentication authentication, Model model) {
         List<Movie> movies = movieService.getAllMovies(authentication);
-
         boolean isReadOnly = securityUtils.isReadOnly(authentication);
 
         model.addAttribute("page", "movies");
@@ -93,24 +93,26 @@ public class MovieController {
         }
 
         List<Long> movieIds = movies.stream().map(Movie::getId).toList();
-        model.addAttribute("firstActorByMovieId", actorService.getFirstActorsByMovieIds(movieIds));
+        model.addAttribute("firstCastByMovieId", movieCastService.getFirstCastByMovieIds(movieIds, authentication));
 
         return "movies-list";
     }
 
     @GetMapping("/{id}")
-    public String movieDetails(@PathVariable Long id,
-                               @RequestParam(required = false, defaultValue = "movies") String from,
-                               Authentication authentication,
-                               Model model) {
-
+    public String movieDetails(
+            @PathVariable Long id,
+            @RequestParam(required = false, defaultValue = "movies") String from,
+            Authentication authentication,
+            Model model
+    ) {
         Movie movie = movieService.getMovieForView(id, authentication);
-
         boolean isReadOnly = securityUtils.isReadOnly(authentication);
 
         model.addAttribute("page", "movies");
         model.addAttribute("movie", movie);
+
         model.addAttribute("actors", actorService.getActorsByMovieIdForView(id, authentication));
+
         model.addAttribute("canModify", !isReadOnly);
         model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
         model.addAttribute("from", from);
@@ -118,24 +120,49 @@ public class MovieController {
         return "movie-details";
     }
 
+    @PostMapping("/{id}/cast/add")
+    public String addCast(
+            @PathVariable Long id,
+            @RequestParam Long actorId,
+            @RequestParam String roleName,
+            @RequestParam(required = false) String salary,
+            Authentication authentication
+    ) {
+        java.math.BigDecimal sal = null;
+        if (salary != null && !salary.isBlank()) {
+            sal = new java.math.BigDecimal(salary);
+        }
+        movieCastService.addCast(id, actorId, roleName, sal, authentication);
+        return "redirect:/movies/" + id + "?from=movies";
+    }
+
+    @PostMapping("/{id}/cast/{castId}/delete")
+    public String deleteCast(
+            @PathVariable Long id,
+            @PathVariable Long castId,
+            Authentication authentication
+    ) {
+        movieCastService.deleteCast(id, castId, authentication);
+        return "redirect:/movies/" + id + "?from=movies";
+    }
+
     @GetMapping("/new")
     public String newMovieForm(Authentication authentication, Model model) {
         checkModifyPermission(authentication);
-
         model.addAttribute("movie", new Movie());
         model.addAttribute("genres", genreService.getAllGenres());
         model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
-
         return "movie-form";
     }
 
     @PostMapping("/new")
-    public String createMovie(@Valid @ModelAttribute Movie movie,
-                              BindingResult result,
-                              @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-                              Authentication authentication,
-                              Model model) {
-
+    public String createMovie(
+            @Valid @ModelAttribute Movie movie,
+            BindingResult result,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            Authentication authentication,
+            Model model
+    ) {
         if (result.hasErrors()) {
             model.addAttribute("genres", genreService.getAllGenres());
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
@@ -170,7 +197,6 @@ public class MovieController {
 
             movieService.saveMovie(movie, authentication.getName());
             return "redirect:/movies";
-
         } catch (IOException e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("genres", genreService.getAllGenres());
@@ -189,25 +215,24 @@ public class MovieController {
         checkModifyPermission(authentication);
 
         Movie movie = movieService.getMovieById(id);
-
         Set<Long> ids = movie.getGenres().stream().map(Genre::getId).collect(Collectors.toSet());
         movie.setGenreIds(ids);
 
         model.addAttribute("movie", movie);
         model.addAttribute("genres", genreService.getAllGenres());
         model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
-
         return "movie-form";
     }
 
     @PostMapping("/edit/{id}")
-    public String updateMovie(@PathVariable Long id,
-                              @Valid @ModelAttribute Movie movie,
-                              BindingResult result,
-                              @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
-                              Authentication authentication,
-                              Model model) {
-
+    public String updateMovie(
+            @PathVariable Long id,
+            @Valid @ModelAttribute Movie movie,
+            BindingResult result,
+            @RequestParam(value = "imageFile", required = false) MultipartFile imageFile,
+            Authentication authentication,
+            Model model
+    ) {
         if (result.hasErrors()) {
             model.addAttribute("genres", genreService.getAllGenres());
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
@@ -219,7 +244,7 @@ public class MovieController {
 
             boolean isAdmin = securityUtils.isAdmin(authentication);
             if (!isAdmin && !Objects.equals(existingMovie.getCreatedBy(), authentication.getName())) {
-                model.addAttribute("error", "You don't have permission to update this movie.");
+                model.addAttribute("error", "You dont have permission to update this movie.");
                 return "redirect:/movies";
             }
 
@@ -235,8 +260,12 @@ public class MovieController {
 
             movieService.updateMovie(id, movie, authentication);
             return "redirect:/movies";
-
         } catch (IOException e) {
+            model.addAttribute("error", e.getMessage());
+            model.addAttribute("genres", genreService.getAllGenres());
+            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+            return "movie-form";
+        } catch (Exception e) {
             model.addAttribute("error", e.getMessage());
             model.addAttribute("genres", genreService.getAllGenres());
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
@@ -250,7 +279,7 @@ public class MovieController {
 
         Movie movie = movieService.getMovieById(id);
         if (movie.getImagePath() != null) {
-            Path filePath = Paths.get("..").resolve(movie.getImagePath().substring(1));
+            Path filePath = Paths.get("").resolve(movie.getImagePath().substring(1));
             Files.deleteIfExists(filePath);
         }
 
@@ -260,30 +289,27 @@ public class MovieController {
 
     private void checkModifyPermission(Authentication authentication) {
         if (securityUtils.isReadOnly(authentication)) {
-            throw new RuntimeException("READ_ONLY users cannot modify data");
+            throw new RuntimeException("READONLY users cannot modify data");
         }
     }
 
     private void handleImageUpload(Movie movie, MultipartFile imageFile, String existingPath) throws IOException {
-        if (!Files.exists(UPLOAD_DIR)) {
-            Files.createDirectories(UPLOAD_DIR);
-        }
+        if (!Files.exists(UPLOAD_DIR)) Files.createDirectories(UPLOAD_DIR);
 
         if (imageFile != null && !imageFile.isEmpty()) {
             String extension = getExtension(imageFile);
             String fileName = System.currentTimeMillis() + "-" + UUID.randomUUID() + extension;
-
             Path filePath = UPLOAD_DIR.resolve(fileName);
-            Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
+            Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
             movie.setImagePath("/uploads/images/" + fileName);
 
             if (existingPath != null && !existingPath.isEmpty()) {
                 try {
-                    Path oldFile = Paths.get("..").resolve(existingPath.substring(1));
+                    Path oldFile = Paths.get("").resolve(existingPath.substring(1));
                     Files.deleteIfExists(oldFile);
                 } catch (IOException e) {
-                    log.warn("Failed to delete old image: {}", e.getMessage());
+                    log.warn("Failed to delete old image {}", e.getMessage());
                 }
             }
         } else if (existingPath != null) {
@@ -293,18 +319,11 @@ public class MovieController {
 
     private static @NonNull String getExtension(MultipartFile imageFile) throws IOException {
         String contentType = imageFile.getContentType();
-        if (contentType == null || !contentType.startsWith("image")) {
-            throw new IOException("Only image files are allowed.");
-        }
-
-        if (imageFile.getSize() > 10L * 1024 * 1024) {
-            throw new IOException("File too large. Maximum size is 10MB.");
-        }
+        if (contentType == null || !contentType.startsWith("image")) throw new IOException("Only image files are allowed.");
+        if (imageFile.getSize() > 10L * 1024 * 1024) throw new IOException("File too large. Maximum size is 10MB.");
 
         String originalFilename = imageFile.getOriginalFilename();
-        if (originalFilename == null || originalFilename.isEmpty()) {
-            throw new IOException("Invalid file name.");
-        }
+        if (originalFilename == null || originalFilename.isEmpty()) throw new IOException("Invalid file name.");
 
         return originalFilename.substring(originalFilename.lastIndexOf("."));
     }

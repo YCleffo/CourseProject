@@ -1,8 +1,15 @@
 package ru.nikogosyan.CourseProject.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import lombok.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -57,11 +64,13 @@ public class Movie {
     @Column(name = "image_path")
     private String imagePath;
 
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<MovieCast> cast = new HashSet<>();
+
     @Transient
     private Set<Long> genreIds = new HashSet<>();
-
-    @ManyToMany(mappedBy = "movies")
-    private Set<Actor> actors = new HashSet<>();
 
     @Transient
     private String genresString;

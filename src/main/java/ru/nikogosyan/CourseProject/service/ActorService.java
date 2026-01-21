@@ -8,12 +8,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.nikogosyan.CourseProject.entity.Actor;
 import ru.nikogosyan.CourseProject.entity.Movie;
+import ru.nikogosyan.CourseProject.entity.MovieCast;
 import ru.nikogosyan.CourseProject.repository.ActorRepository;
+import ru.nikogosyan.CourseProject.repository.MovieCastRepository;
+import ru.nikogosyan.CourseProject.repository.MovieRepository;
 import ru.nikogosyan.CourseProject.utils.Roles;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -21,7 +26,8 @@ import java.util.stream.Collectors;
 public class ActorService {
 
     private final ActorRepository actorRepository;
-    private final MovieService movieService;
+    private final MovieRepository movieRepository;
+    private final MovieCastRepository movieCastRepository;
     private final SecurityUtils securityUtils;
 
     @Transactional(readOnly = true)
@@ -42,7 +48,7 @@ public class ActorService {
         SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
         Actor actor = getActorById(id);
 
-        if (userInfo.isAdmin() && !userInfo.isUser()) return actor;
+        if (userInfo.isAdmin() || !userInfo.isUser()) return actor;
 
         if (!Objects.equals(actor.getCreatedBy(), userInfo.username())) {
             throw new RuntimeException("You dont have permission to view this actor");
@@ -51,57 +57,48 @@ public class ActorService {
     }
 
     @Transactional(readOnly = true)
-    public List<Actor> getActorsByMovieIdForView(Long movieId, Authentication authentication) {
-        SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
-        List<Actor> actors = actorRepository.findByMoviesId(movieId);
+    public void applyRoleForMovie(Actor actor, Long movieId) {
+        if (actor == null || actor.getId() == null || movieId == null) return;
 
-        if (userInfo.isAdmin() && !userInfo.isUser()) return actors;
-
-        return actors.stream()
-                .filter(a -> Objects.equals(a.getCreatedBy(), userInfo.username()))
-                .toList();
+        movieCastRepository.findByActorIdAndMovieId(actor.getId(), movieId).ifPresent(mc -> {
+            actor.setRoleName(mc.getRoleName());
+            actor.setSalary(mc.getSalary());
+        });
     }
 
     @Transactional(readOnly = true)
-    public Map<Long, Actor> getFirstActorsByMovieIds(List<Long> movieIds) {
-        if (movieIds == null || movieIds.isEmpty()) return Map.of();
+    public List<Actor> getActorsByMovieIdForView(Long movieId, Authentication authentication) {
+        List<Actor> actors = actorRepository.findByMoviesId(movieId);
 
-        List<Actor> all = actorRepository.findByMoviesIdIn(movieIds);
+        SecurityUtils.UserInfo ui = securityUtils.getUserInfo(authentication);
+        if (ui.isUser() && !ui.isAdmin()) {
+            actors = actors.stream()
+                    .filter(a -> Objects.equals(a.getCreatedBy(), ui.username()))
+                    .toList();
+        }
 
-        Map<Long, Actor> result = new HashMap<>();
-        all.stream()
-                .sorted(Comparator.comparing(Actor::getId))
-                .forEach(a -> {
-                    if (a.getMovies() == null) return;
-                    for (Movie m : a.getMovies()) {
-                        if (m == null || m.getId() == null) continue;
-                        if (!movieIds.contains(m.getId())) continue;
-                        result.putIfAbsent(m.getId(), a);
-                    }
-                });
-
-        return result;
+        for (Actor a : actors) {
+            applyRoleForMovie(a, movieId);
+        }
+        return actors;
     }
 
     @Transactional
     public Actor saveActor(Actor actor, Authentication authentication) {
         SecurityUtils.UserInfo userInfo = securityUtils.getUserInfo(authentication);
 
-        if (actor.getMovieIds() == null || actor.getMovieIds().isEmpty()) {
-            throw new RuntimeException("Movie is required");
+        Set<Movie> movies = new HashSet<>();
+        if (actor.getMovieIds() != null && !actor.getMovieIds().isEmpty()) {
+            movies.addAll(movieRepository.findAllById(actor.getMovieIds()));
         }
-
-        Set<Movie> movies = actor.getMovieIds().stream()
-                .map(id -> movieService.getMovieForView(id, authentication))
-                .collect(Collectors.toSet());
-
-        actor.setCreatedBy(userInfo.username());
         actor.setMovies(movies);
 
-        // синхронизация обратной стороны (не обязательно для записи, но удобно)
-        movies.forEach(m -> m.getActors().add(actor));
+        actor.setCreatedBy(userInfo.username());
+        Actor saved = actorRepository.save(actor);
 
-        return actorRepository.save(actor);
+        syncMovieCast(saved);
+
+        return saved;
     }
 
     @Transactional
@@ -118,22 +115,21 @@ public class ActorService {
             throw new RuntimeException("You dont have permission to update this actor");
         }
 
-        if (updatedActor.getMovieIds() == null || updatedActor.getMovieIds().isEmpty()) {
-            throw new RuntimeException("Movie is required");
-        }
-
-        Set<Movie> movies = updatedActor.getMovieIds().stream()
-                .map(mid -> movieService.getMovieForView(mid, authentication))
-                .collect(Collectors.toSet());
-
         actor.setName(updatedActor.getName());
-        actor.setRoleName(updatedActor.getRoleName());
-        actor.setSalary(updatedActor.getSalary());
+
+        Set<Movie> movies = new HashSet<>();
+        if (updatedActor.getMovieIds() != null && !updatedActor.getMovieIds().isEmpty()) {
+            movies.addAll(movieRepository.findAllById(updatedActor.getMovieIds()));
+        }
         actor.setMovies(movies);
 
-        movies.forEach(m -> m.getActors().add(actor));
+        actor.setRoleName(updatedActor.getRoleName());
+        actor.setSalary(updatedActor.getSalary());
 
-        return actorRepository.save(actor);
+        Actor saved = actorRepository.save(actor);
+        syncMovieCast(saved);
+
+        return saved;
     }
 
     @Transactional
@@ -150,6 +146,29 @@ public class ActorService {
             throw new RuntimeException("You dont have permission to delete this actor");
         }
 
+        movieCastRepository.deleteByActorId(id);
+
         actorRepository.deleteById(id);
+    }
+
+    private void syncMovieCast(Actor actor) {
+        if (actor.getId() == null) return;
+
+        movieCastRepository.deleteByActorId(actor.getId());
+
+        if (actor.getMovies() == null || actor.getMovies().isEmpty()) return;
+
+        String rn = actor.getRoleName();
+        if (rn == null || rn.isBlank()) rn = "Unknown";
+
+        for (Movie m : actor.getMovies()) {
+            MovieCast mc = new MovieCast();
+            mc.setActor(actor);
+            mc.setMovie(m);
+            mc.setRoleName(rn);
+            mc.setSalary(actor.getSalary());
+            mc.setCreatedBy(actor.getCreatedBy());
+            movieCastRepository.save(mc);
+        }
     }
 }

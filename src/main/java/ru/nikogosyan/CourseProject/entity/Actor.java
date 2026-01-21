@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -17,7 +16,7 @@ import java.util.stream.Collectors;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString(exclude = "movies")
+@ToString(exclude = {"movies"})
 public class Actor {
 
     @Id
@@ -40,10 +39,10 @@ public class Actor {
     @NotBlank(message = "Actor name is required")
     private String name;
 
-    @Column(name = "role_name")
+    @Transient
     private String roleName;
 
-    @Column(precision = 15, scale = 2)
+    @Transient
     private BigDecimal salary;
 
     @Column(name = "created_by", length = 50)
@@ -55,7 +54,9 @@ public class Actor {
     @PostLoad
     public void syncMovieIdsAfterLoad() {
         if (movies != null) {
-            this.movieIds = movies.stream().map(Movie::getId).collect(Collectors.toSet());
+            this.movieIds = movies.stream()
+                    .map(Movie::getId)
+                    .collect(Collectors.toSet());
         }
     }
 

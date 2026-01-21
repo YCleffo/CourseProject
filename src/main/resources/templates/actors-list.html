@@ -29,7 +29,6 @@
                         <th>Фото</th>
                         <th>Имя</th>
                         <th>Фильмы</th>
-                        <th>Зарплата</th>
                         <th>Создано</th>
                         <th th:if="${canModify}">Действия</th>
                     </tr>
@@ -60,7 +59,6 @@
                             </span>
                             <span th:if="${actor.movies == null or actor.movies.isEmpty()}">—</span>
                         </td>
-                        <td th:text="${#numbers.formatDecimal(actor.salary, 1, 2) + ' $'}">50000.00</td>
                         <td th:text="${actor.createdBy}">Пользователь</td>
                         <td th:if="${canModify}">
                             <a th:href="@{/actors/edit/{id}(id=${actor.id})}"
