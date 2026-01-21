@@ -882,3 +882,601 @@
 2026-01-21 15:48:03 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
 2026-01-21 15:48:03 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
 2026-01-21 15:48:03 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-01-21 15:48:59 [main] INFO  r.n.C.CourseProjectApplication - Starting CourseProjectApplication using Java 25.0.1 with PID 43304 (C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject\target\classes started by Yuran in C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject)
+2026-01-21 15:48:59 [main] INFO  r.n.C.CourseProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-21 15:48:59 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-21 15:48:59 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 36 ms. Found 7 JPA repository interfaces.
+2026-01-21 15:49:00 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2026-01-21 15:49:00 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-21 15:49:00 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-01-21 15:49:00 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 968 ms
+2026-01-21 15:49:00 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-21 15:49:00 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-21 15:49:00 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-21 15:49:00 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-21 15:49:00 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@58690f5e
+2026-01-21 15:49:00 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-21 15:49:01 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-21 15:49:01 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/course_project?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.30
+	Default catalog/schema: course_project/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-21 15:49:01 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-21 15:49:01 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21 15:49:01 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-21 15:49:02 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:49:02 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:49:02 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:49:02 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-21 15:49:02 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-21 15:49:03 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-01-21 15:49:03 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2026-01-21 15:49:03 [main] INFO  r.n.C.CourseProjectApplication - Started CourseProjectApplication in 3.98 seconds (process running for 4.455)
+2026-01-21 15:49:03 [RMI TCP Connection(3)-192.168.3.2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-21 15:49:03 [RMI TCP Connection(3)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-01-21 15:49:03 [RMI TCP Connection(3)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-01-21 15:49:05 [http-nio-8082-exec-5] INFO  r.n.C.service.UserService - Loading user by username admin
+2026-01-21 15:49:05 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-01-21 15:49:05 [http-nio-8082-exec-5] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-21 15:49:05 [http-nio-8082-exec-5] INFO  r.n.C.service.UserService - Loaded authorities for admin: [ROLE_ADMIN]
+2026-01-21 15:49:07 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-21 15:49:07 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.actor_id,
+        m1_1.id,
+        m1_1.box_office,
+        m1_1.created_at,
+        m1_1.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_1.image_path,
+        m1_1.release_year,
+        m1_1.title,
+        m1_1.updated_at 
+    from
+        actor_movies m1_0 
+    join
+        movies m1_1 
+            on m1_1.id=m1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_1.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.actor_id=?
+2026-01-21 15:49:07 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.movie_id,
+        a1_1.id,
+        a1_1.created_at,
+        a1_1.created_by,
+        a1_1.name,
+        a1_1.role_name,
+        a1_1.salary 
+    from
+        actor_movies a1_0 
+    join
+        actors a1_1 
+            on a1_1.id=a1_0.actor_id 
+    where
+        a1_0.movie_id=?
+2026-01-21 15:49:07 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.movie_id,
+        a1_1.id,
+        a1_1.created_at,
+        a1_1.created_by,
+        a1_1.name,
+        a1_1.role_name,
+        a1_1.salary 
+    from
+        actor_movies a1_0 
+    join
+        actors a1_1 
+            on a1_1.id=a1_0.actor_id 
+    where
+        a1_0.movie_id=?
+2026-01-21 15:49:07 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id in (?) 
+    order by
+        ap1_0.actor_id,
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-21 15:49:41 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-21 15:49:41 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-21 15:49:41 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21 15:49:41 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-21 15:49:41 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-01-21 15:51:56 [main] INFO  r.n.C.CourseProjectApplication - Starting CourseProjectApplication using Java 25.0.1 with PID 20556 (C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject\target\classes started by Yuran in C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject)
+2026-01-21 15:51:56 [main] INFO  r.n.C.CourseProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-21 15:51:58 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-21 15:51:58 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 41 ms. Found 7 JPA repository interfaces.
+2026-01-21 15:51:58 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2026-01-21 15:51:58 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-21 15:51:58 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-01-21 15:51:58 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1716 ms
+2026-01-21 15:51:58 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-21 15:51:58 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-21 15:51:59 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-21 15:51:59 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-21 15:51:59 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2d36add1
+2026-01-21 15:51:59 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-21 15:51:59 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-21 15:51:59 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/course_project?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.30
+	Default catalog/schema: course_project/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-21 15:52:00 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-21 15:52:00 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21 15:52:00 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-21 15:52:00 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:52:00 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:52:00 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:52:01 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-21 15:52:01 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-21 15:52:01 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-01-21 15:52:01 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2026-01-21 15:52:01 [main] INFO  r.n.C.CourseProjectApplication - Started CourseProjectApplication in 5.478 seconds (process running for 6.064)
+2026-01-21 15:52:02 [RMI TCP Connection(4)-192.168.3.2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-21 15:52:02 [RMI TCP Connection(4)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-01-21 15:52:02 [RMI TCP Connection(4)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-01-21 15:52:03 [http-nio-8082-exec-4] INFO  r.n.C.service.UserService - Loading user by username admin
+2026-01-21 15:52:03 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-01-21 15:52:03 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-21 15:52:03 [http-nio-8082-exec-4] INFO  r.n.C.service.UserService - Loaded authorities for admin: [ROLE_ADMIN]
+2026-01-21 15:52:05 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-21 15:52:05 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.actor_id,
+        m1_1.id,
+        m1_1.box_office,
+        m1_1.created_at,
+        m1_1.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_1.image_path,
+        m1_1.release_year,
+        m1_1.title,
+        m1_1.updated_at 
+    from
+        actor_movies m1_0 
+    join
+        movies m1_1 
+            on m1_1.id=m1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_1.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.actor_id=?
+2026-01-21 15:52:05 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.movie_id,
+        a1_1.id,
+        a1_1.created_at,
+        a1_1.created_by,
+        a1_1.name,
+        a1_1.role_name,
+        a1_1.salary 
+    from
+        actor_movies a1_0 
+    join
+        actors a1_1 
+            on a1_1.id=a1_0.actor_id 
+    where
+        a1_0.movie_id=?
+2026-01-21 15:52:05 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.movie_id,
+        a1_1.id,
+        a1_1.created_at,
+        a1_1.created_by,
+        a1_1.name,
+        a1_1.role_name,
+        a1_1.salary 
+    from
+        actor_movies a1_0 
+    join
+        actors a1_1 
+            on a1_1.id=a1_0.actor_id 
+    where
+        a1_0.movie_id=?
+2026-01-21 15:52:05 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id in (?) 
+    order by
+        ap1_0.actor_id,
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-21 15:53:09 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-21 15:53:09 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-21 15:53:09 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21 15:53:09 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-21 15:53:09 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-01-21 15:53:11 [main] INFO  r.n.C.CourseProjectApplication - Starting CourseProjectApplication using Java 25.0.1 with PID 4668 (C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject\target\classes started by Yuran in C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject)
+2026-01-21 15:53:11 [main] INFO  r.n.C.CourseProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-21 15:53:12 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-21 15:53:12 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 38 ms. Found 7 JPA repository interfaces.
+2026-01-21 15:53:13 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2026-01-21 15:53:13 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-21 15:53:13 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-01-21 15:53:13 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 1507 ms
+2026-01-21 15:53:13 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-21 15:53:13 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-21 15:53:13 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-21 15:53:13 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-21 15:53:13 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5f26cb8b
+2026-01-21 15:53:13 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-21 15:53:13 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-21 15:53:14 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/course_project?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.30
+	Default catalog/schema: course_project/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-21 15:53:14 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-21 15:53:14 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21 15:53:14 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-21 15:53:15 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:53:15 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:53:15 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:53:15 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-21 15:53:15 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-21 15:53:15 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-01-21 15:53:16 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2026-01-21 15:53:16 [main] INFO  r.n.C.CourseProjectApplication - Started CourseProjectApplication in 4.86 seconds (process running for 5.488)
+2026-01-21 15:53:16 [RMI TCP Connection(10)-192.168.3.2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-21 15:53:16 [RMI TCP Connection(10)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-01-21 15:53:16 [RMI TCP Connection(10)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-01-21 15:53:18 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-21 15:53:18 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-21 15:53:18 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21 15:53:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-21 15:53:18 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-01-21 15:53:21 [main] INFO  r.n.C.CourseProjectApplication - Starting CourseProjectApplication using Java 25.0.1 with PID 46368 (C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject\target\classes started by Yuran in C:\Users\Yuran\Documents\Прог\2 курс\Решенные\CourseProject)
+2026-01-21 15:53:21 [main] INFO  r.n.C.CourseProjectApplication - No active profile set, falling back to 1 default profile: "default"
+2026-01-21 15:53:22 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-01-21 15:53:23 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 62 ms. Found 7 JPA repository interfaces.
+2026-01-21 15:53:23 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat initialized with port 8082 (http)
+2026-01-21 15:53:23 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-01-21 15:53:23 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/11.0.15]
+2026-01-21 15:53:23 [main] INFO  o.s.b.w.c.s.WebApplicationContextInitializer - Root WebApplicationContext: initialization completed in 2085 ms
+2026-01-21 15:53:23 [main] INFO  org.hibernate.orm.jpa - HHH008540: Processing PersistenceUnitInfo [name: default]
+2026-01-21 15:53:23 [main] INFO  org.hibernate.orm.core - HHH000001: Hibernate ORM core version 7.2.0.Final
+2026-01-21 15:53:24 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-01-21 15:53:24 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-01-21 15:53:24 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4693d24f
+2026-01-21 15:53:24 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-01-21 15:53:24 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-01-21 15:53:24 [main] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [jdbc:mysql://localhost:3306/course_project?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true]
+	Database driver: MySQL Connector/J
+	Database dialect: MySQLDialect
+	Database version: 8.0.30
+	Default catalog/schema: course_project/undefined
+	Autocommit mode: undefined/unknown
+	Isolation level: REPEATABLE_READ [default REPEATABLE_READ]
+	JDBC fetch size: none
+	Pool: DataSourceConnectionProvider
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2026-01-21 15:53:24 [main] INFO  org.hibernate.orm.core - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-01-21 15:53:24 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21 15:53:25 [main] INFO  o.s.d.j.r.q.QueryEnhancerFactories - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-01-21 15:53:25 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:53:25 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:53:25 [main] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.id,
+        r1_0.name 
+    from
+        roles r1_0 
+    where
+        r1_0.name=?
+2026-01-21 15:53:25 [main] INFO  o.s.s.c.a.a.c.InitializeAuthenticationProviderBeanManagerConfigurer$InitializeAuthenticationProviderManagerConfigurer - Global AuthenticationManager configured with AuthenticationProvider bean with name authenticationProvider
+2026-01-21 15:53:25 [main] WARN  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with an AuthenticationProvider bean. UserDetailsService beans will not be used by Spring Security for automatically configuring username/password login. Consider removing the AuthenticationProvider bean. Alternatively, consider using the UserDetailsService in a manually instantiated DaoAuthenticationProvider. If the current configuration is intentional, to turn off this warning, increase the logging level of 'org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer' to ERROR
+2026-01-21 15:53:26 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-01-21 15:53:26 [main] INFO  o.s.boot.tomcat.TomcatWebServer - Tomcat started on port 8082 (http) with context path '/'
+2026-01-21 15:53:26 [main] INFO  r.n.C.CourseProjectApplication - Started CourseProjectApplication in 5.54 seconds (process running for 6.192)
+2026-01-21 15:53:26 [http-nio-8082-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-01-21 15:53:26 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-01-21 15:53:26 [http-nio-8082-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-01-21 15:53:28 [http-nio-8082-exec-3] INFO  r.n.C.service.UserService - Loading user by username admin
+2026-01-21 15:53:28 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-01-21 15:53:28 [http-nio-8082-exec-3] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-21 15:53:28 [http-nio-8082-exec-3] INFO  r.n.C.service.UserService - Loaded authorities for admin: [ROLE_ADMIN]
+2026-01-21 15:53:29 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.name,
+        a1_0.role_name,
+        a1_0.salary 
+    from
+        actors a1_0
+2026-01-21 15:53:29 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.actor_id,
+        m1_1.id,
+        m1_1.box_office,
+        m1_1.created_at,
+        m1_1.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_1.image_path,
+        m1_1.release_year,
+        m1_1.title,
+        m1_1.updated_at 
+    from
+        actor_movies m1_0 
+    join
+        movies m1_1 
+            on m1_1.id=m1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_1.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.actor_id=?
+2026-01-21 15:53:29 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.movie_id,
+        a1_1.id,
+        a1_1.created_at,
+        a1_1.created_by,
+        a1_1.name,
+        a1_1.role_name,
+        a1_1.salary 
+    from
+        actor_movies a1_0 
+    join
+        actors a1_1 
+            on a1_1.id=a1_0.actor_id 
+    where
+        a1_0.movie_id=?
+2026-01-21 15:53:29 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.movie_id,
+        a1_1.id,
+        a1_1.created_at,
+        a1_1.created_by,
+        a1_1.name,
+        a1_1.role_name,
+        a1_1.salary 
+    from
+        actor_movies a1_0 
+    join
+        actors a1_1 
+            on a1_1.id=a1_0.actor_id 
+    where
+        a1_0.movie_id=?
+2026-01-21 15:53:29 [http-nio-8082-exec-8] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id in (?) 
+    order by
+        ap1_0.actor_id,
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-21 15:55:49 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-21 15:55:49 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-21 15:55:49 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-21 15:55:49 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-21 15:55:49 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

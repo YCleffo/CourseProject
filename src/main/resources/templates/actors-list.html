@@ -28,8 +28,7 @@
                         <th>ID</th>
                         <th>Фото</th>
                         <th>Имя</th>
-                        <th>Роль</th>
-                        <th>Фильм</th>
+                        <th>Фильмы</th>
                         <th>Зарплата</th>
                         <th>Создано</th>
                         <th th:if="${canModify}">Действия</th>
@@ -37,7 +36,7 @@
                 </thead>
                 <tbody>
                     <tr th:if="${#lists.isEmpty(actors)}">
-                        <td colspan="8" class="text-center">Актёры не найдены</td>
+                        <td colspan="7" class="text-center">Актёры не найдены</td>
                     </tr>
                     <tr th:each="actor : ${actors}">
                         <td th:text="${actor.id}">1</td>
@@ -52,12 +51,11 @@
                         <td>
                             <a th:href="@{/actors/{id}(id=${actor.id}, from='actors')}" th:text="${actor.name}">Имя</a>
                         </td>
-                        <td th:text="${actor.roleName}">Роль</td>
                         <td>
                             <span th:if="${actor.movies != null and !actor.movies.isEmpty()}">
                                 <span th:each="m, st : ${actor.movies}">
-                                    <a th:href="@{/movies/{id}(id=${m.id}, from='actors')}" th:text="${m.title}"></a>
-                                    <span th:unless="${st.last}">, </span>
+                                    <a th:href="@{/movies/{id}(id=${m.id}, from='actors')}"
+                                        th:text="${m.title}"></a><span th:if="${!st.last}">, </span>
                                 </span>
                             </span>
                             <span th:if="${actor.movies == null or actor.movies.isEmpty()}">—</span>
