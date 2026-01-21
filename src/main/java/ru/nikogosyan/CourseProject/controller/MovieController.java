@@ -49,28 +49,28 @@ public class MovieController {
     }
 
     private static final Map<String, String> GENRE_TRANSLATIONS = Map.ofEntries(
-            Map.entry("Action", "Боевик"),
-            Map.entry("Adventure", "Приключения"),
-            Map.entry("Comedy", "Комедия"),
-            Map.entry("Drama", "Драма"),
-            Map.entry("Fantasy", "Фэнтези"),
-            Map.entry("Horror", "Ужасы"),
-            Map.entry("Romance", "Романтика"),
-            Map.entry("Sci-Fi", "Научная фантастика"),
-            Map.entry("Thriller", "Триллер"),
-            Map.entry("Crime", "Криминал"),
-            Map.entry("Mystery", "Детектив"),
-            Map.entry("Biography", "Биография"),
-            Map.entry("History", "История"),
-            Map.entry("War", "Военный"),
-            Map.entry("Western", "Вестерн"),
-            Map.entry("Documentary", "Документальный"),
             Map.entry("Animation", "Анимация"),
-            Map.entry("Family", "Семейный"),
+            Map.entry("Anime", "Аниме"),
+            Map.entry("Biography", "Биография"),
+            Map.entry("Action", "Боевик"),
+            Map.entry("War", "Военный"),
+            Map.entry("Documentary", "Документальный"),
+            Map.entry("Mystery", "Детектив"),
+            Map.entry("Drama", "Драма"),
+            Map.entry("History", "История"),
+            Map.entry("Comedy", "Комедия"),
+            Map.entry("Crime", "Криминал"),
             Map.entry("Musical", "Мюзикл"),
+            Map.entry("Sci-Fi", "Научная фантастика"),
+            Map.entry("Adventure", "Приключения"),
+            Map.entry("Romance", "Романтика"),
+            Map.entry("Family", "Семейный"),
             Map.entry("Sport", "Спорт"),
             Map.entry("Superhero", "Супергеройский"),
-            Map.entry("Anime", "Аниме")
+            Map.entry("Fantasy", "Фэнтези"),
+            Map.entry("Western", "Вестерн"),
+            Map.entry("Horror", "Ужасы"),
+            Map.entry("Thriller", "Триллер")
     );
 
     @GetMapping
@@ -87,7 +87,7 @@ public class MovieController {
         for (Movie movie : movies) {
             String genresString = movie.getGenres().stream()
                     .map(Genre::getName)
-                    .map(genreName -> GENRE_TRANSLATIONS.getOrDefault(genreName, genreName))
+                    .map(n -> GENRE_TRANSLATIONS.getOrDefault(n, n))
                     .collect(Collectors.joining(", "));
             movie.setGenresString(genresString);
         }

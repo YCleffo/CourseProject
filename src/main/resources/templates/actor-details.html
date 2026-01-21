@@ -52,13 +52,13 @@
                             <tr>
                                 <th>Фильмы</th>
                                 <td>
-                                    <span th:if="${actor.movies != null and !actor.movies.isEmpty()}">
-                                        <span th:each="m, st : ${actor.movies}">
+                                    <th:block th:if="${actor.movies != null and !actor.movies.isEmpty()}">
+                                        <th:block th:each="m, st : ${actor.movies}">
                                             <a th:href="@{/movies/{id}(id=${m.id}, from='actors')}"
-                                                th:text="${m.title}"></a>
-                                            <span th:unless="${st.last}">, </span>
-                                        </span>
-                                    </span>
+                                               th:text="${m.title}"></a><span th:if="${!st.last}">, </span>
+                                        </th:block>
+                                    </th:block>
+
                                     <span th:if="${actor.movies == null or actor.movies.isEmpty()}">—</span>
                                 </td>
                             </tr>
@@ -68,7 +68,7 @@
                             </tr>
                             <tr>
                                 <th>Гонорар</th>
-                                <td th:text="${actor.salary != null ? #numbers.formatDecimal(actor.salary,1,2) : '—'}">—
+                                <td th:text="${actor.salary != null ? #numbers.formatDecimal(actor.salary,1,2) + ' $' : '—'}">—
                                 </td>
                             </tr>
                             <tr>
@@ -77,9 +77,7 @@
                             </tr>
                             <tr>
                                 <th>Создан</th>
-                                <td
-                                    th:text="${actor.createdAt != null ? #temporals.format(actor.createdAt,'yyyy-MM-dd HH:mm') : '—'}">
-                                    —</td>
+                                <td th:text="${actor.createdAt != null ? #temporals.format(actor.createdAt, 'dd.MM.yyyy HH:mm') : '—'}">—</td>
                             </tr>
                         </table>
 

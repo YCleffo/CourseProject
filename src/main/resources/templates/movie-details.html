@@ -34,13 +34,11 @@
                         <p><strong>Год:</strong> <span th:text="${movie.releaseYear}"></span></p>
                         <p><strong>Сборы:</strong>
                             <span
-                                th:text="${movie.boxOffice != null ? #numbers.formatDecimal(movie.boxOffice, 1, 2) : '—'}"></span>
+                                th:text="${movie.boxOffice != null ? #numbers.formatDecimal(movie.boxOffice, 1, 2) + ' $' : '—'}"></span>
                         </p>
                         <p><strong>Жанры:</strong>
-                            <span th:each="g,stat : ${movie.genres}">
-                                <span
-                                    th:text="${genreTranslations.get(g.name) != null ? genreTranslations.get(g.name) : g.name}"></span>
-                                <span th:unless="${stat.last}">, </span>
+                            <span th:each="g, stat : ${movie.genres}"
+                                th:text="${genreTranslations.get(g.name) != null ? genreTranslations.get(g.name) : g.name} + (!${stat.last} ? ', ' : '')">
                             </span>
                         </p>
                         <p><strong>Добавил:</strong> <span th:text="${movie.createdBy}"></span></p>
@@ -68,7 +66,8 @@
                                     th:text="${a.name}">Имя</a>
                             </td>
                             <td th:text="${a.roleName}"></td>
-                            <td th:text="${a.salary != null ? #numbers.formatDecimal(a.salary, 1, 2) : '—'}"></td>
+                            <td th:text="${a.salary != null ? #numbers.formatDecimal(a.salary, 1, 2) + ' $' : '—'}">
+                            </td>
                         </tr>
                     </tbody>
                 </table>

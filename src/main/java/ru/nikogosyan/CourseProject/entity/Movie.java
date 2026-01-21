@@ -8,7 +8,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "movies")
@@ -59,21 +58,16 @@ public class Movie {
     private String imagePath;
 
     @Transient
-    private String genresString;
-
-    @Transient
     private Set<Long> genreIds = new HashSet<>();
 
     @ManyToMany(mappedBy = "movies")
     private Set<Actor> actors = new HashSet<>();
 
+    @Transient
+    private String genresString;
+
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = LocalDateTime.now();
-    }
-
-    public String getGenresString() {
-        if (genres == null || genres.isEmpty()) return "";
-        return genres.stream().map(Genre::getName).collect(Collectors.joining(", "));
     }
 }

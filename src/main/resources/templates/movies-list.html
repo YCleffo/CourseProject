@@ -54,12 +54,7 @@
                         <td>
                             <a th:href="@{/movies/{id}(id=${movie.id}, from='movies')}" th:text="${movie.title}"></a>
                         </td>
-                        <td>
-                            <th:block th:each="genre : ${movie.genres}">
-                                <span th:text="${genreTranslations.get(genre.name)}">Жанр</span>
-                                <span th:unless="${genreStat.last}">, </span>
-                            </th:block>
-                        </td>
+                        <td th:text="${movie.genresString}"></td>
                         <td th:text="${movie.releaseYear}">2024</td>
                         <td th:text="${#numbers.formatDecimal(movie.boxOffice, 1, 2) + ' $'}">1000000.00</td>
                         <td th:text="${movie.createdBy}">Пользователь</td>
@@ -69,7 +64,8 @@
                             <form th:action="@{/movies/delete/{id}(id=${movie.id})}" method="post"
                                 style="display: inline;">
                                 <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Вы уверены, что хотите удалить этот фильм?')">Удалить</button>
+                                    onclick="return confirm('Вы уверены, что хотите удалить этот фильм?')">Удалить
+                                </button>
                             </form>
                         </td>
                     </tr>
