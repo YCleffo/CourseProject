@@ -15,10 +15,9 @@ import ru.nikogosyan.CourseProject.repository.MovieRepository;
 import ru.nikogosyan.CourseProject.utils.Roles;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -154,21 +153,66 @@ public class ActorService {
     private void syncMovieCast(Actor actor) {
         if (actor.getId() == null) return;
 
-        movieCastRepository.deleteByActorId(actor.getId());
+        List<MovieCast> existing = movieCastRepository.findByActorIdOrderByIdAsc(actor.getId());
 
-        if (actor.getMovies() == null || actor.getMovies().isEmpty()) return;
+        Map<Long, MovieCast> existingByMovieId = existing.stream()
+                .filter(mc -> mc.getMovie() != null && mc.getMovie().getId() != null)
+                .collect(Collectors.toMap(
+                        mc -> mc.getMovie().getId(),
+                        mc -> mc,
+                        (a, b) -> a
+                ));
+
+        Set<Long> desiredMovieIds = actor.getMovies() == null ? Set.of() :
+                actor.getMovies().stream()
+                        .map(Movie::getId)
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toSet());
+
+        for (MovieCast mc : existing) {
+            Long mid = (mc.getMovie() != null ? mc.getMovie().getId() : null);
+            if (mid != null && !desiredMovieIds.contains(mid)) {
+                movieCastRepository.delete(mc);
+            }
+        }
 
         String rn = actor.getRoleName();
-        if (rn == null || rn.isBlank()) rn = "Unknown";
+        String rnTrim = (rn != null && !rn.isBlank()) ? rn.trim() : null;
+        BigDecimal sal = actor.getSalary();
+
+        if (actor.getMovies() == null) return;
 
         for (Movie m : actor.getMovies()) {
-            MovieCast mc = new MovieCast();
-            mc.setActor(actor);
-            mc.setMovie(m);
-            mc.setRoleName(rn);
-            mc.setSalary(actor.getSalary());
-            mc.setCreatedBy(actor.getCreatedBy());
-            movieCastRepository.save(mc);
+            if (m.getId() == null) continue;
+
+            MovieCast mc = existingByMovieId.get(m.getId());
+
+            if (mc == null) {
+                MovieCast created = new MovieCast();
+                created.setActor(actor);
+                created.setMovie(m);
+                created.setCreatedBy(actor.getCreatedBy());
+                created.setRoleName(rnTrim != null ? rnTrim : "Unknown");
+                created.setSalary(sal);
+                movieCastRepository.save(created);
+                continue;
+            }
+
+            boolean changed = false;
+
+            if (rnTrim != null && !rnTrim.equals(mc.getRoleName())) {
+                mc.setRoleName(rnTrim);
+                changed = true;
+            }
+
+            if (sal != null && !sal.equals(mc.getSalary())) {
+                mc.setSalary(sal);
+                changed = true;
+            }
+
+            if (changed) {
+                movieCastRepository.save(mc);
+            }
         }
     }
 }

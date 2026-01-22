@@ -110,13 +110,20 @@ public class MovieCastService {
             throw new RuntimeException("Role name is required");
         }
 
+        var existingOpt = movieCastRepository.findByActorIdAndMovieId(actorId, movieId);
+        if (existingOpt.isPresent()) {
+            MovieCast existing = existingOpt.get();
+            existing.setRoleName(roleName.trim());
+            existing.setSalary(salary);
+            return movieCastRepository.save(existing);
+        }
+
         MovieCast mc = new MovieCast();
         mc.setMovie(movie);
         mc.setActor(actor);
         mc.setRoleName(roleName.trim());
         mc.setSalary(salary);
         mc.setCreatedBy(ui.username());
-
         return movieCastRepository.save(mc);
     }
 
