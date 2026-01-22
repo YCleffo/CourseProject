@@ -5,40 +5,52 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
       </button>
-
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" th:classappend="${page == 'home'} ? 'active'" th:href="@{/home}">Главная</a>
+            <a class="nav-link" th:classappend="${page == 'home'} ? 'active'" th:href="@{/home}">
+              Главная
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:classappend="${page == 'movies'} ? 'active'" th:href="@{/movies}">Фильмы</a>
+            <a class="nav-link" th:classappend="${page == 'movies'} ? 'active'" th:href="@{/movies}">
+              Фильмы
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:classappend="${page == 'actors'} ? 'active'" th:href="@{/actors}">Актёры</a>
+            <a class="nav-link" th:classappend="${page == 'actors'} ? 'active'" th:href="@{/actors}">
+              Актёры
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:classappend="${page == 'calculation'} ? 'active'" th:href="@{/calculation}">Расчет
-              прибыли</a>
+            <a class="nav-link" th:classappend="${page == 'calculation'} ? 'active'" th:href="@{/calculation}">
+              Расчет прибыли
+            </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" th:classappend="${page == 'about'} ? 'active'" th:href="@{/about}">О приложении</a>
+            <a class="nav-link" th:classappend="${page == 'about'} ? 'active'" th:href="@{/about}">
+              О приложении
+            </a>
           </li>
-
           <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-            <a class="nav-link" th:classappend="${page == 'admin'} ? 'active'" th:href="@{/admin/roles}">Админ
-              панель</a>
+            <a class="nav-link" th:classappend="${page == 'admin'} ? 'active'" th:href="@{/admin/roles}">
+              Админ панель
+            </a>
           </li>
         </ul>
-
         <ul class="navbar-nav">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-              <span th:text="${#authentication.name}">Пользователь</span>
+              <span th:text="${#authentication.name}">
+                Пользователь
+              </span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
               <li>
-                <span class="dropdown-item-text">Роль: <span th:text="${roles}"></span></span>
+                <span class="dropdown-item-text">
+                  Роль: 
+                  <span th:text="${roles}"></span>
+                </span>
               </li>
               <li>
                 <hr class="dropdown-divider" />

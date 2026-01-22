@@ -63,7 +63,7 @@
                         <tr th:if="${canModify}" data-nosort="true">
                             <td>
                                 <select name="actorId" class="form-select form-select-sm" required form="castAddForm">
-                                    <option value="" selected>-- выбрать --</option>
+                                    <option value="" selected>- Выберите -</option>
                                     <option th:each="a : ${actorsToAdd}" th:value="${a.id}" th:text="${a.name}">
                                     </option>
                                 </select>
@@ -88,7 +88,7 @@
                         </tr>
 
                         <tr th:if="${#lists.isEmpty(cast)}" data-nosort="true">
-                            <td th:colspan="${canModify ? 4 : 3}" class="text-center text-muted">Каст пока пуст.</td>
+                            <td th:colspan="${canModify ? 4 : 3}" class="text-center text-muted">Пусто.</td>
                         </tr>
 
                         <tr th:each="mc : ${cast}" class="cast-row">
@@ -126,7 +126,9 @@
                                 <form th:action="@{/movies/{id}/cast/{castId}/delete(id=${movie.id}, castId=${mc.id})}"
                                     method="post" style="display:inline"
                                     onsubmit="return confirm('Удалить из каста?');">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger">Удалить</button>
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">
+                                        Удалить
+                                    </button>
                                 </form>
                             </td>
                         </tr>

@@ -24,7 +24,7 @@
                             th:object="${movie}" method="post" enctype="multipart/form-data">
 
                             <div class="mb-3">
-                                <label for="title" class="form-label">Название *</label>
+                                <label for="title" class="form-label">Название</label>
                                 <input type="text" class="form-control" id="title" th:field="*{title}" required>
                                 <div class="text-danger" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">
                                 </div>

@@ -5893,3 +5893,430 @@
 2026-01-22 00:21:08 [RMI TCP Connection(5)-192.168.3.2] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 2026-01-22 00:21:08 [RMI TCP Connection(5)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 2026-01-22 00:21:08 [RMI TCP Connection(5)-192.168.3.2] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-01-22 00:21:54 [http-nio-8082-exec-9] INFO  r.n.C.service.UserService - Loading user by username admin
+2026-01-22 00:21:54 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0 
+    where
+        u1_0.username=?
+2026-01-22 00:21:54 [http-nio-8082-exec-9] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-22 00:21:54 [http-nio-8082-exec-9] INFO  r.n.C.service.UserService - Loaded authorities for admin: [ROLE_ADMIN]
+2026-01-22 00:21:56 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        u1_0.id,
+        u1_0.created_at,
+        u1_0.enabled,
+        u1_0.password,
+        u1_0.username 
+    from
+        users u1_0
+2026-01-22 00:21:56 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-22 00:21:56 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        r1_0.user_id,
+        r1_1.id,
+        r1_1.name 
+    from
+        user_roles r1_0 
+    join
+        roles r1_1 
+            on r1_1.id=r1_0.role_id 
+    where
+        r1_0.user_id=?
+2026-01-22 00:22:03 [http-nio-8082-exec-4] INFO  r.n.C.service.MovieService - Getting movies for user admin, isAdmin=true, isUser=false, isReadOnly=false
+2026-01-22 00:22:03 [http-nio-8082-exec-4] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-22 00:22:06 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.name 
+    from
+        actors a1_0
+2026-01-22 00:22:06 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.actor_id,
+        m1_1.id,
+        m1_1.box_office,
+        m1_1.created_at,
+        m1_1.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_1.image_path,
+        m1_1.release_year,
+        m1_1.title,
+        m1_1.updated_at 
+    from
+        actor_movies m1_0 
+    join
+        movies m1_1 
+            on m1_1.id=m1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_1.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.actor_id=?
+2026-01-22 00:22:06 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.actor_id,
+        m1_1.id,
+        m1_1.box_office,
+        m1_1.created_at,
+        m1_1.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_1.image_path,
+        m1_1.release_year,
+        m1_1.title,
+        m1_1.updated_at 
+    from
+        actor_movies m1_0 
+    join
+        movies m1_1 
+            on m1_1.id=m1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_1.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.actor_id=?
+2026-01-22 00:22:06 [http-nio-8082-exec-7] DEBUG org.hibernate.SQL - 
+    select
+        ap1_0.id,
+        ap1_0.actor_id,
+        ap1_0.created_at,
+        ap1_0.image_path,
+        ap1_0.is_primary 
+    from
+        actor_photos ap1_0 
+    where
+        ap1_0.actor_id in (?, ?) 
+    order by
+        ap1_0.actor_id,
+        ap1_0.is_primary desc,
+        ap1_0.created_at,
+        ap1_0.id
+2026-01-22 00:22:08 [http-nio-8082-exec-1] INFO  r.n.C.service.MovieService - Getting movies for user admin, isAdmin=true, isUser=false, isReadOnly=false
+2026-01-22 00:22:08 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-22 00:22:08 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        mc1_0.id,
+        mc1_0.actor_id,
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.name,
+        mc1_0.created_at,
+        mc1_0.created_by,
+        mc1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        mc1_0.role_name,
+        mc1_0.salary 
+    from
+        movie_cast mc1_0 
+    join
+        movies m1_0 
+            on m1_0.id=mc1_0.movie_id 
+    join
+        actors a1_0 
+            on a1_0.id=mc1_0.actor_id 
+    where
+        m1_0.id in (?, ?, ?) 
+    order by
+        m1_0.id,
+        mc1_0.id
+2026-01-22 00:22:08 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.actor_id,
+        m1_1.id,
+        m1_1.box_office,
+        m1_1.created_at,
+        m1_1.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_1.image_path,
+        m1_1.release_year,
+        m1_1.title,
+        m1_1.updated_at 
+    from
+        actor_movies m1_0 
+    join
+        movies m1_1 
+            on m1_1.id=m1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_1.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.actor_id=?
+2026-01-22 00:22:08 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.actor_id,
+        m1_1.id,
+        m1_1.box_office,
+        m1_1.created_at,
+        m1_1.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_1.image_path,
+        m1_1.release_year,
+        m1_1.title,
+        m1_1.updated_at 
+    from
+        actor_movies m1_0 
+    join
+        movies m1_1 
+            on m1_1.id=m1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_1.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.actor_id=?
+2026-01-22 00:22:25 [http-nio-8082-exec-6] INFO  r.n.C.service.MovieService - Getting movies for user admin, isAdmin=true, isUser=false, isReadOnly=false
+2026-01-22 00:22:25 [http-nio-8082-exec-6] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-22 00:22:26 [http-nio-8082-exec-1] INFO  r.n.C.service.MovieService - Getting movies for user admin, isAdmin=true, isUser=false, isReadOnly=false
+2026-01-22 00:22:26 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-22 00:22:26 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        mc1_0.id,
+        mc1_0.actor_id,
+        a1_0.id,
+        a1_0.created_at,
+        a1_0.created_by,
+        a1_0.name,
+        mc1_0.created_at,
+        mc1_0.created_by,
+        mc1_0.movie_id,
+        m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at,
+        mc1_0.role_name,
+        mc1_0.salary 
+    from
+        movie_cast mc1_0 
+    join
+        movies m1_0 
+            on m1_0.id=mc1_0.movie_id 
+    join
+        actors a1_0 
+            on a1_0.id=mc1_0.actor_id 
+    where
+        m1_0.id in (?, ?, ?) 
+    order by
+        m1_0.id,
+        mc1_0.id
+2026-01-22 00:22:26 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.actor_id,
+        m1_1.id,
+        m1_1.box_office,
+        m1_1.created_at,
+        m1_1.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_1.image_path,
+        m1_1.release_year,
+        m1_1.title,
+        m1_1.updated_at 
+    from
+        actor_movies m1_0 
+    join
+        movies m1_1 
+            on m1_1.id=m1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_1.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.actor_id=?
+2026-01-22 00:22:26 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        m1_0.actor_id,
+        m1_1.id,
+        m1_1.box_office,
+        m1_1.created_at,
+        m1_1.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_1.image_path,
+        m1_1.release_year,
+        m1_1.title,
+        m1_1.updated_at 
+    from
+        actor_movies m1_0 
+    join
+        movies m1_1 
+            on m1_1.id=m1_0.movie_id 
+    left join
+        movie_genres g1_0 
+            on m1_1.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id 
+    where
+        m1_0.actor_id=?
+2026-01-22 00:22:28 [http-nio-8082-exec-1] INFO  r.n.C.service.MovieService - Getting movies for user admin, isAdmin=true, isUser=false, isReadOnly=false
+2026-01-22 00:22:28 [http-nio-8082-exec-1] DEBUG org.hibernate.SQL - 
+    select
+        distinct m1_0.id,
+        m1_0.box_office,
+        m1_0.created_at,
+        m1_0.created_by,
+        g1_0.movie_id,
+        g1_1.id,
+        g1_1.name,
+        m1_0.image_path,
+        m1_0.release_year,
+        m1_0.title,
+        m1_0.updated_at 
+    from
+        movies m1_0 
+    left join
+        movie_genres g1_0 
+            on m1_0.id=g1_0.movie_id 
+    left join
+        genres g1_1 
+            on g1_1.id=g1_0.genre_id
+2026-01-22 00:22:57 [SpringApplicationShutdownHook] INFO  o.s.boot.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2026-01-22 00:22:57 [tomcat-shutdown] INFO  o.s.boot.tomcat.GracefulShutdown - Graceful shutdown complete
+2026-01-22 00:22:57 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-01-22 00:22:57 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-01-22 00:22:57 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

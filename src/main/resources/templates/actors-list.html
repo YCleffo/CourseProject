@@ -61,12 +61,14 @@
                         </td>
                         <td th:text="${actor.createdBy}">Пользователь</td>
                         <td th:if="${canModify}">
-                            <a th:href="@{/actors/edit/{id}(id=${actor.id})}"
-                                class="btn btn-sm btn-primary">Изменить</a>
+                            <a th:href="@{/actors/edit/{id}(id=${actor.id})}" class="btn btn-sm btn-primary">
+                                Изменить
+                            </a>
                             <form th:action="@{/actors/delete/{id}(id=${actor.id})}" method="post"
                                 style="display: inline;">
                                 <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Вы уверены?')">Удалить
+                                    onclick="return confirm('Вы уверены?')">
+                                    Удалить
                                 </button>
                             </form>
                         </td>

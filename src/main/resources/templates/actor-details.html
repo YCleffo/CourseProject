@@ -22,14 +22,17 @@
                 <h3 class="mb-0" th:text="${actor.name}">Имя актёра</h3>
                 <div class="d-flex gap-2">
                     <a th:if="${from == 'movies' and movieId != null}"
-                        th:href="@{/movies/{id}(id=${movieId}, from='movies')}" class="btn btn-secondary btn-sm">Назад к
-                        фильму</a>
-
+                        th:href="@{/movies/{id}(id=${movieId}, from='movies')}" class="btn btn-secondary btn-sm">
+                        Назад к фильму
+                    </a>
                     <a th:unless="${from == 'movies' and movieId != null}" th:href="@{/actors}"
-                        class="btn btn-secondary btn-sm">Назад к списку актёров</a>
-
+                        class="btn btn-secondary btn-sm">
+                        Назад к списку актёров
+                    </a>
                     <a th:if="${canModify}" th:href="@{/actors/edit/{id}(id=${actor.id})}"
-                        class="btn btn-primary btn-sm">Редактировать</a>
+                        class="btn btn-primary btn-sm">
+                        Редактировать
+                    </a>
                 </div>
             </div>
 
@@ -43,7 +46,9 @@
                         <div th:unless="${primaryPhotoPath != null}"
                             class="border rounded d-flex align-items-center justify-content-center bg-light"
                             style="height: 260px;">
-                            <span class="text-muted">Нет фото</span>
+                            <span class="text-muted">
+                                Нет фото
+                            </span>
                         </div>
                     </div>
 
@@ -55,7 +60,7 @@
                                     <span th:if="${actor.movies != null and !actor.movies.isEmpty()}">
                                         <span th:each="m, st : ${actor.movies}">
                                             <a th:href="@{/movies/{id}(id=${m.id}, from='actors')}"
-                                                th:text="${m.title}">Movie</a><span th:if="${!st.last}">, </span>
+                                                th:text="${m.title}">Фильм</a><span th:if="${!st.last}">, </span>
                                         </span>
                                     </span>
                                     <span th:if="${actor.movies == null or actor.movies.isEmpty()}"
@@ -68,7 +73,6 @@
                                     th:text="${actor.roleName != null and !#strings.isEmpty(actor.roleName) ? actor.roleName : '—'}">
                                     —</td>
                             </tr>
-
                             <tr th:if="${movieId != null}">
                                 <th>Гонорар (для текущего фильма)</th>
                                 <td
@@ -116,7 +120,9 @@
                                 th:attr="data-index=${st.index}">
 
                             <div class="card-body p-2">
-                                <span th:if="${p.isPrimary}" class="badge bg-success">Главное</span>
+                                <span th:if="${p.isPrimary}" class="badge bg-success">
+                                    Главное
+                                </span>
 
                                 <div th:if="${canModify}" class="d-grid gap-1 mt-2">
                                     <form th:if="${!p.isPrimary}"
@@ -124,15 +130,18 @@
                                         method="post">
                                         <input type="hidden" name="from" th:value="${from}">
                                         <input type="hidden" name="movieId" th:value="${movieId}">
-                                        <button type="submit" class="btn btn-outline-primary btn-sm">Сделать
-                                            главным</button>
+                                        <button type="submit" class="btn btn-outline-primary btn-sm">
+                                            Сделать главным
+                                        </button>
                                     </form>
 
                                     <form th:action="@{/actors/{id}/photos/{pid}/delete(id=${actor.id}, pid=${p.id})}"
                                         method="post" onsubmit="return confirm('Удалить фото?');">
                                         <input type="hidden" name="from" th:value="${from}">
                                         <input type="hidden" name="movieId" th:value="${movieId}">
-                                        <button type="submit" class="btn btn-outline-danger btn-sm">Удалить</button>
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            Удалить
+                                        </button>
                                     </form>
                                 </div>
 
@@ -158,8 +167,8 @@
                             <div class="carousel-indicators" th:if="${!#lists.isEmpty(photos)}">
                                 <button th:each="p, st : ${photos}" type="button" data-bs-target="#actorGalleryCarousel"
                                     th:classappend="${st.index == 0} ? 'active' : ''" th:attr="data-bs-slide-to=${st.index},
-                   aria-label=|Slide ${st.index + 1}|,
-                   aria-current=${st.index == 0} ? 'true' : null">
+                                        aria-label=|Slide ${st.index + 1}|,
+                                        aria-current=${st.index == 0} ? 'true' : null">
                                 </button>
                             </div>
 
@@ -174,13 +183,13 @@
                             <button class="carousel-control-prev" type="button" data-bs-target="#actorGalleryCarousel"
                                 data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Previous</span>
+                                <span class="visually-hidden">Назад</span>
                             </button>
 
                             <button class="carousel-control-next" type="button" data-bs-target="#actorGalleryCarousel"
                                 data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Next</span>
+                                <span class="visually-hidden">Вперед</span>
                             </button>
 
                         </div>
