@@ -30,3 +30,15 @@ option:hover {
 option {
     cursor: pointer;
 }
+
+.table__action_col .btn {
+    width: 100%;
+}
+
+.table__action_col {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    gap: 12px;
+    justify-content: center;
+}

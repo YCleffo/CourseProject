@@ -28,8 +28,8 @@
                     <tr>
                         <th>ID</th>
                         <th>Фото</th>
-                        <th>Название</th>
-                        <th>Жанр</th>
+                        <th style="width: 200px;">Название</th>
+                        <th style="width: 200px;">Жанр</th>
                         <th>Год выпуска</th>
                         <th>Сборы в прокате</th>
                         <th>Бюджет</th>
@@ -61,14 +61,16 @@
                         <td th:text="${#numbers.formatDecimal(movie.budget, 1, 2) + ' $'}">1000000.00</td>
                         <td th:text="${movie.createdBy}">Пользователь</td>
                         <td th:if="${canModify}">
-                            <a th:href="@{/movies/edit/{id}(id=${movie.id})}"
-                                class="btn btn-sm btn-primary">Изменить</a>
-                            <form th:action="@{/movies/delete/{id}(id=${movie.id})}" method="post"
-                                style="display: inline;">
-                                <button type="submit" class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Вы уверены, что хотите удалить этот фильм?')">Удалить
-                                </button>
-                            </form>
+                            <div class="table__action_col">
+                                <a th:href="@{/movies/edit/{id}(id=${movie.id})}"
+                                   class="btn btn-sm btn-primary">Изменить</a>
+                                <form th:action="@{/movies/delete/{id}(id=${movie.id})}" method="post"
+                                      style="display: inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Вы уверены, что хотите удалить этот фильм?')">Удалить
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 </tbody>

@@ -8,31 +8,37 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
+            <!--/*@thymesVar id="page" type="ru"*/-->
             <a class="nav-link" th:classappend="${page == 'home'} ? 'active'" th:href="@{/home}">
               Главная
             </a>
           </li>
           <li class="nav-item">
+            <!--/*@thymesVar id="page" type="ru"*/-->
             <a class="nav-link" th:classappend="${page == 'movies'} ? 'active'" th:href="@{/movies}">
               Фильмы
             </a>
           </li>
           <li class="nav-item">
+            <!--/*@thymesVar id="page" type="ru"*/-->
             <a class="nav-link" th:classappend="${page == 'actors'} ? 'active'" th:href="@{/actors}">
               Актёры
             </a>
           </li>
           <li class="nav-item">
+            <!--/*@thymesVar id="page" type="ru"*/-->
             <a class="nav-link" th:classappend="${page == 'calculation'} ? 'active'" th:href="@{/calculation}">
               Расчет прибыли
             </a>
           </li>
           <li class="nav-item">
+            <!--/*@thymesVar id="page" type="ru"*/-->
             <a class="nav-link" th:classappend="${page == 'about'} ? 'active'" th:href="@{/about}">
               О приложении
             </a>
           </li>
           <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+            <!--/*@thymesVar id="page" type="ru"*/-->
             <a class="nav-link" th:classappend="${page == 'admin'} ? 'active'" th:href="@{/admin/roles}">
               Админ панель
             </a>
@@ -49,6 +55,7 @@
               <li>
                 <span class="dropdown-item-text">
                   Роль: 
+                  <!--/*@thymesVar id="roles" type="ru"*/-->
                   <span th:text="${roles}"></span>
                 </span>
               </li>
