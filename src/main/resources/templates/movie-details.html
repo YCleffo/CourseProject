@@ -7,6 +7,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" th:href="@{/img/favicon.svg}">
+    <style>
+        th.cast-sort {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th.cast-sort::after {
+            content: " ↕";
+            color: #999;
+            font-weight: normal;
+        }
+
+        th.cast-sort.sorted-asc::after {
+            content: " ↑";
+            color: #333;
+        }
+
+        th.cast-sort.sorted-desc::after {
+            content: " ↓";
+            color: #333;
+        }
+    </style>
 </head>
 
 <body>
@@ -62,21 +84,27 @@
                     <tbody>
                         <tr th:if="${canModify}" data-nosort="true">
                             <td>
-                                <select name="actorId" class="form-select form-select-sm" required form="castAddForm">
-                                    <option value="" selected>- Выберите -</option>
-                                    <option th:each="a : ${actorsToAdd}" th:value="${a.id}" th:text="${a.name}">
-                                    </option>
-                                </select>
+                                <label>
+                                    <select name="actorId" class="form-select form-select-sm" required form="castAddForm">
+                                        <option value="" selected>- Выберите -</option>
+                                        <option th:each="a : ${actorsToAdd}" th:value="${a.id}" th:text="${a.name}">
+                                        </option>
+                                    </select>
+                                </label>
                             </td>
 
                             <td>
-                                <input name="roleName" class="form-control form-control-sm" required form="castAddForm">
+                                <label>
+                                    <input name="roleName" class="form-control form-control-sm" required form="castAddForm">
+                                </label>
                             </td>
 
                             <td>
-                                <input name="salary" type="number" step="0.01" min="0"
-                                    class="form-control form-control-sm" placeholder="например 1000000"
-                                    form="castAddForm">
+                                <label>
+                                    <input name="salary" type="number" step="0.01" min="0"
+                                        class="form-control form-control-sm" placeholder="например 1000000"
+                                        form="castAddForm">
+                                </label>
                             </td>
 
                             <td class="text-nowrap">
@@ -100,17 +128,21 @@
                             <td class="cast-role">
                                 <span th:if="${!canModify}" th:text="${mc.roleName}"></span>
 
-                                <input th:if="${canModify}" class="form-control form-control-sm" name="roleName"
-                                    required th:value="${mc.roleName}" th:attr="form=${'castUpdateForm_' + mc.id}">
+                                <label>
+                                    <input th:if="${canModify}" class="form-control form-control-sm" name="roleName"
+                                        required th:value="${mc.roleName}" th:attr="form=${'castUpdateForm_' + mc.id}">
+                                </label>
                             </td>
 
                             <td class="cast-salary">
                                 <span th:if="${!canModify}"
                                     th:text="${mc.salary != null ? #numbers.formatDecimal(mc.salary, 1, 2) : ''}"></span>
 
-                                <input th:if="${canModify}" class="form-control form-control-sm" name="salary"
-                                    type="number" step="0.01" min="0" th:value="${mc.salary}"
-                                    th:attr="form=${'castUpdateForm_' + mc.id}">
+                                <label>
+                                    <input th:if="${canModify}" class="form-control form-control-sm" name="salary"
+                                        type="number" step="0.01" min="0" th:value="${mc.salary}"
+                                        th:attr="form=${'castUpdateForm_' + mc.id}">
+                                </label>
                             </td>
 
                             <td th:if="${canModify}" class="text-nowrap">
@@ -134,29 +166,6 @@
                         </tr>
                     </tbody>
                 </table>
-
-                <style>
-                    th.cast-sort {
-                        cursor: pointer;
-                        user-select: none;
-                    }
-
-                    th.cast-sort::after {
-                        content: " ↕";
-                        color: #999;
-                        font-weight: normal;
-                    }
-
-                    th.cast-sort.sorted-asc::after {
-                        content: " ↑";
-                        color: #333;
-                    }
-
-                    th.cast-sort.sorted-desc::after {
-                        content: " ↓";
-                        color: #333;
-                    }
-                </style>
 
                 <script>
                     document.addEventListener('DOMContentLoaded', () => {
@@ -223,7 +232,9 @@
 
 
 
-                <a class="btn btn-secondary" th:href="${from == 'actors'} ? @{/actors} : @{/movies}">
+                <a class="btn btn-secondary"
+                   th:with="backUrl=(${from} == 'actors' ? '/actors' : '/movies')"
+                   th:href="@{${backUrl}}">
                     Назад к списку
                 </a>
             </div>
