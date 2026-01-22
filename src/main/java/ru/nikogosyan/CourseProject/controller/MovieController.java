@@ -46,9 +46,9 @@ public class MovieController {
     public void init() {
         try {
             if (!Files.exists(UPLOAD_DIR)) Files.createDirectories(UPLOAD_DIR);
-            log.info("Created upload directory {}", UPLOAD_DIR.toAbsolutePath());
+            log.info("Созданный каталог загрузки {}", UPLOAD_DIR.toAbsolutePath());
         } catch (IOException e) {
-            log.error("Failed to create upload directory {}", e.getMessage(), e);
+            log.error("Не удалось создать каталог для загрузки {}", e.getMessage(), e);
         }
     }
 
@@ -225,7 +225,7 @@ public class MovieController {
 
             if (imageFile != null && !imageFile.isEmpty()) {
                 if (imageFile.getSize() > 50L * 1024 * 1024) {
-                    model.addAttribute("error", "File too large. Maximum size is 50MB.");
+                    model.addAttribute("error", "Файл слишком большой. Максимальный размер - 10 МБ.");
                     model.addAttribute("genres", getGenresSortedRu());
 
                     model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
@@ -234,7 +234,7 @@ public class MovieController {
 
                 String contentType = imageFile.getContentType();
                 if (contentType == null || !contentType.startsWith("image")) {
-                    model.addAttribute("error", "Only image files are allowed.");
+                    model.addAttribute("error", "Разрешены только файлы изображений.");
                     model.addAttribute("genres", getGenresSortedRu());
 
                     model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
@@ -301,7 +301,7 @@ public class MovieController {
 
             boolean isAdmin = securityUtils.isAdmin(authentication);
             if (!isAdmin && !Objects.equals(existingMovie.getCreatedBy(), authentication.getName())) {
-                model.addAttribute("error", "You dont have permission to update this movie.");
+                model.addAttribute("error", "У вас нет разрешения на обновление этого фильма.");
                 return "redirect:/movies";
             }
 
@@ -348,7 +348,7 @@ public class MovieController {
 
     private void checkModifyPermission(Authentication authentication) {
         if (securityUtils.isReadOnly(authentication)) {
-            throw new RuntimeException("READONLY users cannot modify data");
+            throw new RuntimeException("Пользователи, доступные только для чтения, не могут изменять данные");
         }
     }
 
@@ -368,7 +368,7 @@ public class MovieController {
                     Path oldFile = Paths.get("").resolve(existingPath.substring(1));
                     Files.deleteIfExists(oldFile);
                 } catch (IOException e) {
-                    log.warn("Failed to delete old image {}", e.getMessage());
+                    log.warn("Не удалось удалить старое изображение {}", e.getMessage());
                 }
             }
         } else if (existingPath != null) {
@@ -379,11 +379,11 @@ public class MovieController {
     private static @NonNull String getExtension(MultipartFile imageFile) throws IOException {
         String contentType = imageFile.getContentType();
         if (contentType == null || !contentType.startsWith("image"))
-            throw new IOException("Only image files are allowed.");
-        if (imageFile.getSize() > 10L * 1024 * 1024) throw new IOException("File too large. Maximum size is 10MB.");
+            throw new IOException("Разрешены только файлы изображений.");
+        if (imageFile.getSize() > 10L * 1024 * 1024) throw new IOException("Файл слишком большой. Максимальный размер - 10 МБ.");
 
         String originalFilename = imageFile.getOriginalFilename();
-        if (originalFilename == null || originalFilename.isEmpty()) throw new IOException("Invalid file name.");
+        if (originalFilename == null || originalFilename.isEmpty()) throw new IOException("Недопустимое имя файла.");
 
         return originalFilename.substring(originalFilename.lastIndexOf("."));
     }

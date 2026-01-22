@@ -39,7 +39,7 @@ public class ActorService {
 
     @Transactional(readOnly = true)
     public Actor getActorById(Long id) {
-        return actorRepository.findById(id).orElseThrow(() -> new RuntimeException("Actor not found"));
+        return actorRepository.findById(id).orElseThrow(() -> new RuntimeException("Актер не найден"));
     }
 
     @Transactional(readOnly = true)
@@ -50,7 +50,7 @@ public class ActorService {
         if (userInfo.isAdmin() || !userInfo.isUser()) return actor;
 
         if (!Objects.equals(actor.getCreatedBy(), userInfo.username())) {
-            throw new RuntimeException("You dont have permission to view this actor");
+            throw new RuntimeException("У вас нет разрешения на просмотр этого актера");
         }
         return actor;
     }
@@ -111,7 +111,7 @@ public class ActorService {
                 .anyMatch(role -> role.equals(Roles.ROLE_ADMIN));
 
         if (!isAdmin && !Objects.equals(actor.getCreatedBy(), username)) {
-            throw new RuntimeException("You dont have permission to update this actor");
+            throw new RuntimeException("У вас нет разрешения на обновление этого субъекта");
         }
 
         actor.setName(updatedActor.getName());
@@ -142,7 +142,7 @@ public class ActorService {
                 .anyMatch(role -> role.equals(Roles.ROLE_ADMIN));
 
         if (!isAdmin && !Objects.equals(actor.getCreatedBy(), username)) {
-            throw new RuntimeException("You dont have permission to delete this actor");
+            throw new RuntimeException("У вас нет разрешения на удаление этого участника");
         }
 
         movieCastRepository.deleteByActorId(id);

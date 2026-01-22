@@ -63,29 +63,11 @@ public class ActorPhotoService {
         Actor actor = actorService.getActorById(actorId);
         checkCanModify(authentication, actor);
 
-        if (imageFile == null || imageFile.isEmpty()) throw new RuntimeException("File is empty");
-
-        String contentType = imageFile.getContentType();
-        if (contentType == null || !contentType.startsWith("image")) {
-            throw new RuntimeException("Only image files are allowed");
-        }
-
-        if (!Files.exists(UPLOADDIR)) Files.createDirectories(UPLOADDIR);
-
-        String ext = getExtension(imageFile.getOriginalFilename());
-        String fileName = System.currentTimeMillis() + "-" + UUID.randomUUID() + ext;
-
-        Path filePath = UPLOADDIR.resolve(fileName);
-        Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
+        validateImage(imageFile);
+        String webPath = storeFile(imageFile);
 
         boolean makePrimary = !actorPhotoRepository.existsByActorIdAndIsPrimaryTrue(actorId);
-
-        ActorPhoto photo = new ActorPhoto();
-        photo.setActor(actor);
-        photo.setImagePath("/uploads/actors/" + fileName);
-        photo.setPrimary(makePrimary);
-
-        actorPhotoRepository.save(photo);
+        savePhoto(actor, webPath, makePrimary);
     }
 
     @Transactional
@@ -93,13 +75,24 @@ public class ActorPhotoService {
         Actor actor = actorService.getActorById(actorId);
         checkCanModify(authentication, actor);
 
-        if (imageFile == null || imageFile.isEmpty()) throw new RuntimeException("File is empty");
+        validateImage(imageFile);
+        String webPath = storeFile(imageFile);
 
+        actorPhotoRepository.clearPrimary(actorId);
+        savePhoto(actor, webPath, true);
+    }
+
+    private void validateImage(MultipartFile imageFile) {
+        if (imageFile == null || imageFile.isEmpty()) {
+            throw new RuntimeException("Файл пуст");
+        }
         String contentType = imageFile.getContentType();
         if (contentType == null || !contentType.startsWith("image")) {
-            throw new RuntimeException("Only image files are allowed");
+            throw new RuntimeException("Разрешены только файлы изображений");
         }
+    }
 
+    private String storeFile(MultipartFile imageFile) throws IOException {
         if (!Files.exists(UPLOADDIR)) Files.createDirectories(UPLOADDIR);
 
         String ext = getExtension(imageFile.getOriginalFilename());
@@ -108,15 +101,17 @@ public class ActorPhotoService {
         Path filePath = UPLOADDIR.resolve(fileName);
         Files.copy(imageFile.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-        actorPhotoRepository.clearPrimary(actorId);
+        return "/uploads/actors/" + fileName;
+    }
 
+    private void savePhoto(Actor actor, String webPath, boolean primary) {
         ActorPhoto photo = new ActorPhoto();
         photo.setActor(actor);
-        photo.setImagePath("/uploads/actors/" + fileName);
-        photo.setPrimary(true);
-
+        photo.setImagePath(webPath);
+        photo.setPrimary(primary);
         actorPhotoRepository.save(photo);
     }
+
 
     @Transactional
     public void setPrimary(Long actorId, Long photoId, Authentication authentication) {
@@ -124,7 +119,7 @@ public class ActorPhotoService {
         checkCanModify(authentication, actor);
 
         ActorPhoto photo = actorPhotoRepository.findByIdAndActorId(photoId, actorId)
-                .orElseThrow(() -> new RuntimeException("Photo not found"));
+                .orElseThrow(() -> new RuntimeException("Фотография не найдена"));
 
         actorPhotoRepository.clearPrimary(actorId);
         photo.setPrimary(true);
@@ -137,7 +132,7 @@ public class ActorPhotoService {
         checkCanModify(authentication, actor);
 
         ActorPhoto photo = actorPhotoRepository.findByIdAndActorId(photoId, actorId)
-                .orElseThrow(() -> new RuntimeException("Photo not found"));
+                .orElseThrow(() -> new RuntimeException("Фотография не найдена"));
 
         String path = photo.getImagePath();
         if (path != null && path.startsWith("/uploads/")) {
@@ -159,14 +154,14 @@ public class ActorPhotoService {
 
     private void checkCanModify(Authentication authentication, Actor actor) {
         if (securityUtils.isReadOnly(authentication)) {
-            throw new RuntimeException("READONLY users cannot modify data");
+            throw new RuntimeException("Пользователи, доступные только для чтения, не могут изменять данные");
         }
         boolean isAdmin = securityUtils.isAdmin(authentication);
         String username = authentication.getName();
         String createdBy = actor.getCreatedBy();
 
         if (!isAdmin && createdBy != null && !createdBy.equals(username)) {
-            throw new RuntimeException("You dont have permission to modify this actor");
+            throw new RuntimeException("У вас нет прав на изменение этого субъекта");
         }
     }
 

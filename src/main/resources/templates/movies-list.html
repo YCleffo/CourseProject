@@ -32,6 +32,7 @@
                         <th>Жанр</th>
                         <th>Год выпуска</th>
                         <th>Сборы в прокате</th>
+                        <th>Бюджет</th>
                         <th>Создано</th>
                         <th th:if="${canModify}">Действия</th>
                     </tr>
@@ -57,6 +58,7 @@
                         <td th:text="${movie.genresString}"></td>
                         <td th:text="${movie.releaseYear}">2024</td>
                         <td th:text="${#numbers.formatDecimal(movie.boxOffice, 1, 2) + ' $'}">1000000.00</td>
+                        <td th:text="${#numbers.formatDecimal(movie.budget, 1, 2) + ' $'}">1000000.00</td>
                         <td th:text="${movie.createdBy}">Пользователь</td>
                         <td th:if="${canModify}">
                             <a th:href="@{/movies/edit/{id}(id=${movie.id})}"

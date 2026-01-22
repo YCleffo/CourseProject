@@ -36,7 +36,7 @@ public class Actor {
     private Set<Long> movieIds = new HashSet<>();
 
     @Column(nullable = false)
-    @NotBlank(message = "Actor name is required")
+    @NotBlank(message = "Требуется имя актера")
     private String name;
 
     @Transient

@@ -58,6 +58,10 @@
                             <span
                                 th:text="${movie.boxOffice != null ? #numbers.formatDecimal(movie.boxOffice, 1, 2) + ' $' : '—'}"></span>
                         </p>
+                        <p><strong>Сборы:</strong>
+                            <span
+                                    th:text="${movie.budget != null ? #numbers.formatDecimal(movie.boxOffice, 1, 2) + ' $' : '—'}"></span>
+                        </p>
                         <p><strong>Жанры:</strong>
                             <span th:each="g, stat : ${movie.genres}"
                                 th:text="${genreTranslations.get(g.name) != null ? genreTranslations.get(g.name) : g.name} + (!${stat.last} ? ', ' : '')">

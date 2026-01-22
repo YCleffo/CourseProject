@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService {
         for (String roleName : roleNames) {
             if (roleRepository.findByName(roleName).isEmpty()) {
                 roleRepository.save(new Role(roleName));
-                log.info("Created role {}", roleName);
+                log.info("Созданная роль {}", roleName);
             }
         }
     }
@@ -51,13 +51,13 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
-        log.info("Loading user by username {}", username);
+        log.info("Загрузка пользователя по имени пользователя {}", username);
 
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
+                .orElseThrow(() -> new UsernameNotFoundException("Пользователь не найден: " + username));
 
         var auths = mapRolesToAuthorities(user.getRoles());
-        log.info("Loaded authorities for {}: {}", username, auths);
+        log.info("Загруженные полномочия для {}: {}", username, auths);
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
@@ -77,11 +77,11 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void setRolesForUser(String username, Set<String> roleNames) {
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
         Set<Role> newRoles = roleNames.stream()
                 .map(rn -> roleRepository.findByName(rn)
-                        .orElseThrow(() -> new RuntimeException("Role not found: " + rn)))
+                        .orElseThrow(() -> new RuntimeException("Роль не найдена: " + rn)))
                 .collect(Collectors.toSet());
 
         user.getRoles().clear();
@@ -92,10 +92,10 @@ public class UserService implements UserDetailsService {
 
     @Transactional
     public User registerUser(String username, String password) {
-        log.info("Registering new user {}", username);
+        log.info("Регистрация нового пользователя {}", username);
 
         if (userRepository.existsByUsername(username)) {
-            throw new RuntimeException("Username already exists");
+            throw new RuntimeException("Имя пользователя уже существует");
         }
 
         User user = new User();
@@ -104,7 +104,7 @@ public class UserService implements UserDetailsService {
         user.setEnabled(true);
 
         Role readOnlyRole = roleRepository.findByName(Roles.ROLE_READ_ONLY)
-                .orElseThrow(() -> new RuntimeException("Role READONLY not found"));
+                .orElseThrow(() -> new RuntimeException("Роль, доступная только для чтения, не найдена"));
         user.getRoles().add(readOnlyRole);
 
         return userRepository.save(user);
@@ -118,6 +118,6 @@ public class UserService implements UserDetailsService {
     @Transactional(readOnly = true)
     public User findByUsername(String username) {
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
     }
 }

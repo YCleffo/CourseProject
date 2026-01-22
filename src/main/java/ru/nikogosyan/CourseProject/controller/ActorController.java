@@ -93,8 +93,8 @@ public class ActorController {
             return "actor-form";
         }
         checkModifyPermission(authentication);
-        actorService.saveActor(actor, authentication);
-        return "redirect:/actors";
+        Actor saved = actorService.saveActor(actor, authentication);
+        return "redirect:/actors/" + saved.getId();
     }
 
     @GetMapping("/edit/{id}")
@@ -124,8 +124,8 @@ public class ActorController {
             return "actor-form";
         }
         checkModifyPermission(authentication);
-        actorService.updateActor(id, actor, authentication);
-        return "redirect:/actors";
+        Actor saved = actorService.updateActor(id, actor, authentication);
+        return "redirect:/actors/" + saved.getId();
     }
 
     @PostMapping("/delete/{id}")
@@ -146,7 +146,7 @@ public class ActorController {
     ) {
         try {
             actorPhotoService.upload(id, imageFile, authentication);
-            ra.addFlashAttribute("message", "Photo uploaded successfully!");
+            ra.addFlashAttribute("message", "Фотография успешно загружена!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
@@ -166,7 +166,7 @@ public class ActorController {
     ) {
         try {
             actorPhotoService.setPrimary(id, photoId, authentication);
-            ra.addFlashAttribute("message", "Primary photo updated!");
+            ra.addFlashAttribute("message", "Обновлена основная фотография!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
@@ -186,7 +186,7 @@ public class ActorController {
     ) {
         try {
             actorPhotoService.delete(id, photoId, authentication);
-            ra.addFlashAttribute("message", "Photo deleted!");
+            ra.addFlashAttribute("message", "Фотография удалена!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
@@ -204,7 +204,7 @@ public class ActorController {
     ) {
         try {
             actorPhotoService.uploadPrimary(id, imageFile, authentication);
-            ra.addFlashAttribute("message", "Primary photo uploaded!");
+            ra.addFlashAttribute("message", "Загружена основная фотография!");
         } catch (Exception e) {
             ra.addFlashAttribute("error", e.getMessage());
         }
@@ -213,7 +213,7 @@ public class ActorController {
 
     private void checkModifyPermission(Authentication authentication) {
         if (securityUtils.isReadOnly(authentication)) {
-            throw new RuntimeException("READONLY users cannot modify data");
+            throw new RuntimeException("Пользователи, доступные только для чтения, не могут изменять данные");
         }
     }
 }

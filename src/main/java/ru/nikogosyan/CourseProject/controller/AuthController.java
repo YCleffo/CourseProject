@@ -21,10 +21,10 @@ public class AuthController {
                             @RequestParam(value = "logout", required = false) String logout,
                             Model model) {
         if (error != null) {
-            model.addAttribute("error", "Invalid username or password");
+            model.addAttribute("error", "Неверное имя пользователя или пароль");
         }
         if (logout != null) {
-            model.addAttribute("message", "You have been logged out successfully");
+            model.addAttribute("message", "Вы успешно вышли из системы");
         }
         return "login";
     }
@@ -46,16 +46,16 @@ public class AuthController {
             }
 
             if (!password.equals(confirmPassword)) {
-                model.addAttribute("error", "Passwords do not match");
+                model.addAttribute("error", "Пароли не совпадают");
                 return "register";
             }
 
             userService.registerUser(username, password);
             log.info("User registered successfully: {}", username);
-            model.addAttribute("message", "Registration successful! Please login.");
+            model.addAttribute("message", "Регистрация прошла успешно! Пожалуйста, войдите в систему.");
             return "login";
         } catch (RuntimeException e) {
-            log.error("Registration error: {}", e.getMessage());
+            log.error("Ошибка регистрации: {}", e.getMessage());
             model.addAttribute("error", e.getMessage());
             return "register";
         }

@@ -23,6 +23,7 @@ public class SecurityUtils {
         return hasAuthority(authentication, Roles.ROLE_ADMIN);
     }
 
+    @SuppressWarnings("unused")
     public boolean isUser(Authentication authentication) {
         return hasAuthority(authentication, Roles.ROLE_USER);
     }

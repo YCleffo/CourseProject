@@ -11,26 +11,26 @@ import java.math.RoundingMode;
 @Data
 public class CalculationDto {
 
-    @NotNull
+    @NotNull(message = "Выберите фильм")
     private Long movieId;
 
     @NotNull
-    @DecimalMin(value = "0.0", inclusive = true, message = "Production budget must be >= 0")
+    @DecimalMin(value = "0.0", inclusive = true, message = "Бюджет (производство) должен быть 0 или больше")
     private BigDecimal productionBudget = BigDecimal.ZERO;
 
     @NotNull
-    @DecimalMin("0.0")
-    @DecimalMax("100.0")
+    @DecimalMin(value = "0.0", inclusive = true, message = "Маркетинг должен быть 0 или больше")
+    private BigDecimal marketingBudget = BigDecimal.ZERO;
+
+    @NotNull
+    @DecimalMin(value = "0.0", message = "Комиссия дистрибьютора должна быть от 0 до 100")
+    @DecimalMax(value = "100.0", message = "Комиссия дистрибьютора должна быть от 0 до 100")
     private BigDecimal distributionFeePercentUi = new BigDecimal("50");
 
     @NotNull
-    @DecimalMin("0.0")
-    @DecimalMax("100.0")
+    @DecimalMin(value = "0.0", message = "Налог должен быть от 0 до 100")
+    @DecimalMax(value = "100.0", message = "Налог должен быть от 0 до 100")
     private BigDecimal taxPercentUi = new BigDecimal("20");
-
-    @NotNull
-    @DecimalMin(value = "0.0", inclusive = true, message = "Marketing budget must be >= 0")
-    private BigDecimal marketingBudget = BigDecimal.ZERO;
 
     public BigDecimal getDistributionFeePercent() {
         return pctToFraction(distributionFeePercentUi);

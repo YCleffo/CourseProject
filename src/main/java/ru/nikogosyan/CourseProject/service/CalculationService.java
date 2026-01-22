@@ -68,7 +68,7 @@ public class CalculationService {
     @Transactional
     public void clearLogs(Long movieId, Authentication authentication) {
         var ui = securityUtils.getUserInfo(authentication);
-        if (ui.isReadOnly()) throw new RuntimeException("READONLY users cannot modify data");
+        if (ui.isReadOnly()) throw new RuntimeException("Пользователи, доступные только для чтения, не могут изменять данные");
         if (ui.isAdmin()) calculationLogRepository.deleteByMovieId(movieId);
         else calculationLogRepository.deleteByMovieIdAndCreatedBy(movieId, ui.username());
     }

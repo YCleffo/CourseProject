@@ -14,31 +14,31 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(RuntimeException.class)
     public String handleRuntimeException(RuntimeException ex, Model model) {
-        log.error("Runtime exception: {}", ex.getMessage());
+        log.error("Исключение во время выполнения: {}", ex.getMessage());
         model.addAttribute("error", ex.getMessage());
-        log.error("Multipart exception", ex);
+        log.error("Составное исключение", ex);
         return "error";
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public String handleAccessDeniedException(AccessDeniedException ex) {
-        log.error("Access denied: {}", ex.getMessage());
-        log.error("Multipart exception", ex);
+        log.error("Доступ запрещен: {}", ex.getMessage());
+        log.error("Составное исключение", ex);
         return "access-denied";
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public String handleMaxUploadSizeExceededException(MaxUploadSizeExceededException ex, Model model) {
-        log.error("File too large: {}", ex.getMessage());
-        log.error("Multipart exception", ex);
+        log.error("Слишком большой файл: {}", ex.getMessage());
+        log.error("Составное исключение", ex);
         model.addAttribute("error", "Файл слишком большой. Максимальный размер: 50MB");
         return "error";
     }
 
     @ExceptionHandler(MultipartException.class)
     public String handleMultipartException(MultipartException ex, Model model) {
-        log.error("Multipart exception: {}", ex.getMessage());
-        log.error("Multipart exception", ex);
+        log.error("Составное исключение: {}", ex.getMessage());
+        log.error("Составное исключение", ex);
         model.addAttribute("error", "Ошибка загрузки файла: " + ex.getMessage());
         return "error";
     }

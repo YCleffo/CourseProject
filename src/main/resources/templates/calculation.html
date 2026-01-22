@@ -24,8 +24,9 @@
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label for="movieId" class="form-label">Фильм</label>
-                            <select id="movieId" class="form-select" th:field="*{movieId}" required>
-                                <option value="">— Выберите —</option>
+                            <select id="movieId" class="form-select" th:field="*{movieId}" required
+                                    onchange="if(this.value){ window.location.href='/calculation?movieId=' + this.value; }">
+                            <option value="">— Выберите —</option>
                                 <option th:each="m : ${movies}" th:value="${m.id}" th:text="${m.title}"></option>
                             </select>
                             <div class="text-danger" th:if="${#fields.hasErrors('movieId')}" th:errors="*{movieId}">
@@ -63,6 +64,12 @@
                             <div class="text-danger" th:if="${#fields.hasErrors('taxPercentUi')}"
                                 th:errors="*{taxPercentUi}"></div>
                         </div>
+                    </div>
+
+                    <div class="alert alert-info mt-3" th:if="${selectedMovie != null}">
+                        <div><strong>Сборы:</strong> <span th:text="${#numbers.formatDecimal(selectedMovie.boxOffice, 1, 2)}"></span></div>
+                        <div><strong>Бюджет:</strong> <span th:text="${#numbers.formatDecimal(selectedMovie.budget, 1, 2)}"></span></div>
+                        <div><strong>Гонорары актёров:</strong> <span th:text="${#numbers.formatDecimal(selectedActorsSalary, 1, 2)}"></span></div>
                     </div>
 
                     <button type="submit" class="btn btn-primary mt-3">

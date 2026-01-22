@@ -35,12 +35,12 @@ public class AdminController {
                               RedirectAttributes ra) {
         try {
             Set<String> roleNames = (roles == null) ? Set.of() : new HashSet<>(roles);
-            if (roleNames.isEmpty()) throw new RuntimeException("User must have at least one role");
+            if (roleNames.isEmpty()) throw new RuntimeException("У пользователя должна быть хотя бы одна роль");
 
             userService.setRolesForUser(username, roleNames);
             ra.addFlashAttribute("message", "Роли обновлены для пользователя: " + username);
         } catch (Exception e) {
-            log.error("Error updating roles for {}: {}", username, e.getMessage());
+            log.error("Ошибка обновления ролей для {}: {}", username, e.getMessage());
             ra.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/admin/roles";

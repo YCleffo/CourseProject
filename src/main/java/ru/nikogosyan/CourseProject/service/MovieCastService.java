@@ -96,18 +96,18 @@ public class MovieCastService {
     @Transactional
     public MovieCast addCast(Long movieId, Long actorId, String roleName, BigDecimal salary, Authentication authentication) {
         SecurityUtils.UserInfo ui = securityUtils.getUserInfo(authentication);
-        if (ui.isReadOnly()) throw new RuntimeException("READONLY users cannot modify data");
+        if (ui.isReadOnly()) throw new RuntimeException("Пользователи, доступные только для чтения, не могут изменять данные");
 
         Movie movie = movieService.getMovieById(movieId);
         checkCanModifyMovie(movie, authentication);
 
         Actor actor = actorService.getActorById(actorId);
         if (!ui.isAdmin() && ui.isUser() && actor.getCreatedBy() != null && !actor.getCreatedBy().equals(ui.username())) {
-            throw new RuntimeException("You dont have permission to use this actor");
+            throw new RuntimeException("У вас нет разрешения на использование этого актера");
         }
 
         if (roleName == null || roleName.isBlank()) {
-            throw new RuntimeException("Role name is required");
+            throw new RuntimeException("Требуется указать имя роли");
         }
 
         var existingOpt = movieCastRepository.findByActorIdAndMovieId(actorId, movieId);
@@ -130,13 +130,13 @@ public class MovieCastService {
     @Transactional
     public void deleteCast(Long movieId, Long castId, Authentication authentication) {
         SecurityUtils.UserInfo ui = securityUtils.getUserInfo(authentication);
-        if (ui.isReadOnly()) throw new RuntimeException("READONLY users cannot modify data");
+        if (ui.isReadOnly()) throw new RuntimeException("Пользователи, доступные только для чтения, не могут изменять данные");
 
         Movie movie = movieService.getMovieById(movieId);
         checkCanModifyMovie(movie, authentication);
 
         MovieCast mc = movieCastRepository.findByIdAndMovieId(castId, movieId)
-                .orElseThrow(() -> new RuntimeException("Cast not found"));
+                .orElseThrow(() -> new RuntimeException("Актерский состав не найден"));
 
         movieCastRepository.delete(mc);
     }
@@ -145,7 +145,7 @@ public class MovieCastService {
         boolean isAdmin = securityUtils.isAdmin(authentication);
         String username = authentication.getName();
         if (!isAdmin && movie.getCreatedBy() != null && !movie.getCreatedBy().equals(username)) {
-            throw new RuntimeException("You dont have permission to update this movie.");
+            throw new RuntimeException("У вас нет разрешения на обновление этого фильма.");
         }
     }
 
@@ -159,18 +159,18 @@ public class MovieCastService {
     ) {
         SecurityUtils.UserInfo ui = securityUtils.getUserInfo(authentication);
         if (ui.isReadOnly()) {
-            throw new RuntimeException("READONLY users cannot modify data");
+            throw new RuntimeException("Пользователи, доступные только для чтения, не могут изменять данные");
         }
 
         Movie movie = movieService.getMovieById(movieId);
         checkCanModifyMovie(movie, authentication);
 
         if (roleName == null || roleName.isBlank()) {
-            throw new RuntimeException("Role name is required");
+            throw new RuntimeException("Требуется указать имя роли");
         }
 
         MovieCast mc = movieCastRepository.findByIdAndMovieId(castId, movieId)
-                .orElseThrow(() -> new RuntimeException("Cast not found"));
+                .orElseThrow(() -> new RuntimeException("Актерский состав не найден"));
 
         mc.setRoleName(roleName.trim());
         mc.setSalary(salary);

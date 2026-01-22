@@ -32,7 +32,7 @@ public class Movie {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Title is required")
+    @NotBlank(message = "Требуется название")
     private String title;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -44,13 +44,17 @@ public class Movie {
     private Set<Genre> genres = new HashSet<>();
 
     @Column(name = "release_year")
-    @Min(value = 1900, message = "Release year must be after 1900")
-    @Max(value = 2100, message = "Release year must be before 2100")
+    @Min(value = 1900, message = "Год выпуска должен быть после 1900 года")
+    @Max(value = 2100, message = "Год выпуска должен быть после 2100 года")
     private Integer releaseYear;
 
     @Column(name = "box_office", precision = 15, scale = 2)
     @DecimalMin(value = "0.0", message = "Box office must be positive")
     private BigDecimal boxOffice;
+
+    @Column(name = "budget", precision = 15, scale = 2)
+    @DecimalMin(value = "0.0", message = "Бюджет не может быть отрицательным")
+    private BigDecimal budget;
 
     @Column(name = "created_by", length = 50)
     private String createdBy;

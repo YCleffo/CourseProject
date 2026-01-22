@@ -54,6 +54,21 @@ public class CalculationController {
             model.addAttribute("logs", calculationService.getLogsForMovie(movieId, authentication));
         }
 
+        if (movieId != null) {
+            Movie movie = movieService.getMovieForView(movieId, authentication);
+            List<Actor> actors = actorService.getActorsByMovieIdForView(movieId, authentication);
+
+            BigDecimal actorsSalary = actors.stream()
+                    .map(Actor::getSalary)
+                    .filter(Objects::nonNull)
+                    .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+            form.setProductionBudget(movie.getBudget() != null ? movie.getBudget() : BigDecimal.ZERO);
+
+            model.addAttribute("selectedMovie", movie);
+            model.addAttribute("selectedActorsSalary", actorsSalary);
+        }
+
         return "calculation";
     }
 
@@ -89,7 +104,7 @@ public class CalculationController {
         CalculationResultDto result = calculationService.calculate(movie, actorsSalary, calc);
 
         if (securityUtils.isReadOnly(authentication)) {
-            throw new RuntimeException("READONLY users cannot modify data");
+            throw new RuntimeException("Пользователи, доступные только для чтения, не могут изменять данные");
         }
 
         calculationService.saveLog(movie, authentication, calc, result);
