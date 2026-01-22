@@ -12,7 +12,6 @@ import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -94,7 +93,7 @@ public class MovieCastService {
     }
 
     @Transactional
-    public MovieCast addCast(Long movieId, Long actorId, String roleName, BigDecimal salary, Authentication authentication) {
+    public void addCast(Long movieId, Long actorId, String roleName, BigDecimal salary, Authentication authentication) {
         SecurityUtils.UserInfo ui = securityUtils.getUserInfo(authentication);
         if (ui.isReadOnly()) throw new RuntimeException("Пользователи, доступные только для чтения, не могут изменять данные");
 
@@ -115,7 +114,7 @@ public class MovieCastService {
             MovieCast existing = existingOpt.get();
             existing.setRoleName(roleName.trim());
             existing.setSalary(salary);
-            return movieCastRepository.save(existing);
+            movieCastRepository.save(existing);
         }
 
         MovieCast mc = new MovieCast();
@@ -124,7 +123,7 @@ public class MovieCastService {
         mc.setRoleName(roleName.trim());
         mc.setSalary(salary);
         mc.setCreatedBy(ui.username());
-        return movieCastRepository.save(mc);
+        movieCastRepository.save(mc);
     }
 
     @Transactional
@@ -150,7 +149,7 @@ public class MovieCastService {
     }
 
     @Transactional
-    public MovieCast updateCast(
+    public void updateCast(
             Long movieId,
             Long castId,
             String roleName,
@@ -174,6 +173,6 @@ public class MovieCastService {
 
         mc.setRoleName(roleName.trim());
         mc.setSalary(salary);
-        return movieCastRepository.save(mc);
+        movieCastRepository.save(mc);
     }
 }

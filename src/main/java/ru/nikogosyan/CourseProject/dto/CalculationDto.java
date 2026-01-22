@@ -15,11 +15,11 @@ public class CalculationDto {
     private Long movieId;
 
     @NotNull
-    @DecimalMin(value = "0.0", inclusive = true, message = "Бюджет (производство) должен быть 0 или больше")
+    @DecimalMin(value = "0.0", message = "Бюджет (производство) должен быть 0 или больше")
     private BigDecimal productionBudget = BigDecimal.ZERO;
 
     @NotNull
-    @DecimalMin(value = "0.0", inclusive = true, message = "Маркетинг должен быть 0 или больше")
+    @DecimalMin(value = "0.0", message = "Маркетинг должен быть 0 или больше")
     private BigDecimal marketingBudget = BigDecimal.ZERO;
 
     @NotNull

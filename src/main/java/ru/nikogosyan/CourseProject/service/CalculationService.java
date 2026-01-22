@@ -74,7 +74,7 @@ public class CalculationService {
     }
 
     @Transactional
-    public CalculationLog saveLog(Movie movie,
+    public void saveLog(Movie movie,
                                   Authentication authentication,
                                   CalculationDto form,
                                   CalculationResultDto result) {
@@ -99,7 +99,7 @@ public class CalculationService {
         log.setNetProfit(result.getNetProfit());
         log.setRoi(result.getRoi());
 
-        return calculationLogRepository.save(log);
+        calculationLogRepository.save(log);
     }
 
     @Transactional(readOnly = true)

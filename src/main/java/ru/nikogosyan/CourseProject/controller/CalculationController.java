@@ -19,7 +19,6 @@ import ru.nikogosyan.CourseProject.service.MovieService;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Objects;
 
@@ -70,11 +69,6 @@ public class CalculationController {
         }
 
         return "calculation";
-    }
-
-    private static BigDecimal pctToFraction(BigDecimal pct) {
-        if (pct == null) return BigDecimal.ZERO;
-        return pct.divide(new BigDecimal("100"), 4, RoundingMode.HALF_UP);
     }
 
     @PostMapping("/profit")

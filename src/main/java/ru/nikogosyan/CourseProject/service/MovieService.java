@@ -57,10 +57,10 @@ public class MovieService {
     }
 
     @Transactional
-    public Movie saveMovie(Movie movie, String username) {
+    public void saveMovie(Movie movie, String username) {
         log.info("Добавлен фильм {} пользователем {}", movie.getTitle(), username);
         movie.setCreatedBy(username);
-        return movieRepository.save(movie);
+        movieRepository.save(movie);
     }
 
     @Transactional
@@ -82,7 +82,7 @@ public class MovieService {
     }
 
     @Transactional
-    public Movie updateMovie(Long id, Movie updatedMovie, Authentication authentication) {
+    public void updateMovie(Long id, Movie updatedMovie, Authentication authentication) {
         Movie movie = getMovieById(id);
 
         String username = authentication.getName();
@@ -102,6 +102,6 @@ public class MovieService {
         movie.setImagePath(updatedMovie.getImagePath());
         movie.setBudget(updatedMovie.getBudget());
 
-        return movieRepository.save(movie);
+        movieRepository.save(movie);
     }
 }

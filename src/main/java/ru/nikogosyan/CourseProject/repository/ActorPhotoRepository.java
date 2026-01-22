@@ -28,5 +28,6 @@ public interface ActorPhotoRepository extends JpaRepository<ActorPhoto, Long> {
         where p.actor.id in :actorIds
         order by p.actor.id, p.isPrimary desc, p.createdAt asc, p.id asc
     """)
+
     List<ActorPhoto> findForActorsOrdered(@Param("actorIds") List<Long> actorIds);
 }

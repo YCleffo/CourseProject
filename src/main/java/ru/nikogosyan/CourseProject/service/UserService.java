@@ -50,7 +50,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
+    public @NonNull UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
         log.info("Загрузка пользователя по имени пользователя {}", username);
 
         User user = userRepository.findByUsername(username)
@@ -91,7 +91,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public User registerUser(String username, String password) {
+    public void registerUser(String username, String password) {
         log.info("Регистрация нового пользователя {}", username);
 
         if (userRepository.existsByUsername(username)) {
@@ -107,17 +107,11 @@ public class UserService implements UserDetailsService {
                 .orElseThrow(() -> new RuntimeException("Роль, доступная только для чтения, не найдена"));
         user.getRoles().add(readOnlyRole);
 
-        return userRepository.save(user);
+        userRepository.save(user);
     }
 
     @Transactional(readOnly = true)
     public List<User> findAllUsers() {
         return userRepository.findAll();
-    }
-
-    @Transactional(readOnly = true)
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
     }
 }

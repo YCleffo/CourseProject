@@ -20,6 +20,7 @@ import ru.nikogosyan.CourseProject.service.GenreService;
 import ru.nikogosyan.CourseProject.service.MovieCastService;
 import ru.nikogosyan.CourseProject.service.MovieService;
 import ru.nikogosyan.CourseProject.utils.SecurityUtils;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -50,6 +51,13 @@ public class MovieController {
         } catch (IOException e) {
             log.error("Не удалось создать каталог для загрузки {}", e.getMessage(), e);
         }
+    }
+
+    private String movieFormWithError(Model model, String errorMessage) {
+        model.addAttribute("error", errorMessage);
+        model.addAttribute("genres", getGenresSortedRu());
+        model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
+        return "movie-form";
     }
 
     private static final Map<String, String> GENRE_TRANSLATIONS = Map.ofEntries(
@@ -158,7 +166,8 @@ public class MovieController {
             @PathVariable Long castId,
             @RequestParam String roleName,
             @RequestParam(required = false) String salary,
-            Authentication authentication
+            Authentication authentication,
+            RedirectAttributes ra
     ) {
         BigDecimal sal = null;
         if (salary != null && !salary.isBlank()) {
@@ -166,7 +175,9 @@ public class MovieController {
         }
 
         movieCastService.updateCast(id, castId, roleName, sal, authentication);
-        return "redirect:/movies/" + id + "?from=movies";
+
+        ra.addAttribute("from", "movies");
+        return "redirect:/movies/" + id;
     }
 
     @PostMapping("/{id}/cast/add")
@@ -175,24 +186,31 @@ public class MovieController {
             @RequestParam Long actorId,
             @RequestParam String roleName,
             @RequestParam(required = false) String salary,
-            Authentication authentication
+            Authentication authentication,
+            RedirectAttributes ra
     ) {
-        java.math.BigDecimal sal = null;
+        BigDecimal sal = null;
         if (salary != null && !salary.isBlank()) {
-            sal = new java.math.BigDecimal(salary);
+            sal = new BigDecimal(salary);
         }
+
         movieCastService.addCast(id, actorId, roleName, sal, authentication);
-        return "redirect:/movies/" + id + "?from=movies";
+
+        ra.addAttribute("from", "movies");
+        return "redirect:/movies/" + id;
     }
 
     @PostMapping("/{id}/cast/{castId}/delete")
     public String deleteCast(
             @PathVariable Long id,
             @PathVariable Long castId,
-            Authentication authentication
+            Authentication authentication,
+            RedirectAttributes ra
     ) {
         movieCastService.deleteCast(id, castId, authentication);
-        return "redirect:/movies/" + id + "?from=movies";
+
+        ra.addAttribute("from", "movies");
+        return "redirect:/movies/" + id;
     }
 
     @GetMapping("/new")
@@ -215,7 +233,6 @@ public class MovieController {
     ) {
         if (result.hasErrors()) {
             model.addAttribute("genres", getGenresSortedRu());
-
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
             return "movie-form";
         }
@@ -224,23 +241,6 @@ public class MovieController {
             checkModifyPermission(authentication);
 
             if (imageFile != null && !imageFile.isEmpty()) {
-                if (imageFile.getSize() > 50L * 1024 * 1024) {
-                    model.addAttribute("error", "Файл слишком большой. Максимальный размер - 10 МБ.");
-                    model.addAttribute("genres", getGenresSortedRu());
-
-                    model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
-                    return "movie-form";
-                }
-
-                String contentType = imageFile.getContentType();
-                if (contentType == null || !contentType.startsWith("image")) {
-                    model.addAttribute("error", "Разрешены только файлы изображений.");
-                    model.addAttribute("genres", getGenresSortedRu());
-
-                    model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
-                    return "movie-form";
-                }
-
                 handleImageUpload(movie, imageFile, null);
             }
 
@@ -250,18 +250,8 @@ public class MovieController {
 
             movieService.saveMovie(movie, authentication.getName());
             return "redirect:/movies";
-        } catch (IOException e) {
-            model.addAttribute("error", e.getMessage());
-            model.addAttribute("genres", getGenresSortedRu());
-
-            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
-            return "movie-form";
         } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            model.addAttribute("genres", getGenresSortedRu());
-
-            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
-            return "movie-form";
+            return movieFormWithError(model, e.getMessage());
         }
     }
 
@@ -291,7 +281,6 @@ public class MovieController {
     ) {
         if (result.hasErrors()) {
             model.addAttribute("genres", getGenresSortedRu());
-
             model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
             return "movie-form";
         }
@@ -317,18 +306,8 @@ public class MovieController {
 
             movieService.updateMovie(id, movie, authentication);
             return "redirect:/movies";
-        } catch (IOException e) {
-            model.addAttribute("error", e.getMessage());
-            model.addAttribute("genres", getGenresSortedRu());
-
-            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
-            return "movie-form";
         } catch (Exception e) {
-            model.addAttribute("error", e.getMessage());
-            model.addAttribute("genres", getGenresSortedRu());
-
-            model.addAttribute("genreTranslations", GENRE_TRANSLATIONS);
-            return "movie-form";
+            return movieFormWithError(model, e.getMessage());
         }
     }
 

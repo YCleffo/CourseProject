@@ -12,6 +12,5 @@ public interface CalculationLogRepository extends JpaRepository<CalculationLog, 
     void deleteByMovieIdAndCreatedBy(Long movieId, String createdBy);
 
     List<CalculationLog> findByMovieIdOrderByCreatedAtDesc(Long movieId);
-
     List<CalculationLog> findByMovieIdAndCreatedByOrderByCreatedAtDesc(Long movieId, String createdBy);
 }
